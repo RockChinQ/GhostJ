@@ -16,22 +16,14 @@ public class TransCmd extends  Thread{
                 //检查是否是工作信息
                 String cmd[]=typeCmd.split(" ");
                 switch (cmd[0]){
-                    case "!info":{
-                        switch (cmd[1]){
-                            case "list-conn":{
-                                Out.say("TransCmd-info","已建立的连接("+ServerMain.socketArrayList.size()+")：\n\t\tname\tconnTime\tstate");
-                                for(HandleConn conn:ServerMain.socketArrayList){
-                                    Out.say(conn.hostName+"  "+conn.connTime+"   "
-                                            +(conn.equals(ServerMain.focusedConn)?"聚焦":"后台"));
-                                }
-                                Out.say("TransCmd-info","列表完成.");
-                                continue;
-                            }
-                            default:{
-                                Out.say("TransCmd-info","不正确的二级指令");
-                                continue;
-                            }
+                    case "!list":{
+                        Out.say("TransCmd-info","已建立的连接("+ServerMain.socketArrayList.size()+")：\n\t\tname\tconnTime\tstate");
+                        for(HandleConn conn:ServerMain.socketArrayList){
+                            Out.say(conn.hostName+"  "+conn.connTime+"   "
+                                    +(conn.equals(ServerMain.focusedConn)?"聚焦":"后台"));
                         }
+                        Out.say("TransCmd-info","列表完成.");
+                        continue;
                     }
                     case "!dfocus":{
                         ServerMain.focusedConn=null;

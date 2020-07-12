@@ -1,6 +1,6 @@
 package com.ghostj.client;
 
-import sun.awt.windows.WBufferStrategy;
+//import sun.awt.windows.WBufferStrategy;
 
 import java.io.*;
 import java.net.Socket;
