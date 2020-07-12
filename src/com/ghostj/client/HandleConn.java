@@ -105,7 +105,7 @@ public class HandleConn extends Thread{
                             continue;
                         }
                     }
-                    //处理
+                    //处理收到的消息
                     if(!ClientMain.processing){//无正在进行的操作
                         ClientMain.processCmd=new ProcessCmd();
                         ClientMain.processCmd.cmd=new String(cmd);
