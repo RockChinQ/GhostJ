@@ -16,6 +16,10 @@ public class TransCmd extends  Thread{
                 //检查是否是工作信息
                 String cmd[]=typeCmd.split(" ");
                 switch (cmd[0]){
+                    case "!help":{
+                        Out.say("TransCme-help", "command      description\n!list   list all alive conn\n!focus <connName(wordStartwith)>   \n!dfocus    \n!chname <connName(wordStartWith)> <newName>     \n!stop    \n!close    ");
+                        continue;
+                    }
                     case "!list":{
                         Out.say("TransCmd-info","已建立的连接("+ServerMain.socketArrayList.size()+")：\n\t\tname\tconnTime\tstate");
                         for(HandleConn conn:ServerMain.socketArrayList){
@@ -39,6 +43,24 @@ public class TransCmd extends  Thread{
                             }
                         }
                         Out.say("TransCmd-focus","无此名称连接");
+                        continue;
+                    }
+                    case "!chname":{
+                        if (cmd.length >= 3)
+                            for (HandleConn conn : ServerMain.socketArrayList) {
+                                if (conn.hostName.startsWith(cmd[1])) {
+                                    conn.hostName = new String(cmd[2]);
+                                    conn.bufferedWriter.write("!!cfg name " + cmd[2]);
+                                    conn.bufferedWriter.newLine();
+                                    conn.bufferedWriter.flush();
+                                    conn.bufferedWriter.write("!!writecfg");
+                                    conn.bufferedWriter.newLine();
+                                    conn.bufferedWriter.flush();
+                                    Out.say("TransCmd-chname", "已修改名称");
+                                    continue readMsg;
+                                }
+                            }
+                        Out.say("TransCmd-chname", "无此名称连接");
                         continue;
                     }
                     case "!close":
