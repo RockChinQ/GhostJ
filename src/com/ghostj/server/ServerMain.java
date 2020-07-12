@@ -27,6 +27,8 @@ public class ServerMain {
         Out.say("ServerMain","键盘>客户端数据传输接口已启动");
     }
     public static void killConn(HandleConn handleConn){
+        if(handleConn==null)
+            return;
         if(handleConn.equals(focusedConn))
             focusedConn=null;
         socketArrayList.remove(handleConn);

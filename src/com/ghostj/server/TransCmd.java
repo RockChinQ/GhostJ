@@ -17,7 +17,7 @@ public class TransCmd extends  Thread{
                 String cmd[]=typeCmd.split(" ");
                 switch (cmd[0]){
                     case "!help":{
-                        Out.say("TransCme-help", "command      description\n!list   list all alive conn\n!focus <connName(wordStartwith)>   \n!dfocus    \n!chname <connName(wordStartWith)> <newName>     \n!stop    \n!close    ");
+                        Out.say("TransCme-help", "command      description\n!list   列表所有连接的主机\n!focus <connName(wordStartwith)>   聚焦\n!dfocus    退出聚焦\n!chname <connName(wordStartWith)> <newName>     修改客户端名称\n!stop    关闭服务端\n!close    关闭服务的");
                         continue;
                     }
                     case "!list":{
@@ -35,6 +35,10 @@ public class TransCmd extends  Thread{
                         continue readMsg;
                     }
                     case "!focus":{
+                        if(cmd.length<2){
+                            Out.say("TransCmd-focus","正确语法\n!focus <connName(wordStartWith)>");
+                            continue ;
+                        }
                         for(HandleConn conn:ServerMain.socketArrayList){
                             if(conn.hostName.startsWith(cmd[1])){
                                 ServerMain.focusedConn=conn;
@@ -80,6 +84,7 @@ public class TransCmd extends  Thread{
             }catch (Exception e){
                 e.printStackTrace();
                 Out.say("TansCmd","无法将输入指令传输至客户端");
+                ServerMain.killConn(ServerMain.focusedConn);
             }
         }
     }
