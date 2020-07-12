@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GhostClient:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GhostClient_jar</output-path>
+    <root id="archive" name="GhostJ.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/client/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="GhostJ" />
+    </root>
+  </artifact>
+</component>
