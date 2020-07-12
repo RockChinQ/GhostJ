@@ -40,11 +40,17 @@ public class HandleConn extends Thread{
                     StringBuffer cmds=new StringBuffer("");
                     int workInfoLen=0;
                     while((c=inputStreamReader.read())!=-1){
-                        if((char)c=='!')
+                        if((char)c=='!') {
+                            //cmds.append("");
                             break;
+                        }
+                        if ((char)c=='\n') {
+                            cmds.append("\n");
+                            break;
+                        }
                         cmds.append((char)c);
                         workInfoLen++;
-                        if(workInfoLen>=20)
+                        if(workInfoLen>=25)
                             break;
                     }
                     String cmd[]=cmds.toString().split(" ");

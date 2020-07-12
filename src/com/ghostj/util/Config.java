@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.HashMap;
 
 public class Config {
-    HashMap<String,Object> field=new HashMap<>();
+    public HashMap<String,Object> field=new HashMap<>();
     //File configFile;
     String filePath=null;
     public Config(String filePath){

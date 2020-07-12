@@ -17,7 +17,7 @@ public class ClientMain {
     public static SocketAddress socketAddress=null;
     public static Socket socket=null;
     public static BufferedReader bufferedReader=null;
-    public static BufferedWriter bufferedWriter=null;
+    public static OutputStreamWriter bufferedWriter=null;
     public static HandleConn handleConn=null;
     public static String name="";
 
