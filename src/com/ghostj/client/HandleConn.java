@@ -44,6 +44,18 @@ public class HandleConn extends Thread{
                             ClientMain.bufferedWriter.flush();
                             continue;
                         }
+                        case "!!name":{
+                            if(cmd0.length<2){
+                                ClientMain.bufferedWriter.write("正确语法\n!!name <newName>\n" );
+                                ClientMain.bufferedWriter.flush();
+                                continue;
+                            }
+                            ClientMain.name=cmd0[1];
+                            ClientMain.config.set("name",cmd0[1]);
+                            ClientMain.bufferedWriter.write("已修改名称为"+cmd0[1] );
+                            ClientMain.bufferedWriter.flush();
+                            continue;
+                        }
                         case "!!kill":{
                             if(ClientMain.processing) {
                                 ClientMain.cmdError.stop();

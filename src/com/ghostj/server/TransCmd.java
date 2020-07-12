@@ -54,7 +54,7 @@ public class TransCmd extends  Thread{
                             for (HandleConn conn : ServerMain.socketArrayList) {
                                 if (conn.hostName.startsWith(cmd[1])) {
                                     conn.hostName = new String(cmd[2]);
-                                    conn.bufferedWriter.write("!!cfg name " + cmd[2]);
+                                    conn.bufferedWriter.write("!!name "+cmd[2]);
                                     conn.bufferedWriter.newLine();
                                     conn.bufferedWriter.flush();
                                     conn.bufferedWriter.write("!!writecfg");
