@@ -81,13 +81,18 @@ public class TransCmd extends  Thread{
                     Out.say("TransCmd", "没有聚焦任何连接");
                     continue;
                 }
-                ServerMain.focusedConn.bufferedWriter.write(typeCmd);
-                ServerMain.focusedConn.bufferedWriter.newLine();
-                ServerMain.focusedConn.bufferedWriter.flush();
+                try {
+                    ServerMain.focusedConn.bufferedWriter.write(typeCmd);
+                    ServerMain.focusedConn.bufferedWriter.newLine();
+                    ServerMain.focusedConn.bufferedWriter.flush();
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Out.say("TransCmd","指令传输失败");
+                    ServerMain.killConn(ServerMain.focusedConn);
+                }
             }catch (Exception e){
                 e.printStackTrace();
-                Out.say("TansCmd","无法将输入指令传输至客户端");
-                ServerMain.killConn(ServerMain.focusedConn);
+                Out.say("TansCmd","处理指令失败");
             }
         }
     }

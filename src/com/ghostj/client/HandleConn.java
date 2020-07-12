@@ -30,6 +30,7 @@ public class HandleConn extends Thread{
                 ClientMain.bufferedWriter.flush();
                 Out.say("HandleConn","Sent name.");
                 ClientMain.bufferedReader=new BufferedReader(new InputStreamReader(ClientMain.socket.getInputStream(),"UTF-8"));
+
                 while(true){
                     String cmd= ClientMain.bufferedReader.readLine();
                     //接收到数据

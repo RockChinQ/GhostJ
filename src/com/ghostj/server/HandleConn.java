@@ -60,6 +60,10 @@ public class HandleConn extends Thread{
                             this.hostName=new String(cmd[1]);
                             continue;
                         }
+                        case "version":{
+                            Out.say("conn"+hostName,"版本号:"+cmd[1]);
+                            continue;
+                        }
                         default:{
                             Out.sayThisLine(cmds.toString());
                         }
