@@ -33,7 +33,7 @@ public class HandleConn extends Thread{
                 while(true){
                     String cmd= ClientMain.bufferedReader.readLine();
                     //接收到数据
-                    //Out.say("HandleConn",""+cmd);
+                    Out.say("HandleConn",""+cmd);
 
                     //检查是否是工作指令
                     String cmd0[]=cmd.split(" ");
@@ -52,7 +52,7 @@ public class HandleConn extends Thread{
                             }
                             ClientMain.name=cmd0[1];
                             ClientMain.config.set("name",cmd0[1]);
-                            ClientMain.bufferedWriter.write("已修改名称为"+cmd0[1] );
+                            ClientMain.bufferedWriter.write("已修改名称为"+cmd0[1]+"\n" );
                             ClientMain.bufferedWriter.flush();
                             continue;
                         }

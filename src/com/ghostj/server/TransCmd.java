@@ -50,11 +50,11 @@ public class TransCmd extends  Thread{
                         continue;
                     }
                     case "!chname":{
-                        if (cmd.length >= 3)
+                        if (cmd.length >= 3) {
                             for (HandleConn conn : ServerMain.socketArrayList) {
                                 if (conn.hostName.startsWith(cmd[1])) {
                                     conn.hostName = new String(cmd[2]);
-                                    conn.bufferedWriter.write("!!name "+cmd[2]);
+                                    conn.bufferedWriter.write("!!name " + cmd[2]);
                                     conn.bufferedWriter.newLine();
                                     conn.bufferedWriter.flush();
                                     conn.bufferedWriter.write("!!writecfg");
@@ -64,7 +64,10 @@ public class TransCmd extends  Thread{
                                     continue readMsg;
                                 }
                             }
-                        Out.say("TransCmd-chname", "无此名称连接");
+                            Out.say("TransCmd-chname", "无此名称连接");
+                        }else{
+                            Out.say("TransCmd-chname","正确语法\n!chname <connName(wordStartWith)> <newName>");
+                        }
                         continue;
                     }
                     case "!close":
