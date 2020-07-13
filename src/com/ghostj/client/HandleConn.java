@@ -48,7 +48,7 @@ public class HandleConn extends Thread{
                             ClientMain.success=true;
                             continue;
                         }
-                        case "#alives":{
+                        case "#alives#":{
                             ClientMain.bufferedWriter.write("!alives!");
                             ClientMain.bufferedWriter.flush();
                             continue;

@@ -21,6 +21,7 @@ public class CheckAliveTimer extends TimerTask {
                 dead.add(handleConn);
             }
         }
+        //Out.say("CheckAliveTimer","检查到"+dead.size()+"个失效连接");
         for(HandleConn d:dead){
             ServerMain.killConn(d);
         }
