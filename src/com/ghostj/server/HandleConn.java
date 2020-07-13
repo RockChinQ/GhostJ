@@ -55,6 +55,9 @@ public class HandleConn extends Thread{
                     }
                     String cmd[]=cmds.toString().split(" ");
                     switch (cmd[0]){
+                        case "alive":{
+                            continue;
+                        }
                         case "name":{
                             Out.say("conn"+hostName,"新名称"+cmd[1]);
                             this.hostName=new String(cmd[1]);

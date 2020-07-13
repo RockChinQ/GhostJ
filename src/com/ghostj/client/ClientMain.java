@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.util.Timer;
 
 public class ClientMain {
     public static Config config;
@@ -36,5 +37,8 @@ public class ClientMain {
         //启动连接线程
         handleConn=new HandleConn();
         handleConn.start();
+        //检测计时器
+        Timer t=new Timer();
+        t.schedule(new CheckAliveTimer(),1000,30000);
     }
 }

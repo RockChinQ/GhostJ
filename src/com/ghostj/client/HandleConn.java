@@ -34,11 +34,18 @@ public class HandleConn extends Thread{
                 while(true){
                     String cmd= ClientMain.bufferedReader.readLine();
                     //接收到数据
-                    Out.say("HandleConn",""+cmd);
+                    //Out.say("HandleConn",""+cmd);
 
                     //检查是否是工作指令
                     String cmd0[]=cmd.split(" ");
                     switch (cmd0[0]){
+                        case "#alive#":{
+                            continue;
+                        }
+                        case "!!reconn":{
+                            ClientMain.socket.close();
+                            continue;
+                        }
                         case "!!help":{
                             String helpinfo="help msg:\ncommand        description\n!!kill     kill the current process(use when a command last for so long)\n!!listcfg   list all config fields of client\n!!rmcfg <key>   remove a field\n!!cfg <key> <value>   set a field\n!!writecfg   write config fields to file";
                             ClientMain.bufferedWriter.write(helpinfo+"\n");
@@ -139,7 +146,11 @@ public class HandleConn extends Thread{
 
                 Out.say("HandleConn","连接异常，尝试重新连接");
                 e.printStackTrace();
-
+                try {
+                    ClientMain.socket.close();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
                 continue;
             }finally {
                 try {

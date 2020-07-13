@@ -5,7 +5,9 @@ import com.ghostj.util.Config;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class ServerMain {
     public static ArrayList<HandleConn> socketArrayList=new ArrayList<>();
@@ -25,6 +27,10 @@ public class ServerMain {
         transCmd=new TransCmd();
         transCmd.start();
         Out.say("ServerMain","键盘>客户端数据传输接口已启动");
+
+        //启动检查计时器
+        Timer t=new Timer();
+        t.schedule(new CheckAliveTimer(),1000,30000);
     }
     public static void killConn(HandleConn handleConn){
         if(handleConn==null)
