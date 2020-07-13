@@ -49,6 +49,9 @@ public class TransCmd extends  Thread{
                         Out.say("TransCmd-focus","无此名称连接");
                         continue;
                     }
+                    case "!test":{
+                        new CheckAliveMaster().start();
+                    }
                     case "!chname":{
                         if (cmd.length >= 3) {
                             for (HandleConn conn : ServerMain.socketArrayList) {

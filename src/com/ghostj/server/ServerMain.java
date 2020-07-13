@@ -16,6 +16,8 @@ public class ServerMain {
     public static HandleConn focusedConn=null;
     public static TransCmd transCmd=null;
     public static AcceptConn acceptConn=null;
+
+    public static boolean manuallyTestConn=false;
     public static void main(String[] args){
         //加载配置文件
         port=config.getIntValue("port");
