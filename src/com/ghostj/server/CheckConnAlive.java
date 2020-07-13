@@ -10,10 +10,10 @@ public class CheckConnAlive extends Thread{
     }
     public void run(){
         try {
-            bufferedWriter.write("#alive#");
+            bufferedWriter.write("#alives#");
             bufferedWriter.newLine();
             bufferedWriter.flush();
-            success=true;
+            //success=true;
         }catch (Exception e){
 
         }

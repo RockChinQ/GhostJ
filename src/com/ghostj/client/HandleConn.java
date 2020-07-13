@@ -2,6 +2,8 @@ package com.ghostj.client;
 
 //import sun.awt.windows.WBufferStrategy;
 
+import com.ghostj.util.FileRW;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Date;
@@ -30,7 +32,10 @@ public class HandleConn extends Thread{
                 ClientMain.bufferedWriter.flush();
                 Out.say("HandleConn","Sent name.");
                 ClientMain.bufferedReader=new BufferedReader(new InputStreamReader(ClientMain.socket.getInputStream(),"UTF-8"));
-
+                //发送版本号
+                String ver= FileRW.read("nowVer.txt");
+                ClientMain.bufferedWriter.write("!version "+ver+"!");
+                ClientMain.bufferedWriter.flush();
                 while(true){
                     String cmd= ClientMain.bufferedReader.readLine();
                     //接收到数据
@@ -40,6 +45,12 @@ public class HandleConn extends Thread{
                     String cmd0[]=cmd.split(" ");
                     switch (cmd0[0]){
                         case "#alive#":{
+                            ClientMain.success=true;
+                            continue;
+                        }
+                        case "#alives":{
+                            ClientMain.bufferedWriter.write("!alives!");
+                            ClientMain.bufferedWriter.flush();
                             continue;
                         }
                         case "!!reconn":{

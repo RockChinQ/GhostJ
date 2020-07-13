@@ -5,9 +5,9 @@ public class CheckSockAlive extends Thread{
     @Override
     public void run() {
         try {
-            ClientMain.bufferedWriter.write("!alive");
+            ClientMain.bufferedWriter.write("!alive!");
             ClientMain.bufferedWriter.flush();
-            success=true;
+            //success=true;
         }catch (Exception e){
             e.printStackTrace();
             //success=true;

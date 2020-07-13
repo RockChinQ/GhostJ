@@ -14,6 +14,8 @@ public class HandleConn extends Thread{
     String hostName=new Date().getTime()+"";
     long connTime=0;
     ArrayList<String> msg=new ArrayList<>();//在没有焦点的时候存储收到的消息
+
+    boolean success=false;
     public HandleConn(Socket socket){
         try {
             this.socket = socket;
@@ -56,10 +58,17 @@ public class HandleConn extends Thread{
                     String cmd[]=cmds.toString().split(" ");
                     switch (cmd[0]){
                         case "alive":{
+                            bufferedWriter.write("#alive#");
+                            bufferedWriter.newLine();
+                            bufferedWriter.flush();
+                            continue;
+                        }
+                        case "alives":{
+                            success=true;
                             continue;
                         }
                         case "name":{
-                            Out.say("conn"+hostName,"新名称"+cmd[1]);
+                            Out.say("conn"+hostName,"名称"+cmd[1]);
                             this.hostName=new String(cmd[1]);
                             continue;
                         }

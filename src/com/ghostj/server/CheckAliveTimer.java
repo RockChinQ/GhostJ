@@ -11,10 +11,11 @@ public class CheckAliveTimer extends TimerTask {
         ArrayList<HandleConn> dead=new ArrayList<>();
         for(HandleConn handleConn: ServerMain.socketArrayList){
             try {
+                handleConn.success=false;
                 CheckConnAlive cca=new CheckConnAlive(handleConn.bufferedWriter);
                 cca.start();
                 new Thread().sleep(1500);
-                if(!cca.success)
+                if(!handleConn.success)
                     dead.add(handleConn);
             }catch (Exception e){
                 dead.add(handleConn);

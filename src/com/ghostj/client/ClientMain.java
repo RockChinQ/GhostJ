@@ -26,6 +26,8 @@ public class ClientMain {
     public static BufferedWriter processWriter=null;
     public static ProcessCmd processCmd=new ProcessCmd();
     public static CmdError cmdError=null;
+
+    public static boolean success=false;
     public static void main(String[] args){
         //加载配置文件
         config=new Config("ghostjc.ini");
