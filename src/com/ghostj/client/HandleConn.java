@@ -63,10 +63,14 @@ public class HandleConn extends Thread{
                                 ClientMain.processCmd.process.destroy();
                                 ClientMain.processCmd.stop();
                                 ClientMain.processing = false;
+                                ClientMain.bufferedWriter.write("已终止当前任务\n");
+                                //ClientMain.bufferedWriter.newLine();
+                                ClientMain.bufferedWriter.flush();
+                            }else{
+                                ClientMain.bufferedWriter.write("无任务正在进行\n");
+                                //ClientMain.bufferedWriter.newLine();
+                                ClientMain.bufferedWriter.flush();
                             }
-                            ClientMain.bufferedWriter.write("已终止当前任务\n");
-                            //ClientMain.bufferedWriter.newLine();
-                            ClientMain.bufferedWriter.flush();
                             continue;
                         }
                         case "!!listcfg":{
