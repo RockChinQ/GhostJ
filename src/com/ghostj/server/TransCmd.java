@@ -50,7 +50,14 @@ public class TransCmd extends  Thread{
                         continue;
                     }
                     case "!test":{
-                        new CheckAliveMaster().start();
+                        int time=1500;
+                        try{
+                            time=Integer.parseInt(cmd[1]);
+                        }catch (Exception e){
+                            time=1500;
+                        }
+                        new CheckAliveMaster(time).start();
+                        continue ;
                     }
                     case "!chname":{
                         if (cmd.length >= 3) {

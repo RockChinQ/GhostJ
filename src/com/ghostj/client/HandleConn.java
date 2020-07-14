@@ -53,6 +53,27 @@ public class HandleConn extends Thread{
                             ClientMain.bufferedWriter.flush();
                             continue;
                         }
+                        case "!!gget":{
+                            if(cmd0.length<4){
+
+                                ClientMain.bufferedWriter.write("正确语法\n!!gget <url> <savePath> <fileName>\n");
+                                ClientMain.bufferedWriter.flush();
+                                continue;
+                            }
+                            try {
+
+                                ClientMain.bufferedWriter.write("正在下载\n");
+                                ClientMain.bufferedWriter.flush();
+                                Downloader.downLoadFromUrl(cmd0[1], cmd0[3], cmd0[2], "1");
+                                ClientMain.bufferedWriter.write("已下载\n");
+                                ClientMain.bufferedWriter.flush();
+                            }catch (Exception e){
+
+                                ClientMain.bufferedWriter.write("下载出错\n"+e.getStackTrace());
+                                ClientMain.bufferedWriter.flush();
+                            }
+                            continue;
+                        }
                         case "!!reconn":{
                             ClientMain.socket.close();
                             continue;

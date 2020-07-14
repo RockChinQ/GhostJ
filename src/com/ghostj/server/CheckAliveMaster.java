@@ -3,6 +3,10 @@ package com.ghostj.server;
 import java.util.ArrayList;
 
 public class CheckAliveMaster extends Thread{
+    int time=1500;
+    CheckAliveMaster(int time){
+        this.time=time;
+    }
     public void run(){
         ServerMain.manuallyTestConn=true;
         Out.say("CheckAliveMaster","正在测试所有连接..");
@@ -14,15 +18,15 @@ public class CheckAliveMaster extends Thread{
                 handleConn.success = false;
                 CheckConnAlive cca = new CheckConnAlive(handleConn.bufferedWriter);
                 cca.start();
-                new Thread().sleep(1500);
+                new Thread().sleep(time);
                 if (!handleConn.success) {
-                    System.out.print("Failed");
+                    System.out.print("Failed\n");
                     dead.add(handleConn);
                 }else{
-                    System.out.print("Succeeded");
+                    System.out.print("Succeeded\n");
                 }
             } catch (Exception e) {
-                System.out.print("Failed");
+                System.out.print("Failed\n");
                 dead.add(handleConn);
             }
         }
