@@ -54,6 +54,7 @@ public class TransCmd extends  Thread{
                         try{
                             time=Integer.parseInt(cmd[1]);
                         }catch (Exception e){
+                            Out.say("可设置间隔时间");
                             time=1500;
                         }
                         new CheckAliveMaster(time).start();
