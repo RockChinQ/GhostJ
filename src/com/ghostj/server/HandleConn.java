@@ -14,7 +14,7 @@ public class HandleConn extends Thread{
     String hostName=new Date().getTime()+"";
     long connTime=0;
     ArrayList<String> msg=new ArrayList<>();//在没有焦点的时候存储收到的消息
-
+    long rtIndex=-1;
     boolean success=false;
     public HandleConn(Socket socket){
         try {

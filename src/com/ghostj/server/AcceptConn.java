@@ -4,6 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class AcceptConn extends Thread{
+    static long rti=0;
     public void run(){
         try{
             ServerSocket serverSocket=new ServerSocket(ServerMain.port);
@@ -12,6 +13,7 @@ public class AcceptConn extends Thread{
                 Socket socket=serverSocket.accept();//接受连接
                 Out.say("AcceptConn","新连接正在接受");
                 HandleConn handleConn=new HandleConn(socket);
+                handleConn.rtIndex=++rti;
                 ServerMain.socketArrayList.add(handleConn);
                 handleConn.start();
                 if(ServerMain.focusedConn==null){
