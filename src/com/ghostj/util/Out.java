@@ -1,4 +1,4 @@
-package com.ghostj.server;
+package com.ghostj.util;
 
 import java.util.Date;
 
