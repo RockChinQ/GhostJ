@@ -4,8 +4,11 @@ import com.ghostj.master.MasterMain;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class InitGUI {
+	static final Font cf=new Font("微软雅黑",Font.PLAIN,15);
 	public JFrame mainwd=new JFrame();
 	public ClientTable clientTable=new ClientTable();
 	public JPanel bgp=new JPanel();
@@ -13,6 +16,8 @@ public class InitGUI {
 	public JButton testConn=new JButton("Test");
 	public JTextArea console=new JTextArea();
 	JScrollPane scrollPane=new JScrollPane();
+	public JScrollBar scrollBar=null;
+	public JTextField type=new JTextField();
 
 	public LoginPanel loginPanel;
 	public InitGUI(){
@@ -46,15 +51,44 @@ public class InitGUI {
 		clientTable.setBackground(null);
 		bgp.add(clientTable);
 
-		console.setBounds(220,25,400,400);
+		console.setBounds(220,25,530,570);
 		console.setBackground(Color.darkGray);
-		console.setForeground(new Color(0, 214, 232));
+		console.setForeground(new Color(255, 255, 255, 255));
+		console.setFont(cf);
+		console.setEditable(false);
 		scrollPane.setBounds(console.getBounds());
 		scrollPane.setViewportView(console);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollBar=scrollPane.getVerticalScrollBar();
 
 		bgp.add(scrollPane);
+
+		type.setBounds(console.getX(),console.getY()+console.getHeight()+10,console.getWidth(),40);
+		type.setBackground(console.getBackground());
+		type.setForeground(console.getForeground());
+		type.setFont(console.getFont());
+		type.setCaretColor(Color.white);
+		type.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				super.keyTyped(e);
+				//System.out.println(e.getKeyChar());
+				if(e.getKeyChar()==KeyEvent.VK_ENTER){
+					try{
+						MasterMain.bufferedWriter.write(type.getText());
+						MasterMain.bufferedWriter.newLine();
+						MasterMain.bufferedWriter.flush();
+						type.setText("");
+					}catch (Exception err){
+						;
+					}
+				}
+			}
+		});
+		type.requestFocus();
+
+		bgp.add(type);
 
 		bgp.setVisible(false);
 

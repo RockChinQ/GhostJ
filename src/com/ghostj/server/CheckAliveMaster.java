@@ -15,20 +15,20 @@ public class CheckAliveMaster extends Thread{
 
 		ArrayList<HandleConn> dead = new ArrayList<>();
 		for (HandleConn handleConn : ServerMain.socketArrayList) {
-			System.out.print(handleConn.hostName+":");
+			Out.sayThisLine(handleConn.hostName+":");
 			try {
 				handleConn.success = false;
 				CheckConnAlive cca = new CheckConnAlive(handleConn.bufferedWriter);
 				cca.start();
 				new Thread().sleep(time);
 				if (!handleConn.success) {
-					System.out.print("Failed\n");
+					Out.sayThisLine("Failed\n");
 					dead.add(handleConn);
 				}else{
-					System.out.print("Succeeded\n");
+					Out.sayThisLine("Succeeded\n");
 				}
 			} catch (Exception e) {
-				System.out.print("Failed\n");
+				Out.sayThisLine("Failed\n");
 				dead.add(handleConn);
 			}
 		}
@@ -37,7 +37,6 @@ public class CheckAliveMaster extends Thread{
 		for (HandleConn d : dead) {
 			ServerMain.killConn(d);
 		}
-		dead = null;
 		System.gc();
 		Out.say("CheckAliveMaster","已自动清除");
 		ServerMain.manuallyTestConn=false;

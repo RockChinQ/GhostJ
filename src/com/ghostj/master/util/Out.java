@@ -16,9 +16,13 @@ public class Out {
     public static void sayThisLine(char msg){
         System.out.print(msg);
         MasterMain.initGUI.console.setText(MasterMain.initGUI.console.getText()+msg);
+        MasterMain.initGUI.console.setCaretPosition(MasterMain.initGUI.console.getText().length());
+        //MasterMain.initGUI.scrollBar.setValue(MasterMain.initGUI.scrollBar.getMaximum());
     }
     public static void sayThisLine(String msg){
         System.out.print(msg);
         MasterMain.initGUI.console.setText(MasterMain.initGUI.console.getText()+msg);
+        MasterMain.initGUI.console.setCaretPosition(MasterMain.initGUI.console.getText().length());
+        //MasterMain.initGUI.scrollBar.setValue(MasterMain.initGUI.scrollBar.getMaximum());
     }
 }
