@@ -11,7 +11,7 @@ public class LoginPanel extends JDialog {
 	public InputField pwInput=null;
 	public JButton login=new JButton("Login");
 	public JButton exit=new JButton("Exit");
-	LoginPanel(JFrame parent){
+	public LoginPanel(JFrame parent){
 		super(parent);
 		this.setTitle("Login");
 		parent.setEnabled(false);
@@ -49,6 +49,7 @@ public class LoginPanel extends JDialog {
 		try{
 			ipInput.setValue(MasterMain.config.getStringValue("ip"));
 			portInput.setValue(MasterMain.config.getStringValue("port"));
+			pwInput.setValue(MasterMain.config.getStringValue("pw"));
 		}catch (Exception e){
 
 		}

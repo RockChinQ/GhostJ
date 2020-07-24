@@ -16,6 +16,8 @@ public class HandleConn extends Thread{
     long connTime=0;
     ArrayList<String> msg=new ArrayList<>();//在没有焦点的时候存储收到的消息
     long rtIndex=-1;
+
+    String version=null;
     boolean success=false;
     public HandleConn(Socket socket){
         try {
@@ -71,10 +73,12 @@ public class HandleConn extends Thread{
                         case "name":{
                             Out.say("conn"+hostName,"名称"+cmd[1]);
                             this.hostName=new String(cmd[1]);
+                            ServerMain.sendListToMaster();
                             continue;
                         }
                         case "version":{
                             Out.say("conn"+hostName,"版本号:"+cmd[1]);
+                            this.version=new String(cmd[1]);
                             continue;
                         }
                         default:{
