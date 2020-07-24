@@ -3,7 +3,7 @@ package com.ghostj.master.conn;
 import com.ghostj.master.MasterMain;
 import com.ghostj.master.gui.ClientTable;
 import com.ghostj.master.gui.LoginPanel;
-import com.ghostj.util.Out;
+import com.ghostj.master.util.Out;
 
 public class HandleConn extends Thread{
 
@@ -18,16 +18,17 @@ public class HandleConn extends Thread{
 					if((char)c=='!'){
 						StringBuffer cmds=new StringBuffer("");
 						int workInfoLen=0;
-						while((c=MasterMain.inputStreamReader.read())!=-1){
-							if((char)c=='!') {
+						while(true){
+							int c0=MasterMain.inputStreamReader.read();
+							if((char)c0=='!') {
 								//cmds.append("");
 								break;
 							}
-							if ((char)c=='\n') {
+							if ((char)c0=='\n') {
 								cmds.append("\n");
 								break;
 							}
-							cmds.append((char)c);
+							cmds.append((char)c0);
 							workInfoLen++;
 //							if(workInfoLen>=25)
 //								break;
@@ -37,31 +38,33 @@ public class HandleConn extends Thread{
 						switch (cmd[0]){
 							case "close":{
 								kill("连接被关闭");
-								break;
+								continue;
 							}
 							case "passErr":{
 								kill("密码错误");
-								break;
+								continue;
 							}
 							case "clients":{//获取到最新列表
 								Out.say("HandleConn","接收到客户端列表");
 								MasterMain.initGUI.clientTable.clients.clear();
-								for(int i=1;i<cmd.length;i+=4){
+								for(int i=1;i<cmd.length;i+=5){
 									ClientTable.clientInfo clientInfo=new ClientTable.clientInfo();
 									clientInfo.id=Long.parseLong(cmd[i]);
 									clientInfo.name=cmd[i+1];
 									clientInfo.connTime=Long.parseLong(cmd[i+2]);
 									clientInfo.status=Boolean.parseBoolean(cmd[i+3]);
+									clientInfo.version= cmd[i + 4];
 									MasterMain.initGUI.clientTable.clients.add(clientInfo);
 								}
 								MasterMain.initGUI.clientTable.updateCom();
-								break;
+								continue;
 							}
 							default:{
 								Out.sayThisLine(cmds.toString());
 							}
 						}
 					}
+					Out.sayThisLine((char)c);
 				}catch (Exception e){
 					Out.say("HandleConn","接受数据出错，连接正在重置");
 					e.printStackTrace();

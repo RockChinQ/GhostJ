@@ -11,6 +11,8 @@ public class InitGUI {
 	public JPanel bgp=new JPanel();
 
 	public JButton testConn=new JButton("Test");
+	public JTextArea console=new JTextArea();
+	JScrollPane scrollPane=new JScrollPane();
 
 	public LoginPanel loginPanel;
 	public InitGUI(){
@@ -39,10 +41,20 @@ public class InitGUI {
 		});
 		bgp.add(testConn);
 
-		clientTable.setSize(150,this.mainwd.getHeight());
+		clientTable.setSize(185,this.mainwd.getHeight());
 		clientTable.setLocation(10,40);
 		clientTable.setBackground(null);
 		bgp.add(clientTable);
+
+		console.setBounds(220,25,400,400);
+		console.setBackground(Color.darkGray);
+		console.setForeground(new Color(0, 214, 232));
+		scrollPane.setBounds(console.getBounds());
+		scrollPane.setViewportView(console);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+		bgp.add(scrollPane);
 
 		bgp.setVisible(false);
 

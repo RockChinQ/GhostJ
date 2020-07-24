@@ -1,7 +1,7 @@
 package com.ghostj.master.conn;
 
 import com.ghostj.master.MasterMain;
-import com.ghostj.util.Out;
+import com.ghostj.master.util.Out;
 
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;

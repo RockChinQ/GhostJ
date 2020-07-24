@@ -6,15 +6,19 @@ import com.ghostj.util.Out;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ClientTable extends JPanel {
 
-
+	static Font btnf=new Font("Consolas",Font.PLAIN,20);
+	static Font dscf=new Font("Consolas",Font.ITALIC,14);
 	public static class clientInfo{
 		public long id=-1;
 		public String name=null;
 		public long connTime=-1;
 		public boolean status=false;
+		public String version=null;
+		public String connTimeStr=null;
 	}
 	public ArrayList<clientInfo> clients=new ArrayList<>();
 
@@ -24,6 +28,10 @@ public class ClientTable extends JPanel {
 		public entry(clientInfo clientInfo){
 			this.clientInfo=clientInfo;
 			this.setSelected(false);
+			this.setFont(btnf);
+
+			Date d = new Date(clientInfo.connTime);
+			clientInfo.connTimeStr=new String(d.getDate()+","+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds());
 			this.addActionListener(e->{
 				try{
 					Out.say("ClientTable","focus");
@@ -40,8 +48,11 @@ public class ClientTable extends JPanel {
 			//System.out.println(clientInfo.status+" "+(clientInfo.status?sbg:nbg).getRed());
 			g.setColor(clientInfo.status?sbg:nbg);
 			g.fillRect(0,0,this.getWidth(),this.getHeight());
+			g.setFont(this.getFont());
 			g.setColor(Color.white);
 			g.drawString(clientInfo.id+" "+clientInfo.name,3,15);
+			g.setFont(dscf);
+			g.drawString(clientInfo.connTimeStr+" "+clientInfo.version,3,36);
 		}
 	}
 

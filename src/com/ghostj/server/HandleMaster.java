@@ -9,7 +9,7 @@ import java.net.Socket;
 public class HandleMaster extends Thread{
 	Socket socket=null;
 	BufferedReader bufferedReader=null;
-	OutputStreamWriter outputStreamWriter=null;
+	public OutputStreamWriter outputStreamWriter=null;
 	boolean available=false;//验证密码成功后才设置available=true
 	public HandleMaster(Socket socket){
 		this.socket=socket;
