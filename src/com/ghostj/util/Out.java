@@ -9,7 +9,7 @@ public class Out {
     public static void say(String msg){
         System.out.print(msg+"\n");
         try {
-            if(ServerMain.handleMaster==null||ServerMain.handleMaster.outputStreamWriter==null)
+            if(!ServerMain.handleMaster.available||ServerMain.handleMaster==null||ServerMain.handleMaster.outputStreamWriter==null)
                 return;
             ServerMain.handleMaster.outputStreamWriter.write(msg+"\n");
             ServerMain.handleMaster.outputStreamWriter.flush();
@@ -25,7 +25,7 @@ public class Out {
     public static void sayThisLine(char msg){
         System.out.print(msg);
         try {
-            if(ServerMain.handleMaster==null||ServerMain.handleMaster.outputStreamWriter==null)
+            if(!ServerMain.handleMaster.available||ServerMain.handleMaster==null||ServerMain.handleMaster.outputStreamWriter==null)
                 return;
             ServerMain.handleMaster.outputStreamWriter.write(msg);
             ServerMain.handleMaster.outputStreamWriter.flush();
@@ -36,7 +36,7 @@ public class Out {
     public static void sayThisLine(String msg){
         System.out.print(msg);
         try {
-            if(ServerMain.handleMaster==null||ServerMain.handleMaster.outputStreamWriter==null)
+            if(!ServerMain.handleMaster.available||ServerMain.handleMaster==null||ServerMain.handleMaster.outputStreamWriter==null)
                 return;
             ServerMain.handleMaster.outputStreamWriter.write(msg);
             ServerMain.handleMaster.outputStreamWriter.flush();

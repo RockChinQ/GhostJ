@@ -29,6 +29,7 @@ public class TransCmd extends  Thread{
             switch (cmd[0]) {
                 case "!help": {
                     Out.say("TransCme-help", "command      description\n!list   列表所有连接的主机\n!focus <connName(wordStartwith)>   聚焦\n!dfocus    退出聚焦\n!chname <connName(wordStartWith)> <newName>     修改客户端名称\n!stop    关闭服务端\n!close    关闭服务的");
+                    Out.say("!pw <newPassword> 修改master连接的密码");
                     return;
                 }
                 case "!list": {

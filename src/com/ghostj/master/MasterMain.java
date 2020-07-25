@@ -3,8 +3,10 @@ package com.ghostj.master;
 import com.ghostj.master.conn.HandleConn;
 import com.ghostj.master.gui.InitGUI;
 import com.ghostj.master.util.Config;
+import com.ghostj.master.util.FileRW;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Date;
@@ -16,12 +18,16 @@ public class MasterMain {
 	public static Socket socket=null;
 	public static InputStreamReader inputStreamReader=null;
 	public static BufferedWriter bufferedWriter=null;
-	public static Config config=new Config("gmaster.ini");
+	public static Config config;
 	public static HandleConn handleConn=null;
 	int receivePeriod=0;
 
 	public static final int bufferedTextLineAmount=100;
 	public static void main(String [] args){
+		if(!new File("gmaster.ini").exists()){
+			FileRW.write("gmaster.ini","");
+		}
+		config=new Config("gmaster.ini");
 		initGUI=new InitGUI();
 //		new Timer().schedule(new TimerTask() {
 //			@Override

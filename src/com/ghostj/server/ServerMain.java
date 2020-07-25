@@ -73,7 +73,7 @@ public class ServerMain {
 
 	}
 	public static void sendListToMaster() throws IOException {
-		Out.say("ServerMain","尝试将列表发至master");
+		//Out.say("ServerMain","尝试将列表发至master");
 		if(acceptMaster.acceptable|| !handleMaster.available){
 			return;
 		}

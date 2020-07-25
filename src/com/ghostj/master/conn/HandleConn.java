@@ -16,12 +16,12 @@ public class HandleConn extends Thread{
 					c=MasterMain.inputStreamReader.read();
 
 					if((char)c=='!'){
-						StringBuffer cmds=new StringBuffer("");
+						StringBuffer cmds=new StringBuffer("!");
 						int workInfoLen=0;
 						while(true){
 							int c0=MasterMain.inputStreamReader.read();
 							if((char)c0=='!') {
-								//cmds.append("");
+								cmds.append("!");
 								break;
 							}
 							if ((char)c0=='\n') {
@@ -34,17 +34,17 @@ public class HandleConn extends Thread{
 //								break;
 						}
 						System.out.println(cmds);
-						String cmd[]=cmds.toString().split(" ");
+						String cmd[]=cmds.toString().substring(0,cmds.length()-1).split(" ");
 						switch (cmd[0]){
-							case "close":{
+							case "!close":{
 								kill("连接被关闭");
 								continue;
 							}
-							case "passErr":{
+							case "!passErr":{
 								kill("密码错误");
 								continue;
 							}
-							case "clients":{//获取到最新列表
+							case "!clients":{//获取到最新列表
 								Out.say("HandleConn","接收到客户端列表");
 								MasterMain.initGUI.clientTable.clients.clear();
 								for(int i=1;i<cmd.length;i+=5){
@@ -61,6 +61,7 @@ public class HandleConn extends Thread{
 							}
 							default:{
 								Out.sayThisLine(cmds.toString());
+								continue;
 							}
 						}
 					}

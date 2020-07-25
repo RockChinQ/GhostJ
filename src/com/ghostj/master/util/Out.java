@@ -15,14 +15,12 @@ public class Out {
     //在此行输出
     public static void sayThisLine(char msg){
         System.out.print(msg);
-        MasterMain.initGUI.console.setText(MasterMain.initGUI.console.getText()+msg);
-        MasterMain.initGUI.console.setCaretPosition(MasterMain.initGUI.console.getText().length());
+        MasterMain.initGUI.addStringToConsole.addStr(String.valueOf(msg));
         //MasterMain.initGUI.scrollBar.setValue(MasterMain.initGUI.scrollBar.getMaximum());
     }
     public static void sayThisLine(String msg){
         System.out.print(msg);
-        MasterMain.initGUI.console.setText(MasterMain.initGUI.console.getText()+msg);
-        MasterMain.initGUI.console.setCaretPosition(MasterMain.initGUI.console.getText().length());
+        MasterMain.initGUI.addStringToConsole.addStr(msg);
         //MasterMain.initGUI.scrollBar.setValue(MasterMain.initGUI.scrollBar.getMaximum());
     }
 }

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class InitGUI {
 	static final Font cf=new Font("微软雅黑",Font.PLAIN,15);
@@ -18,10 +19,14 @@ public class InitGUI {
 	JScrollPane scrollPane=new JScrollPane();
 	public JScrollBar scrollBar=null;
 	public JTextField type=new JTextField();
+	public AddStringToConsole addStringToConsole=null;
 
 	public LoginPanel loginPanel;
+
+	public ArrayList<String> commandHistory=new ArrayList<>();
+	public int updownPosition=0;
 	public InitGUI(){
-		mainwd.setSize(800,700);
+		mainwd.setSize(900,720);
 		mainwd.setLocation(200,100);
 		mainwd.setLayout(null);
 		mainwd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +56,7 @@ public class InitGUI {
 		clientTable.setBackground(null);
 		bgp.add(clientTable);
 
-		console.setBounds(220,25,530,570);
+		console.setBounds(220,25,580,570);
 		console.setBackground(Color.darkGray);
 		console.setForeground(new Color(255, 255, 255, 255));
 		console.setFont(cf);
@@ -62,6 +67,7 @@ public class InitGUI {
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollBar=scrollPane.getVerticalScrollBar();
 
+		addStringToConsole=new AddStringToConsole();
 		bgp.add(scrollPane);
 
 		type.setBounds(console.getX(),console.getY()+console.getHeight()+10,console.getWidth(),40);
@@ -76,13 +82,35 @@ public class InitGUI {
 				//System.out.println(e.getKeyChar());
 				if(e.getKeyChar()==KeyEvent.VK_ENTER){
 					try{
+
 						MasterMain.bufferedWriter.write(type.getText());
 						MasterMain.bufferedWriter.newLine();
 						MasterMain.bufferedWriter.flush();
+						commandHistory.add(type.getText());
 						type.setText("");
+						updownPosition=commandHistory.size();
 					}catch (Exception err){
 						;
 					}
+				}
+			}
+			@Override
+			public void keyPressed(KeyEvent e){
+				if(e.getKeyCode()==KeyEvent.VK_UP){
+					//System.out.println(updownPosition);
+					updownPosition=updownPosition-1<0?0:updownPosition-1;
+					type.setText(commandHistory.get(updownPosition));
+				}else if(e.getKeyCode()==KeyEvent.VK_DOWN){
+					if(commandHistory.size()==0)
+						return;
+					if(updownPosition==commandHistory.size()-1){
+						type.setText("");
+						updownPosition=commandHistory.size();
+						return;
+					}
+					updownPosition=updownPosition+1>=commandHistory.size()?commandHistory.size()-1:updownPosition+1;
+					type.setText(commandHistory.get(updownPosition));
+
 				}
 			}
 		});
@@ -92,6 +120,7 @@ public class InitGUI {
 
 		bgp.setVisible(false);
 
+		//mainwd.setSize(console.getX()+console.getWidth(),mainwd.getHeight());
 		mainwd.setVisible(true);
 
 		loginPanel=new LoginPanel(mainwd);

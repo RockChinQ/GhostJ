@@ -80,7 +80,18 @@ public class HandleConn extends Thread{
                                 continue;
                             }
                             case "!!help": {
-                                String helpinfo = "help msg:\ncommand        description\n!!kill     kill the current process(use when a command last for so long)\n!!listcfg   list all config fields of client\n!!rmcfg <key>   remove a field\n!!cfg <key> <value>   set a field\n!!writecfg   write config fields to file";
+                                String helpinfo = "client的help\n" +
+                                        "!!gget <url> <savePath> <fileName>  从url下载文件\n" +
+                                        "!!reconn  使客户端重启建立连接\n" +
+                                        "!!help  显示此消息\n" +
+                                        "!!name <newName>  修改客户端name\n" +
+                                        "!!kill  kill当前客户端正在进行的process\n" +
+                                        "\t（仅断开与process的连接，无法终止进程）\n" +
+                                        "\n" +
+                                        "!!listcfg  列出客户端的config所有字段\n" +
+                                        "!!rmcfg <fieldKey>  删除客户端的config中指定字段\n" +
+                                        "!!cfg <key> <value>  修改/增加客户端config中指定字段的值\n" +
+                                        "!!writecfg  将客户端的config写入文件\n";
                                 ClientMain.bufferedWriter.write(helpinfo + "\n");
                                 ClientMain.bufferedWriter.flush();
                                 continue;

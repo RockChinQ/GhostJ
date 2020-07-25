@@ -42,11 +42,11 @@ public class HandleConn extends Thread{
                 //String msg=bufferedReader.readLine();
                 //检查是否是工作信息
                 if((char)c=='!'){
-                    StringBuffer cmds=new StringBuffer("");
+                    StringBuffer cmds=new StringBuffer("!");
                     int workInfoLen=0;
                     while((c=inputStreamReader.read())!=-1){
                         if((char)c=='!') {
-                            //cmds.append("");
+                            cmds.append("!");
                             break;
                         }
                         if ((char)c=='\n') {
@@ -58,31 +58,37 @@ public class HandleConn extends Thread{
                         if(workInfoLen>=25)
                             break;
                     }
-                    String cmd[]=cmds.toString().split(" ");
+                    String cmd[]=cmds.toString().substring(0,cmds.length()-1).split(" ");
                     switch (cmd[0]){
-                        case "alive":{
+                        case "!alive":{
                             bufferedWriter.write("#alive#");
                             bufferedWriter.newLine();
                             bufferedWriter.flush();
                             continue;
                         }
-                        case "alives":{
+                        case "!alives":{
                             success=true;
                             continue;
                         }
-                        case "name":{
+                        case "!name":{
                             Out.say("conn"+hostName,"名称"+cmd[1]);
                             this.hostName=new String(cmd[1]);
                             ServerMain.sendListToMaster();
                             continue;
                         }
-                        case "version":{
+                        case "!version":{
+                            if(cmd.length<2){
+                                Out.say("conn"+hostName,"客户端提供了不正确的版本号消息");
+                                continue;
+                            }
                             Out.say("conn"+hostName,"版本号:"+cmd[1]);
                             this.version=new String(cmd[1]);
+                            ServerMain.sendListToMaster();
                             continue;
                         }
                         default:{
                             Out.sayThisLine(cmds.toString());
+                            continue;
                         }
                     }
                 }
