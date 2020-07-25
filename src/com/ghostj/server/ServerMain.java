@@ -5,6 +5,7 @@ import com.ghostj.util.Out;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Timer;
 
 public class ServerMain {
@@ -21,6 +22,8 @@ public class ServerMain {
 	public static HandleMaster handleMaster=null;
 
 	public static String masterPw="master123456";
+
+	public static CheckMasterAlive checkMasterAlive=new CheckMasterAlive();
 	public static void main(String[] args){
 		//加载配置文件
 		port=config.getIntValue("port");
@@ -52,6 +55,8 @@ public class ServerMain {
 			config.write();
 			e.printStackTrace();
 		}
+		//启动master的检测计时器
+		new Timer().schedule(checkMasterAlive,6000,15000);
 		Out.say("ServerMain","master的pw是"+masterPw);
 	}
 	public static void killConn(HandleConn handleConn){

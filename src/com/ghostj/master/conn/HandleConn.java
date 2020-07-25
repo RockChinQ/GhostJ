@@ -36,6 +36,16 @@ public class HandleConn extends Thread{
 						System.out.println(cmds);
 						String cmd[]=cmds.toString().substring(0,cmds.length()-1).split(" ");
 						switch (cmd[0]){
+							case "!relogin":{
+								kill("被server断开连接");
+								continue;
+							}
+							case "!alivem":{
+								MasterMain.bufferedWriter.write("#alivem#");
+								MasterMain.bufferedWriter.newLine();
+								MasterMain.bufferedWriter.flush();
+								continue;
+							}
 							case "!passErr":{
 								kill("密码错误");
 								continue;

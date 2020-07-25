@@ -20,8 +20,8 @@ public class CreateConn extends Thread{
 			new Thread(() -> {
 				try{
 					MasterMain.socket=new Socket(MasterMain.initGUI.loginPanel.ipInput.getValue(),Integer.parseInt(MasterMain.initGUI.loginPanel.portInput.getValue()));
-					MasterMain.inputStreamReader=new InputStreamReader(MasterMain.socket.getInputStream());
-					MasterMain.bufferedWriter=new BufferedWriter(new OutputStreamWriter(MasterMain.socket.getOutputStream()));
+					MasterMain.inputStreamReader=new InputStreamReader(MasterMain.socket.getInputStream(),"GBK");
+					MasterMain.bufferedWriter=new BufferedWriter(new OutputStreamWriter(MasterMain.socket.getOutputStream(),"GBK"));
 					MasterMain.initGUI.loginPanel.setTitle("Login-连接成功");
 					MasterMain.initGUI.mainwd.setEnabled(true);
 					MasterMain.initGUI.mainwd.setVisible(true);

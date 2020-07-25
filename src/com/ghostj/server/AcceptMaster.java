@@ -24,8 +24,8 @@ public class AcceptMaster extends Thread{
 				Socket socket=serverSocket.accept();
 				Out.say("AcceptMaster","正在接受Master的连接");
 				ServerMain.handleMaster=new HandleMaster(socket);
-				ServerMain.handleMaster.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				ServerMain.handleMaster.outputStreamWriter=new OutputStreamWriter(socket.getOutputStream());
+				ServerMain.handleMaster.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream(),"GBK"));
+				ServerMain.handleMaster.outputStreamWriter=new OutputStreamWriter(socket.getOutputStream(),"GBK");
 				ServerMain.handleMaster.start();
 				acceptable=false;
 				Out.say("AcceptMaster","Master连接已准备就绪");

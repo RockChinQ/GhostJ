@@ -31,7 +31,7 @@ public class HandleMaster extends Thread{
 				//处理指令
 				try{
 					String cmd[]=msg.split(" ");
-					System.out.println(msg);
+					//System.out.println(msg);
 					switch (cmd[0]){
 						case "#pw":{
 							if(cmd.length<2){
@@ -53,6 +53,10 @@ public class HandleMaster extends Thread{
 								ServerMain.acceptMaster.acceptable=true;
 								this.stop();
 							}
+							continue readMsg;
+						}
+						case "#alivem#":{
+							ServerMain.checkMasterAlive.alive=true;
 							continue readMsg;
 						}
 					}
