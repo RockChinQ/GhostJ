@@ -9,10 +9,13 @@ public class LoginPanel extends JDialog {
 	public InputField ipInput=null;
 	public InputField portInput=null;
 	public InputField pwInput=null;
-	public JButton login=new JButton("Login");
-	public JButton exit=new JButton("Exit");
+	public Button login=new Button("Login");
+	public Button exit=new Button("Exit");
 	public LoginPanel(JFrame parent){
 		super(parent);
+		try {
+			MasterMain.initGUI.addStringToConsole.addStr("\n============重置连接============\n");
+		}catch (Exception e){}
 		this.setTitle("Login");
 		parent.setEnabled(false);
 		this.setSize(280,280);

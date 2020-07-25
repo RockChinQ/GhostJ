@@ -14,7 +14,7 @@ public class InitGUI {
 	public ClientTable clientTable=new ClientTable();
 	public JPanel bgp=new JPanel();
 
-	public JButton testConn=new JButton("Test");
+	public Button testConn=new Button("Test");
 	public JTextArea console=new JTextArea();
 	JScrollPane scrollPane=new JScrollPane();
 	public JScrollBar scrollBar=null;

@@ -36,10 +36,6 @@ public class HandleConn extends Thread{
 						System.out.println(cmds);
 						String cmd[]=cmds.toString().substring(0,cmds.length()-1).split(" ");
 						switch (cmd[0]){
-							case "!close":{
-								kill("连接被关闭");
-								continue;
-							}
 							case "!passErr":{
 								kill("密码错误");
 								continue;
