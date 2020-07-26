@@ -57,13 +57,14 @@ public class HandleConn extends Thread{
 							case "!clients":{//获取到最新列表
 								Out.say("HandleConn","接收到客户端列表");
 								MasterMain.initGUI.clientTable.clients.clear();
-								for(int i=1;i<cmd.length;i+=5){
+								for(int i=1;i<cmd.length;i+=6){
 									ClientTable.clientInfo clientInfo=new ClientTable.clientInfo();
 									clientInfo.id=Long.parseLong(cmd[i]);
 									clientInfo.name=cmd[i+1];
 									clientInfo.connTime=Long.parseLong(cmd[i+2]);
 									clientInfo.status=Boolean.parseBoolean(cmd[i+3]);
 									clientInfo.version= cmd[i + 4];
+									clientInfo.sysStartTime=Long.parseLong(cmd[i+5]);
 									MasterMain.initGUI.clientTable.clients.add(clientInfo);
 								}
 								MasterMain.initGUI.clientTable.updateCom();

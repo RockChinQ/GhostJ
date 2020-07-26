@@ -16,9 +16,11 @@ public class ClientTable extends JPanel {
 		public long id=-1;
 		public String name=null;
 		public long connTime=-1;
+		public long sysStartTime=-1;
 		public boolean status=false;
 		public String version=null;
 		public String connTimeStr=null;
+		public String sysStartTimeStr=null;
 	}
 	public ArrayList<clientInfo> clients=new ArrayList<>();
 
@@ -32,6 +34,8 @@ public class ClientTable extends JPanel {
 
 			Date d = new Date(clientInfo.connTime);
 			clientInfo.connTimeStr=new String(d.getDate()+","+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds());
+			Date da = new Date(clientInfo.sysStartTime);
+			clientInfo.sysStartTimeStr=new String(da.getDate()+","+da.getHours()+":"+da.getMinutes()+":"+da.getSeconds());
 			this.addActionListener(e->{
 				try{
 					Out.say("ClientTable","focus");
@@ -52,11 +56,13 @@ public class ClientTable extends JPanel {
 			g.setColor(Color.white);
 			g.drawString(clientInfo.id+" "+clientInfo.name,3,15);
 			g.setFont(dscf);
-			g.drawString(clientInfo.connTimeStr+" "+clientInfo.version,3,36);
+			g.drawString(clientInfo.sysStartTimeStr+" "+clientInfo.version,3,32);
+			g.setColor(Color.green);
+			g.drawString(clientInfo.connTimeStr,3,45);
 		}
 	}
 
-	public static final int entryHeight=40;
+	public static final int entryHeight=50;
 	public ClientTable(){
 		this.setLayout(null);
 	}

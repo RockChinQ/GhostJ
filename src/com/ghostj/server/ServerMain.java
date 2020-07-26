@@ -84,7 +84,7 @@ public class ServerMain {
 		}
 		StringBuffer msg=new StringBuffer("!clients");
 		for(HandleConn handleConn:socketArrayList){
-			msg.append(" "+handleConn.rtIndex+" "+handleConn.hostName+" "+handleConn.connTime+" "+(handleConn==focusedConn)+" "+handleConn.version);
+			msg.append(" "+handleConn.rtIndex+" "+handleConn.hostName+" "+handleConn.connTime+" "+(handleConn==focusedConn)+" "+handleConn.version+" "+handleConn.sysStartTime);
 		}
 		handleMaster.outputStreamWriter.write(msg.toString()+"!");
 		handleMaster.outputStreamWriter.flush();

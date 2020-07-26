@@ -23,18 +23,22 @@ public class HandleConn extends Thread{
                     try{ this.sleep(15000-(new Date().getTime()-st)); }catch (Exception e0){ ; }
                     continue;
                 }
+                ClientMain.bufferedWriter=new OutputStreamWriter(ClientMain.socket.getOutputStream(),"utf8");
+                ClientMain.bufferedReader=new BufferedReader(new InputStreamReader(ClientMain.socket.getInputStream(),"UTF-8"));
                 //连接正常
                 Out.say("HandleConn","已连接");
-                //发送name
-                ClientMain.bufferedWriter=new OutputStreamWriter(ClientMain.socket.getOutputStream(),"utf8");
-                ClientMain.bufferedWriter.write("!name "+ClientMain.name+"!");
-                //ClientMain.bufferedWriter.newLine();
-                ClientMain.bufferedWriter.flush();
-                Out.say("HandleConn","Sent name.");
-                ClientMain.bufferedReader=new BufferedReader(new InputStreamReader(ClientMain.socket.getInputStream(),"UTF-8"));
-                //发送版本号
-                String ver= FileRW.read("nowVer.txt");
-                ClientMain.bufferedWriter.write("!version "+ver+"!");
+//                //发送name
+//                ClientMain.bufferedWriter.write("!name "+ClientMain.name+"!");
+//                //ClientMain.bufferedWriter.newLine();
+//                ClientMain.bufferedWriter.flush();
+//                Out.say("HandleConn","Sent name.");
+//                //发送版本号
+//                String ver= FileRW.read("nowVer.txt");
+//                ClientMain.bufferedWriter.write("!version "+ver+"!");
+//                ClientMain.bufferedWriter.flush();
+
+                //发送info
+                ClientMain.bufferedWriter.write("!info "+ClientMain.name+" c"+FileRW.read("nowVer.txt")+" "+ClientMain.sysStartTime+"!");
                 ClientMain.bufferedWriter.flush();
                 while(true){
                     String cmd= ClientMain.bufferedReader.readLine();
@@ -117,13 +121,12 @@ public class HandleConn extends Thread{
                                     ClientMain.processing = false;
                                     ClientMain.bufferedWriter.write("已终止当前任务\n");
                                     //ClientMain.bufferedWriter.newLine();
-                                    ClientMain.bufferedWriter.flush();
                                 } else {
                                     ClientMain.bufferedWriter.write("无任务正在进行\n");
                                     //ClientMain.bufferedWriter.newLine();
-                                    ClientMain.bufferedWriter.flush();
                                 }
-                                continue;
+	                            ClientMain.bufferedWriter.flush();
+	                            continue;
                             }
                             case "!!listcfg": {
                                 StringBuffer fields = new StringBuffer("客户端" + ClientMain.name + "的配置文件字段\n");

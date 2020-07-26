@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.util.Date;
 import java.util.Timer;
 
 public class ClientMain {
@@ -28,7 +29,10 @@ public class ClientMain {
     public static CmdError cmdError=null;
 
     public static boolean success=false;
+
+    public static long sysStartTime=-1;
     public static void main(String[] args){
+        sysStartTime=new Date().getTime();
         //加载配置文件
         config=new Config("ghostjc.ini");
         port=config.getIntValue("port");

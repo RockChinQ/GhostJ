@@ -14,6 +14,7 @@ public class HandleConn extends Thread{
     BufferedWriter bufferedWriter=null;
     String hostName=new Date().getTime()+"";
     long connTime=0;
+    long sysStartTime=0;
     ArrayList<String> msg=new ArrayList<>();//在没有焦点的时候存储收到的消息
     long rtIndex=-1;
 
@@ -55,8 +56,8 @@ public class HandleConn extends Thread{
                         }
                         cmds.append((char)c);
                         workInfoLen++;
-                        if(workInfoLen>=25)
-                            break;
+//                        if(workInfoLen>=25)
+//                            break;
                     }
                     String cmd[]=cmds.toString().substring(0,cmds.length()-1).split(" ");
                     switch (cmd[0]){
@@ -83,6 +84,18 @@ public class HandleConn extends Thread{
                             }
                             Out.say("conn"+hostName,"版本号:"+cmd[1]);
                             this.version=new String(cmd[1]);
+                            ServerMain.sendListToMaster();
+                            continue;
+                        }
+                        case "!info":{
+                            if (cmd.length<4){
+                                Out.say("conn"+hostName,"客户端提供的info语法不正确");
+                                continue;
+                            }
+                            Out.say("conn"+cmd[1],"name:"+cmd[1]+" version:"+cmd[2]+" sysStartTime:"+cmd[3]);
+                            this.hostName=cmd[1];
+                            this.version=cmd[2];
+                            this.sysStartTime=Long.parseLong(cmd[3]);
                             ServerMain.sendListToMaster();
                             continue;
                         }
