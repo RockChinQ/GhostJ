@@ -33,7 +33,7 @@ public class HandleConn extends Thread{
 //							if(workInfoLen>=25)
 //								break;
 						}
-						System.out.println(cmds);
+						//System.out.println(cmds);
 						String cmd[]=cmds.toString().substring(0,cmds.length()-1).split(" ");
 						switch (cmd[0]){
 							case "!relogin":{
@@ -44,6 +44,10 @@ public class HandleConn extends Thread{
 								MasterMain.bufferedWriter.write("#alivem#");
 								MasterMain.bufferedWriter.newLine();
 								MasterMain.bufferedWriter.flush();
+								continue;
+							}
+							case "!alivems":{
+								MasterMain.checkServerAlive.alive=true;
 								continue;
 							}
 							case "!passErr":{
@@ -86,6 +90,13 @@ public class HandleConn extends Thread{
 	}
 	public void kill(String msg){
 
+		try{
+			MasterMain.bufferedWriter.write("#close#");
+			MasterMain.bufferedWriter.newLine();
+			MasterMain.bufferedWriter.flush();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		MasterMain.socket=null;
 		MasterMain.inputStreamReader=null;
 		MasterMain.initGUI.loginPanel=new LoginPanel(MasterMain.initGUI.mainwd);

@@ -59,6 +59,28 @@ public class HandleMaster extends Thread{
 							ServerMain.checkMasterAlive.alive=true;
 							continue readMsg;
 						}
+						case "#alivems#":{
+							try{
+								//Out.say("HandleMaster","检测连接");
+								outputStreamWriter.write("!alivems!");
+								outputStreamWriter.flush();
+							}catch (Exception e){
+								e.printStackTrace();
+							}
+							continue readMsg;
+						}
+						case "#close#":{
+							try {
+								outputStreamWriter.close();
+								bufferedReader.close();
+							}catch (Exception e){
+								Out.say("HandleMaster","关闭连接失败");
+								e.printStackTrace();
+							}
+							ServerMain.acceptMaster.acceptable=true;
+							this.stop();
+							continue readMsg;
+						}
 					}
 					//已处理完master级别指令
 					//不是指令的发送至下一级

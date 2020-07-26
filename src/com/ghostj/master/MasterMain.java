@@ -1,5 +1,6 @@
 package com.ghostj.master;
 
+import com.ghostj.master.conn.CheckServerAlive;
 import com.ghostj.master.conn.HandleConn;
 import com.ghostj.master.gui.InitGUI;
 import com.ghostj.master.util.Config;
@@ -23,12 +24,15 @@ public class MasterMain {
 	int receivePeriod=0;
 
 	public static final int bufferedTextLineAmount=100;
+	public static CheckServerAlive checkServerAlive=new CheckServerAlive();
 	public static void main(String [] args){
 		if(!new File("gmaster.ini").exists()){
 			FileRW.write("gmaster.ini","");
 		}
 		config=new Config("gmaster.ini");
 		initGUI=new InitGUI();
+
+		new Timer().schedule(checkServerAlive,4000,15000);
 //		new Timer().schedule(new TimerTask() {
 //			@Override
 //			public void run() {
