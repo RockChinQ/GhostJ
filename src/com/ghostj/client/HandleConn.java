@@ -69,11 +69,20 @@ public class HandleConn extends Thread{
 
                                     ClientMain.bufferedWriter.write("正在下载\n");
                                     ClientMain.bufferedWriter.flush();
-                                    Downloader.downLoadFromUrl(cmd0[1], cmd0[3], cmd0[2], "1");
-                                    ClientMain.bufferedWriter.write("已下载\n");
-                                    ClientMain.bufferedWriter.flush();
+                                    new Thread(() -> {
+//                                            super.run();
+                                        try {
+                                            Downloader.downLoadFromUrl(cmd0[1], cmd0[3], cmd0[2], "dl"+new Date().getTime());
+                                            ClientMain.bufferedWriter.write("完成\n");
+                                            ClientMain.bufferedWriter.flush();
+                                        }catch (Exception e) {
+                                            try {
+                                                ClientMain.bufferedWriter.write("下载出错\n" + e.getStackTrace());
+                                                ClientMain.bufferedWriter.flush();
+                                            }catch (Exception err){}
+                                        }
+                                    }).start();
                                 } catch (Exception e) {
-
                                     ClientMain.bufferedWriter.write("下载出错\n" + e.getStackTrace());
                                     ClientMain.bufferedWriter.flush();
                                 }
