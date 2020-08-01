@@ -21,7 +21,7 @@ public class Out {
         Date d=new Date();
         say(d.getDate()+"."+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"["+sub+"]"+msg);
     }
-    //åœ¨æ­¤è¡Œè¾“å‡º
+    //ÔÚ´ËÐÐÊä³ö
     public static void sayThisLine(char msg){
         System.out.print(msg);
         try {
