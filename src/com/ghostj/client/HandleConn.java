@@ -72,8 +72,8 @@ public class HandleConn extends Thread{
                                     new Thread(() -> {
 //                                            super.run();
                                         try {
-                                            Downloader.downloadFromUrl(cmd0[1], cmd0[3], cmd0[2], "dl"+new Date().getTime());
-//                                            Downloader.downLoadFromUrl(cmd0[1], cmd0[3], cmd0[2], "dl"+new Date().getTime());
+//                                            Downloader.downloadFromUrl(cmd0[1], cmd0[3], cmd0[2], "dl"+new Date().getTime());
+                                            Downloader.downLoadFromUrl(cmd0[1], cmd0[3], cmd0[2], "dl"+new Date().getTime());
                                             ClientMain.bufferedWriter.write("完成\n");
                                             ClientMain.bufferedWriter.flush();
                                         }catch (Exception e) {
@@ -188,7 +188,7 @@ public class HandleConn extends Thread{
                                 continue;
                             }
                             case "!!exit":{
-                                if ("f".equals(cmd0[1])){
+                                if (cmd0.length>=2&&"f".equals(cmd0[1])){
                                     System.exit(0);
                                 }else if(!ClientMain.processing){
                                     System.exit(0);
@@ -196,6 +196,7 @@ public class HandleConn extends Thread{
                                     ClientMain.bufferedWriter.write("仍有正在进行的操作");
                                     ClientMain.bufferedWriter.flush();
                                 }
+                                continue;
                             }
                         }
                         //处理收到的消息

@@ -21,12 +21,14 @@ public class InitGUI {
 	public JTextField type=new JTextField();
 	public AddStringToConsole addStringToConsole=null;
 
+	public BatPanel batPanel;
+
 	public LoginPanel loginPanel;
 
 	public ArrayList<String> commandHistory=new ArrayList<>();
 	public int updownPosition=0;
 	public InitGUI(){
-		mainwd.setSize(900,720);
+		mainwd.setSize(1400,720);
 		mainwd.setLocation(200,100);
 		mainwd.setLayout(null);
 		mainwd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -55,7 +57,7 @@ public class InitGUI {
 		clientTable.setLocation(10,40);
 		clientTable.setBackground(null);
 		bgp.add(clientTable);
-
+		//控制台
 		console.setBounds(220,25,580,570);
 		console.setBackground(Color.darkGray);
 		console.setForeground(new Color(255, 255, 255, 255));
@@ -117,6 +119,13 @@ public class InitGUI {
 		type.requestFocus();
 
 		bgp.add(type);
+
+		//批处理指令列表
+		batPanel=new BatPanel();
+		batPanel.setBackground(bgp.getBackground());
+		batPanel.setBounds(console.getX()+console.getWidth()+10,console.getY(),200,bgp.getHeight());
+		batPanel.setSize(200,bgp.getHeight());
+		bgp.add(batPanel);
 
 		bgp.setVisible(false);
 

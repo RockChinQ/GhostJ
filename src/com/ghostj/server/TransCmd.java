@@ -34,11 +34,11 @@ public class TransCmd extends  Thread{
                     return;
                 }
                 case "!list": {
-                    Out.say("TransCmd-info", "已建立的连接(" + ServerMain.socketArrayList.size() + ")：\nindex\tname\tconnTime\tstate");
+                    Out.say("TransCmd-info", "已建立的连接(" + ServerMain.socketArrayList.size() + ")：\nindex\tname\tconnTime\tstate\tversion");
                     for (HandleConn conn : ServerMain.socketArrayList) {
                         Date d = new Date(conn.connTime);
-                        Out.say(conn.rtIndex + "  " + conn.hostName + "  " + (d.getDate() + "," + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds()) + "   "
-                                + (conn.equals(ServerMain.focusedConn) ? "聚焦" : "后台"));
+                        Out.say(conn.rtIndex + "\t" + conn.hostName + "\t" + (d.getDate() + "," + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds()) + "\t"
+                                + (conn.equals(ServerMain.focusedConn) ? "聚焦" : "后台")+"\t"+conn.version);
                     }
                     Out.say("TransCmd-info", "列表完成.");
                     return;

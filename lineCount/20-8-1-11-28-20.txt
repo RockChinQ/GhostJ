@@ -1,0 +1,64 @@
+W:\IdeaProjects\GhostJ
+Counting:W:\IdeaProjects\GhostJ\src ...
+Counting:W:\IdeaProjects\GhostJ\src\client ...
+Counting:W:\IdeaProjects\GhostJ\src\client\META-INF ...
+      File MANIFEST.MF 67
+Counting:W:\IdeaProjects\GhostJ\src\com ...
+Counting:W:\IdeaProjects\GhostJ\src\com\ghostj ...
+Counting:W:\IdeaProjects\GhostJ\src\com\ghostj\client ...
+      File AbstractImage.java 232
+      File CheckAliveTimer.java 617
+      File CheckSockAlive.java 414
+      File ClientMain.java 1643
+      File CmdError.java 602
+      File Downloader.java 3716
+      File HandleConn.java 12635
+      File Out.java 225
+      File ProcessCmd.java 2340
+      File Test.java 506
+Counting:W:\IdeaProjects\GhostJ\src\com\ghostj\master ...
+Counting:W:\IdeaProjects\GhostJ\src\com\ghostj\master\conn ...
+      File CheckServerAlive.java 859
+      File CreateConn.java 2084
+      File HandleConn.java 2997
+Counting:W:\IdeaProjects\GhostJ\src\com\ghostj\master\gui ...
+      File AddStringToConsole.java 1135
+      File Button.java 1621
+      File ClientTable.java 2550
+      File InitGUI.java 3928
+      File InputField.java 1328
+      File LoginPanel.java 1650
+      File MasterMain.java 2021
+Counting:W:\IdeaProjects\GhostJ\src\com\ghostj\master\util ...
+      File Config.java 2814
+      File FileRW.java 1333
+      File Out.java 900
+Counting:W:\IdeaProjects\GhostJ\src\com\ghostj\server ...
+      File AcceptConn.java 1013
+      File AcceptMaster.java 1130
+      File CheckAliveMaster.java 1115
+      File CheckAliveTimer.java 1515
+      File CheckConnAlive.java 541
+      File CheckMasterAlive.java 1183
+      File HandleConn.java 4829
+      File HandleMaster.java 2494
+      File ServerMain.java 3057
+      File TransCmd.java 6837
+Counting:W:\IdeaProjects\GhostJ\src\com\ghostj\util ...
+      File Config.java 2807
+      File FileRW.java 568
+      File Out.java 1706
+Counting:W:\IdeaProjects\GhostJ\src\COUNTLINE ...
+      File Main.java 2307
+Counting:W:\IdeaProjects\GhostJ\src\master ...
+Counting:W:\IdeaProjects\GhostJ\src\master\META-INF ...
+      File MANIFEST.MF 67
+Counting:W:\IdeaProjects\GhostJ\src\META-INF ...
+      File MANIFEST.MF 67
+Counting:W:\IdeaProjects\GhostJ\src\server ...
+Counting:W:\IdeaProjects\GhostJ\src\server\META-INF ...
+      File MANIFEST.MF 67
+----------Summary 104ms-----------
+Line Count:2239
+Symbol Count:77215
+Average:35 sym/line

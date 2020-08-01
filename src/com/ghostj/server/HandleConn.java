@@ -37,7 +37,7 @@ public class HandleConn extends Thread{
     public void run() {
         try{
             //BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
-            InputStreamReader inputStreamReader=new InputStreamReader(socket.getInputStream(),"utf8");
+            InputStreamReader inputStreamReader=new InputStreamReader(socket.getInputStream(),"GBK");
             int c=0;
             while ((c=inputStreamReader.read())!=-1){
                 //String msg=bufferedReader.readLine();
