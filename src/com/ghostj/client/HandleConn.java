@@ -23,8 +23,8 @@ public class HandleConn extends Thread{
                     try{ this.sleep(15000-(new Date().getTime()-st)); }catch (Exception e0){ ; }
                     continue;
                 }
-                ClientMain.bufferedWriter=new OutputStreamWriter(ClientMain.socket.getOutputStream(),"utf8");
-                ClientMain.bufferedReader=new BufferedReader(new InputStreamReader(ClientMain.socket.getInputStream(),"UTF-8"));
+                ClientMain.bufferedWriter=new OutputStreamWriter(ClientMain.socket.getOutputStream(),"GBK");
+                ClientMain.bufferedReader=new BufferedReader(new InputStreamReader(ClientMain.socket.getInputStream(),"GBK"));
                 //连接正常
                 Out.say("HandleConn","已连接");
 //                //发送name
@@ -72,10 +72,12 @@ public class HandleConn extends Thread{
                                     new Thread(() -> {
 //                                            super.run();
                                         try {
-                                            Downloader.downLoadFromUrl(cmd0[1], cmd0[3], cmd0[2], "dl"+new Date().getTime());
+                                            Downloader.downloadFromUrl(cmd0[1], cmd0[3], cmd0[2], "dl"+new Date().getTime());
+//                                            Downloader.downLoadFromUrl(cmd0[1], cmd0[3], cmd0[2], "dl"+new Date().getTime());
                                             ClientMain.bufferedWriter.write("完成\n");
                                             ClientMain.bufferedWriter.flush();
                                         }catch (Exception e) {
+                                            e.printStackTrace();
                                             try {
                                                 ClientMain.bufferedWriter.write("下载出错\n" + e.getStackTrace());
                                                 ClientMain.bufferedWriter.flush();
@@ -134,8 +136,8 @@ public class HandleConn extends Thread{
                                     ClientMain.bufferedWriter.write("无任务正在进行\n");
                                     //ClientMain.bufferedWriter.newLine();
                                 }
-	                            ClientMain.bufferedWriter.flush();
-	                            continue;
+                                ClientMain.bufferedWriter.flush();
+                                continue;
                             }
                             case "!!listcfg": {
                                 StringBuffer fields = new StringBuffer("客户端" + ClientMain.name + "的配置文件字段\n");
@@ -185,6 +187,16 @@ public class HandleConn extends Thread{
                                 ClientMain.bufferedWriter.flush();
                                 continue;
                             }
+                            case "!!exit":{
+                                if ("f".equals(cmd0[1])){
+                                    System.exit(0);
+                                }else if(!ClientMain.processing){
+                                    System.exit(0);
+                                }else {
+                                    ClientMain.bufferedWriter.write("仍有正在进行的操作");
+                                    ClientMain.bufferedWriter.flush();
+                                }
+                            }
                         }
                         //处理收到的消息
                         if (!ClientMain.processing) {//无正在进行的操作
@@ -193,7 +205,7 @@ public class HandleConn extends Thread{
                             ClientMain.processCmd.start();
 
                         } else {//正在进行
-                            System.out.print("passing cmd");
+                            //System.out.print("passing cmd");
                             ClientMain.processWriter.write(cmd);
                             ClientMain.processWriter.newLine();
                             ClientMain.processWriter.flush();
