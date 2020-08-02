@@ -24,6 +24,7 @@ public class ClientTable extends JPanel {
 	}
 	public ArrayList<clientInfo> clients=new ArrayList<>();
 
+	public int tableStart=0;
 	public static class entry extends JButton{
 		public static Color nbg=new Color(142, 141, 141),sbg=new Color(60,60,60);
 		clientInfo clientInfo=null;
@@ -39,7 +40,7 @@ public class ClientTable extends JPanel {
 			this.addActionListener(e->{
 				try{
 					Out.say("ClientTable","focus");
-					MasterMain.bufferedWriter.write("!focus "+clientInfo.name);
+					MasterMain.bufferedWriter.write("!focus &"+clientInfo.id);
 					MasterMain.bufferedWriter.newLine();
 					MasterMain.bufferedWriter.flush();
 				}catch (Exception err){
@@ -71,7 +72,7 @@ public class ClientTable extends JPanel {
 		this.removeAll();
 
 		//客户端列表的获取和添加在上一步进行，这里仅将列表扫描并添加entry
-		int index=0;
+		int index= -tableStart;
 		for(clientInfo clientInfo:clients){
 			entry e=new entry(clientInfo);
 			e.setSize(this.getWidth(),entryHeight);

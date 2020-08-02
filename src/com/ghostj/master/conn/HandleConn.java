@@ -67,6 +67,7 @@ public class HandleConn extends Thread{
 									clientInfo.sysStartTime=Long.parseLong(cmd[i+5]);
 									MasterMain.initGUI.clientTable.clients.add(clientInfo);
 								}
+								MasterMain.initGUI.clientTable.tableStart=MasterMain.initGUI.clientTable.tableStart+5>MasterMain.initGUI.clientTable.clients.size()?0:MasterMain.initGUI.clientTable.tableStart;
 								MasterMain.initGUI.clientTable.updateCom();
 								continue;
 							}

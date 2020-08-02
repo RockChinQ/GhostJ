@@ -64,7 +64,7 @@ public class TransCmd extends  Thread{
                     if (cmd[1].startsWith("&")) {
                         try {
                             long i = Integer.parseInt(cmd[1].substring(1));
-                            Out.say("index:" + i);
+                            //Out.say("index:" + i);
                             for (HandleConn conn : ServerMain.socketArrayList) {
                                 if (conn.rtIndex == i) {
                                     ServerMain.focusedConn = conn;

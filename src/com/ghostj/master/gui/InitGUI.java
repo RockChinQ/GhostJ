@@ -15,6 +15,7 @@ public class InitGUI {
 	public JPanel bgp=new JPanel();
 
 	public Button testConn=new Button("Test");
+	Button up=new Button("-"),down=new Button("+");
 	public JTextArea console=new JTextArea();
 	JScrollPane scrollPane=new JScrollPane();
 	public JScrollBar scrollBar=null;
@@ -28,7 +29,7 @@ public class InitGUI {
 	public ArrayList<String> commandHistory=new ArrayList<>();
 	public int updownPosition=0;
 	public InitGUI(){
-		mainwd.setSize(1400,720);
+		mainwd.setSize(830,920);
 		mainwd.setLocation(200,100);
 		mainwd.setLayout(null);
 		mainwd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +41,7 @@ public class InitGUI {
 		bgp.setBackground(new Color(80,80,80));
 		mainwd.add(bgp);
 
-		testConn.setSize(80,30);
+		testConn.setSize(80,35);
 		testConn.setLocation(10,6);
 		testConn.addActionListener(e->{
 			try{
@@ -52,11 +53,27 @@ public class InitGUI {
 			}
 		});
 		bgp.add(testConn);
+		//上下翻页
+		up.setBounds(testConn.getX()+testConn.getWidth()+5,testConn.getY(),40,35);
+		down.setBounds(testConn.getX()+testConn.getWidth()+up.getWidth()+7,testConn.getY(),40,35);
+		bgp.add(up);
+		bgp.add(down);
 
-		clientTable.setSize(185,this.mainwd.getHeight());
-		clientTable.setLocation(10,40);
+		up.addActionListener(e -> {
+			clientTable.tableStart=clientTable.tableStart<=0?0:clientTable.tableStart-1;
+			clientTable.updateCom();
+		});
+		down.addActionListener(e -> {
+			if (clientTable.clients.size()<6)
+				return;
+			clientTable.tableStart=clientTable.tableStart+5>=clientTable.clients.size()?clientTable.clients.size()-5:clientTable.tableStart+1;
+			clientTable.updateCom();
+		});
+
+
+		clientTable.setSize(185,300);
+		clientTable.setLocation(10,45);
 		clientTable.setBackground(null);
-		bgp.add(clientTable);
 		//控制台
 		console.setBounds(220,25,580,570);
 		console.setBackground(Color.darkGray);
@@ -123,9 +140,11 @@ public class InitGUI {
 		//批处理指令列表
 		batPanel=new BatPanel();
 		batPanel.setBackground(bgp.getBackground());
-		batPanel.setBounds(console.getX()+console.getWidth()+10,console.getY(),200,bgp.getHeight());
+		batPanel.setBounds(clientTable.getX(),clientTable.getY()+clientTable.getHeight()+10,200,bgp.getHeight());
 		batPanel.setSize(170,bgp.getHeight());
 		bgp.add(batPanel);
+
+		bgp.add(clientTable);
 
 		bgp.setVisible(false);
 

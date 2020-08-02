@@ -7,10 +7,12 @@ import com.ghostj.master.util.Out;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 public class BatPanel extends JPanel {
-    static final Color batBgc=new Color(140,140,140),batSel=new Color(60,60,60);
+    static final Color batBgc=new Color(140,140,140),batSel=new Color(60,60,60),nameCl=new Color(130, 188, 252);
+    static final Font batFont=new Font("Consolas",Font.PLAIN,16),batName=new Font("Consolas",Font.BOLD,17);
     public class bat extends JButton{
         String cmds="";
         String name="bat";
@@ -33,12 +35,15 @@ public class BatPanel extends JPanel {
             g.setColor(this.isSelected()?batSel:batBgc);
             g.fillRect(0,0,this.getWidth(),this.getHeight());
             g.setColor(Color.white);
-            g.setFont(this.getFont());
-            g.drawString(name,10,13);
-            g.drawString(cmds,10,26);
+            g.setFont(batFont);
+            g.drawString(cmds,4,29);
+            g.setColor(nameCl);
+            g.setFont(batName);
+            g.drawString(name,10,14);
         }
     }
 
+    public JLabel tag=new JLabel("Saved Commands");
     public Button run=new Button("Run");
     public Button add=new Button("Add");
     public Button del=new Button("Del");
@@ -46,15 +51,34 @@ public class BatPanel extends JPanel {
 
     ArrayList<bat> bats=new ArrayList<>();
     JPanel panelForBats=new JPanel();
+
+    static final Font btnF=new Font("Consolas",Font.BOLD,19);
     public BatPanel(){
         this.setLayout(null);
 
 //        this.setBackground(MasterMain.initGUI.clientTable.getBackground());
 
-        run.setBounds(0,5,40,30);
-        add.setBounds(42,5,40,30);
-        del.setBounds(84,5,40,30);
-        edi.setBounds(126,5,40,30);
+        tag.setFont(batFont);
+        tag.setSize(130,20);
+        tag.setLocation(5,0);
+        tag.setForeground(Color.white);
+        this.add(tag);
+
+        run.setBounds(0,20,40,30);
+        add.setBounds(42,20,40,30);
+        del.setBounds(84,20,40,30);
+        edi.setBounds(126,20,40,30);
+
+        run.setForeground(Color.green);
+        run.setText(">>");
+        run.setFont(btnF);
+
+        add.setText("+");
+        add.setFont(btnF);
+
+        del.setText("—");
+        del.setFont(btnF);
+        del.setForeground(Color.red);
 
         this.add(add);
         this.add(run);
@@ -95,7 +119,7 @@ public class BatPanel extends JPanel {
 
 
         panelForBats.setLayout(null);
-        panelForBats.setLocation(0,40);
+        panelForBats.setLocation(0,add.getY()+add.getHeight()+10);
         panelForBats.setBackground(this.getBackground());
         this.add(panelForBats);
 
@@ -108,7 +132,7 @@ public class BatPanel extends JPanel {
 
         jDialog.setLayout(null);
 //            jDialog.setBackground(MasterMain.initGUI.bgp.getBackground());
-        jDialog.setTitle("新建批处理");
+        jDialog.setTitle("批处理");
         jDialog.setSize(400,500);
         jDialog.setLocation(MasterMain.initGUI.mainwd.getLocation());
 
@@ -145,6 +169,9 @@ public class BatPanel extends JPanel {
             jDialog.dispose();
         });
         jDialog.add(save);
+
+        jDialog.setSize(400,save.getY()+save.getHeight()+50);
+
         jDialog.setVisible(true);
     }
 
@@ -166,6 +193,9 @@ public class BatPanel extends JPanel {
     }
     //刷新列表
     public void loadBats(){
+        if(!new File("batList.json").exists()){
+            return;
+        }
         //清除现有的
         bats.clear();
         panelForBats.removeAll();
