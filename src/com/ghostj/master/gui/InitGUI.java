@@ -124,7 +124,7 @@ public class InitGUI {
 		batPanel=new BatPanel();
 		batPanel.setBackground(bgp.getBackground());
 		batPanel.setBounds(console.getX()+console.getWidth()+10,console.getY(),200,bgp.getHeight());
-		batPanel.setSize(200,bgp.getHeight());
+		batPanel.setSize(170,bgp.getHeight());
 		bgp.add(batPanel);
 
 		bgp.setVisible(false);
