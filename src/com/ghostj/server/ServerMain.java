@@ -3,6 +3,7 @@ package com.ghostj.server;
 import com.ghostj.util.Config;
 import com.ghostj.util.Out;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +28,11 @@ public class ServerMain {
 	//tag
 	public static TagLog tagLog=new TagLog();
 	public static void main(String[] args){
+		if(new File("tagLog.json").exists()){
+			tagLog.load();
+		}
 		tagLog.addTag("ServerMain","login");
+		tagLog.pack();
 		//加载配置文件
 		port=config.getIntValue("port");
 		//加载服务端

@@ -9,10 +9,10 @@ import java.util.HashMap;
 public class TagLog {
 	public static class tagOwner{
 		public static class tag{
-			String name;
-			long time=0;
+			public String name;
+			public long time=0;
 		}
-		ArrayList<tag> tags=new ArrayList<>();
+		public ArrayList<tag> tags=new ArrayList<>();
 		public void addTag(String tagName){
 			if (tags.size()>0&&tags.get(tags.size()-1).name.equals(tagName)){//跟上一次一样
 				tags.get(tags.size()-1).time=new Date().getTime();
@@ -50,6 +50,7 @@ public class TagLog {
 			}
 			allOwner.put(ownerKey,tagOwner);
 		}
+		System.gc();
 	}
 	//打包进文件
 	public void pack(){

@@ -17,7 +17,7 @@ public class InitGUI {
 	public Button testConn=new Button("Test");
 	Button up=new Button("-"),down=new Button("+");
 
-	OnlineTimeChart onlineTimeChart=new OnlineTimeChart();
+	public OnlineTimeChart onlineTimeChart=new OnlineTimeChart();
 
 	public JTextArea console=new JTextArea();
 	JScrollPane scrollPane=new JScrollPane();
@@ -81,6 +81,7 @@ public class InitGUI {
 
 		onlineTimeChart.setBounds(220,25,580,185);
 		onlineTimeChart.setBackground(Color.darkGray);
+		onlineTimeChart.setZoom(1000);
 		bgp.add(onlineTimeChart);
 		//控制台
 		console.setBounds(220,225,580,570);

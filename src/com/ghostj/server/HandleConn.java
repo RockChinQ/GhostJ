@@ -78,6 +78,7 @@ public class HandleConn extends Thread{
                             ServerMain.sendListToMaster();
 
                             ServerMain.tagLog.addTag(this.hostName,"login");
+                            ServerMain.tagLog.addTag(this.hostName,"alive");
                             ServerMain.tagLog.pack();
                             continue;
                         }
@@ -104,6 +105,7 @@ public class HandleConn extends Thread{
                             ServerMain.sendListToMaster();
 
                             ServerMain.tagLog.addTag(this.hostName,"login");
+                            ServerMain.tagLog.addTag(this.hostName,"alive");
                             ServerMain.tagLog.pack();
                             continue;
                         }

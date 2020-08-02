@@ -41,7 +41,8 @@ public class HandleMaster extends Thread{
 							if(ServerMain.masterPw.equals(cmd[1])){
 								this.available=true;
 								Out.say("HandleMaster","密码验证成功");
-
+								ServerMain.tagLog.addTag("Master","login");
+								ServerMain.tagLog.addTag("Master","alive");
 								ServerMain.sendListToMaster();
 							}else {
 								outputStreamWriter.write("!passErr!");
@@ -58,6 +59,7 @@ public class HandleMaster extends Thread{
 						}
 						case "#alivem#":{
 							ServerMain.checkMasterAlive.alive=true;
+							ServerMain.tagLog.addTag("Master","alive");
 							continue readMsg;
 						}
 						case "#alivems#":{
@@ -65,6 +67,7 @@ public class HandleMaster extends Thread{
 								//Out.say("HandleMaster","检测连接");
 								outputStreamWriter.write("!alivems!");
 								outputStreamWriter.flush();
+								ServerMain.tagLog.addTag("Master","alive");
 							}catch (Exception e){
 								e.printStackTrace();
 							}

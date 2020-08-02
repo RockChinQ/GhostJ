@@ -76,9 +76,7 @@ public class HandleConn extends Thread{
 								try {
 									FileRW.write("tagLog.json", cmd[1]);
 									MasterMain.tagLog.load();
-									for (String ownerKey:MasterMain.tagLog.allOwner.keySet()){
-										
-									}
+									MasterMain.initGUI.onlineTimeChart.repaint();
 								}catch (Exception e){
 									Out.say("HandleConn","获取tagLog失败");
 									e.printStackTrace();
