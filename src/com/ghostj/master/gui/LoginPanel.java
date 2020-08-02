@@ -14,7 +14,7 @@ public class LoginPanel extends JDialog {
 	public LoginPanel(JFrame parent){
 		super(parent);
 		try {
-			MasterMain.initGUI.addStringToConsole.addStr("\n============ÖØÖÃÁ¬½Ó============\n");
+			MasterMain.initGUI.addStringToConsole.addStr("\n============é‡ç½®è¿æ¥============\n");
 		}catch (Exception e){}
 		this.setTitle("Login");
 		parent.setEnabled(false);

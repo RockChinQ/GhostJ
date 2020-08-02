@@ -5,6 +5,7 @@ import com.ghostj.util.Out;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,6 +76,9 @@ public class HandleConn extends Thread{
                             Out.say("conn"+hostName,"名称"+cmd[1]);
                             this.hostName=new String(cmd[1]);
                             ServerMain.sendListToMaster();
+
+                            ServerMain.tagLog.addTag(this.hostName,"login");
+                            ServerMain.tagLog.pack();
                             continue;
                         }
                         case "!version":{
@@ -93,10 +97,14 @@ public class HandleConn extends Thread{
                                 continue;
                             }
                             Out.say("conn"+cmd[1],"name:"+cmd[1]+" version:"+cmd[2]+" sysStartTime:"+cmd[3]);
+
                             this.hostName=cmd[1];
                             this.version=cmd[2];
                             this.sysStartTime=Long.parseLong(cmd[3]);
                             ServerMain.sendListToMaster();
+
+                            ServerMain.tagLog.addTag(this.hostName,"login");
+                            ServerMain.tagLog.pack();
                             continue;
                         }
                         default:{

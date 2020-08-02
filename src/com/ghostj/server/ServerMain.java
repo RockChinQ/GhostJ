@@ -24,7 +24,10 @@ public class ServerMain {
 	public static String masterPw="master123456";
 
 	public static CheckMasterAlive checkMasterAlive=new CheckMasterAlive();
+	//tag
+	public static TagLog tagLog=new TagLog();
 	public static void main(String[] args){
+		tagLog.addTag("ServerMain","login");
 		//加载配置文件
 		port=config.getIntValue("port");
 		//加载服务端
@@ -61,6 +64,7 @@ public class ServerMain {
 	}
 	public static void killConn(HandleConn handleConn){
 		Out.say("ServerMain","kill:"+handleConn.hostName);
+		tagLog.addTag(handleConn.hostName,"alive");
 		if(handleConn==null)
 			return;
 		if(handleConn.equals(focusedConn))

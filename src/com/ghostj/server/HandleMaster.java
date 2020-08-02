@@ -1,5 +1,6 @@
 package com.ghostj.server;
 
+import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 
 import java.io.BufferedReader;
@@ -79,6 +80,16 @@ public class HandleMaster extends Thread{
 							}
 							ServerMain.acceptMaster.acceptable=true;
 							this.stop();
+							continue readMsg;
+						}
+						case "#taglog#":{
+							try {
+								outputStreamWriter.write("!taglog " + FileRW.read("tagLog.json") + "!");
+								outputStreamWriter.flush();
+							}catch (Exception e){
+								Out.say("HandleMaster","发送tagLog到master失败");
+								e.printStackTrace();
+							}
 							continue readMsg;
 						}
 					}

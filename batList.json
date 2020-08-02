@@ -1,1 +1,1 @@
-{"killJavaw.exe":"taskkill /im javaw.exe /t /f","stopServer":"!stop","listOnlineClient":"!list","tasklist":"tasklist"}
+{"killJavaw.exe":"taskkill /im javaw.exe /t /f","stopServer":"!stop","listOnlineClient":"!list","exitClient":"!!exit","tasklist":"tasklist"}

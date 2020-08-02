@@ -3,6 +3,7 @@ package com.ghostj.master.conn;
 import com.ghostj.master.MasterMain;
 import com.ghostj.master.gui.ClientTable;
 import com.ghostj.master.gui.LoginPanel;
+import com.ghostj.master.util.FileRW;
 import com.ghostj.master.util.Out;
 
 public class HandleConn extends Thread{
@@ -69,6 +70,19 @@ public class HandleConn extends Thread{
 								}
 								MasterMain.initGUI.clientTable.tableStart=MasterMain.initGUI.clientTable.tableStart+5>MasterMain.initGUI.clientTable.clients.size()?0:MasterMain.initGUI.clientTable.tableStart;
 								MasterMain.initGUI.clientTable.updateCom();
+								continue;
+							}
+							case "!taglog":{
+								try {
+									FileRW.write("tagLog.json", cmd[1]);
+									MasterMain.tagLog.load();
+									for (String ownerKey:MasterMain.tagLog.allOwner.keySet()){
+										
+									}
+								}catch (Exception e){
+									Out.say("HandleConn","获取tagLog失败");
+									e.printStackTrace();
+								}
 								continue;
 							}
 							default:{

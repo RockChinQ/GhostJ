@@ -31,7 +31,11 @@ public class CheckAliveTimer extends TimerTask {
                         e.printStackTrace();
                     }
                 }
-                dead = null;
+                for(HandleConn tag:ServerMain.socketArrayList){
+                    ServerMain.tagLog.addTag(tag.hostName,"alive");
+                }
+                ServerMain.tagLog.addTag("ServerMain","alive");
+                ServerMain.tagLog.pack();
                 System.gc();
             }catch (Exception e){
                 Out.say("CheckAliveTimer","检测连接时出错");

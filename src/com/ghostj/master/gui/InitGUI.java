@@ -16,6 +16,9 @@ public class InitGUI {
 
 	public Button testConn=new Button("Test");
 	Button up=new Button("-"),down=new Button("+");
+
+	OnlineTimeChart onlineTimeChart=new OnlineTimeChart();
+
 	public JTextArea console=new JTextArea();
 	JScrollPane scrollPane=new JScrollPane();
 	public JScrollBar scrollBar=null;
@@ -34,6 +37,7 @@ public class InitGUI {
 		mainwd.setLayout(null);
 		mainwd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainwd.setBackground(new Color(80,80,80));
+		mainwd.setTitle("Master Of GhostJ.Powered by RockChin");
 
 		bgp.setSize(mainwd.getSize());
 		bgp.setLocation(0,0);
@@ -74,8 +78,12 @@ public class InitGUI {
 		clientTable.setSize(185,300);
 		clientTable.setLocation(10,45);
 		clientTable.setBackground(null);
+
+		onlineTimeChart.setBounds(220,25,580,185);
+		onlineTimeChart.setBackground(Color.darkGray);
+		bgp.add(onlineTimeChart);
 		//控制台
-		console.setBounds(220,25,580,570);
+		console.setBounds(220,225,580,570);
 		console.setBackground(Color.darkGray);
 		console.setForeground(new Color(255, 255, 255, 255));
 		console.setFont(cf);
