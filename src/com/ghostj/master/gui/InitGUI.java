@@ -18,6 +18,8 @@ public class InitGUI {
 	Button up=new Button("-"),down=new Button("+");
 
 	public OnlineTimeChart onlineTimeChart=new OnlineTimeChart();
+	public Button displayRange=new Button("10分钟");
+	public int rangeIndex=1;
 
 	public JTextArea console=new JTextArea();
 	JScrollPane scrollPane=new JScrollPane();
@@ -79,10 +81,19 @@ public class InitGUI {
 		clientTable.setLocation(10,45);
 		clientTable.setBackground(null);
 
-		onlineTimeChart.setBounds(220,25,580,185);
+		onlineTimeChart.setBounds(220,45,580,175);
 		onlineTimeChart.setBackground(Color.darkGray);
 		onlineTimeChart.setZoom(1000);
 		bgp.add(onlineTimeChart);
+
+		displayRange.setBounds(onlineTimeChart.getX(),up.getY(),60,up.getHeight());
+		displayRange.addActionListener((e)->{
+			rangeIndex++;
+			onlineTimeChart.setZoom((onlineTimeChart.DISPLAY_RANGE[rangeIndex%13]/(long)onlineTimeChart.getWidth()));
+			onlineTimeChart.repaint();
+			displayRange.setText(onlineTimeChart.DISPLAY_RANGE_DESCRI[rangeIndex%13]);
+		});
+		bgp.add(displayRange);
 		//控制台
 		console.setBounds(220,225,580,570);
 		console.setBackground(Color.darkGray);

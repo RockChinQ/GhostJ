@@ -87,6 +87,7 @@ public class HandleMaster extends Thread{
 						}
 						case "#taglog#":{
 							try {
+								ServerMain.logAliveDevice();
 								outputStreamWriter.write("!taglog " + FileRW.read("tagLog.json") + "!");
 								outputStreamWriter.flush();
 							}catch (Exception e){

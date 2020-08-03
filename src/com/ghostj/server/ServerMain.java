@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class ServerMain {
 	public static ArrayList<HandleConn> socketArrayList=new ArrayList<>();
@@ -66,6 +67,17 @@ public class ServerMain {
 		//启动master的检测计时器
 		new Timer().schedule(checkMasterAlive,6000,15000);
 		Out.say("ServerMain","master的pw是"+masterPw);
+		//启动taglog计时器
+//		new Timer().schedule(new TimerTask() {
+//			@Override
+//			public void run() {
+//				try{
+//					logAliveDevice();
+//				}catch (Exception e){
+//					e.printStackTrace();
+//				}
+//			}
+//		},new Date(),5000);
 	}
 	public static void killConn(HandleConn handleConn){
 		Out.say("ServerMain","kill:"+handleConn.hostName);
@@ -104,5 +116,16 @@ public class ServerMain {
 //    }
 	public static void stopServer(int status){
 		System.exit(status);
+	}
+
+	public static void logAliveDevice(){
+		for(HandleConn handleConn:socketArrayList){
+			if(handleConn.avai)
+				tagLog.addTag(handleConn.hostName,"alive");
+		}
+		tagLog.addTag("ServerMain","alive");
+		if(handleMaster.available)
+			tagLog.addTag("Master","alive");
+		tagLog.pack();
 	}
 }

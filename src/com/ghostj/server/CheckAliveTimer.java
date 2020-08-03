@@ -32,7 +32,8 @@ public class CheckAliveTimer extends TimerTask {
                     }
                 }
                 for(HandleConn tag:ServerMain.socketArrayList){
-                    ServerMain.tagLog.addTag(tag.hostName,"alive");
+                    if(tag.avai)
+                        ServerMain.tagLog.addTag(tag.hostName,"alive");
                 }
                 ServerMain.tagLog.addTag("ServerMain","alive");
                 ServerMain.tagLog.pack();

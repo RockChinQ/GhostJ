@@ -14,6 +14,7 @@ public class HandleConn extends Thread{
     Socket socket=null;
     BufferedWriter bufferedWriter=null;
     String hostName=new Date().getTime()+"";
+    boolean avai=false;
     long connTime=0;
     long sysStartTime=0;
     ArrayList<String> msg=new ArrayList<>();//在没有焦点的时候存储收到的消息
@@ -77,6 +78,7 @@ public class HandleConn extends Thread{
                             this.hostName=new String(cmd[1]);
                             ServerMain.sendListToMaster();
 
+                            avai=true;
                             ServerMain.tagLog.addTag(this.hostName,"login");
                             ServerMain.tagLog.addTag(this.hostName,"alive");
                             ServerMain.tagLog.pack();
@@ -99,6 +101,7 @@ public class HandleConn extends Thread{
                             }
                             Out.say("conn"+cmd[1],"name:"+cmd[1]+" version:"+cmd[2]+" sysStartTime:"+cmd[3]);
 
+                            avai=true;
                             this.hostName=cmd[1];
                             this.version=cmd[2];
                             this.sysStartTime=Long.parseLong(cmd[3]);
