@@ -35,7 +35,7 @@ public class CheckAliveTimer extends TimerTask {
                     if(tag.avai)
                         ServerMain.tagLog.addTag(tag.hostName,"alive");
                 }
-                ServerMain.tagLog.addTag("ServerMain","alive");
+                ServerMain.tagLog.addTag(".Server","alive");
                 ServerMain.tagLog.pack();
                 System.gc();
             }catch (Exception e){

@@ -55,16 +55,17 @@ public class TagLog {
 	}
 	//打包进文件
 	public void pack(){
-		JSONObject jsonObject=new JSONObject();
+		JSONObject jsonObject=new JSONObject(true);
 		for(String ownerKey:allOwner.keySet()){
-			JSONObject aowner=new JSONObject();
+			JSONObject aowner=new JSONObject(true);
 			tagOwner owner=allOwner.get(ownerKey);
 			int index=0;
 			for(tagOwner.tag tag:owner.tags){
 				JSONObject atag=new JSONObject();
 				atag.put("n",tag.name);
 				atag.put("t",tag.time);
-				aowner.put(""+index++,atag.toJSONString());
+				aowner.put(""+(index),atag.toJSONString());
+				index++;
 			}
 			jsonObject.put(ownerKey,aowner.toJSONString());
 		}

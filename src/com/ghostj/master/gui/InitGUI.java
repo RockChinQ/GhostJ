@@ -18,7 +18,7 @@ public class InitGUI {
 	Button up=new Button("-"),down=new Button("+");
 
 	public OnlineTimeChart onlineTimeChart=new OnlineTimeChart();
-	public Button displayRange=new Button("10分钟");
+	public Button displayRange=new Button("10分钟 (1分钟/格)");
 	public int rangeIndex=1;
 
 	public JTextArea console=new JTextArea();
@@ -86,13 +86,15 @@ public class InitGUI {
 		onlineTimeChart.setZoom(1000);
 		bgp.add(onlineTimeChart);
 
-		displayRange.setBounds(onlineTimeChart.getX(),up.getY(),60,up.getHeight());
+		displayRange.setBounds(onlineTimeChart.getX(),up.getY(),150,up.getHeight());
 		displayRange.addActionListener((e)->{
 			rangeIndex++;
-			onlineTimeChart.setZoom((onlineTimeChart.DISPLAY_RANGE[rangeIndex%13]/(long)onlineTimeChart.getWidth()));
+			onlineTimeChart.setZoom((OnlineTimeChart.DISPLAY_RANGE[rangeIndex%13]/(long)onlineTimeChart.getWidth()));
+			onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%13]/onlineTimeChart.zoom));
 			onlineTimeChart.repaint();
-			displayRange.setText(onlineTimeChart.DISPLAY_RANGE_DESCRI[rangeIndex%13]);
+			displayRange.setText(OnlineTimeChart.DISPLAY_RANGE_DESCRI[rangeIndex%13]+" ("+OnlineTimeChart.DISPLAY_GRID_DESCRI[rangeIndex%13]+"/格)");
 		});
+		onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%13]/onlineTimeChart.zoom));
 		bgp.add(displayRange);
 		//控制台
 		console.setBounds(220,225,580,570);

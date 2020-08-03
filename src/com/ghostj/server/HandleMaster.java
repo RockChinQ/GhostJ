@@ -26,6 +26,8 @@ public class HandleMaster extends Thread{
 				}catch (Exception e){
 					Out.say("HandleMaster","处理master连接时出错，正在重置连接");
 					e.printStackTrace();
+					ServerMain.tagLog.addTag(".Master","alive");
+					ServerMain.handleMaster.available=false;
 					ServerMain.acceptMaster.acceptable=true;
 					this.stop();
 				}
@@ -41,9 +43,10 @@ public class HandleMaster extends Thread{
 							if(ServerMain.masterPw.equals(cmd[1])){
 								this.available=true;
 								Out.say("HandleMaster","密码验证成功");
-								ServerMain.tagLog.addTag("Master","login");
-								ServerMain.tagLog.addTag("Master","alive");
 								ServerMain.sendListToMaster();
+								ServerMain.tagLog.addTag(".Master","login");
+								new Thread().sleep(20);
+								ServerMain.tagLog.addTag(".Master","alive");
 							}else {
 								outputStreamWriter.write("!passErr!");
 								outputStreamWriter.flush();
@@ -59,7 +62,8 @@ public class HandleMaster extends Thread{
 						}
 						case "#alivem#":{
 							ServerMain.checkMasterAlive.alive=true;
-							ServerMain.tagLog.addTag("Master","alive");
+							if(available)
+								ServerMain.tagLog.addTag(".Master","alive");
 							continue readMsg;
 						}
 						case "#alivems#":{
@@ -67,7 +71,8 @@ public class HandleMaster extends Thread{
 								//Out.say("HandleMaster","检测连接");
 								outputStreamWriter.write("!alivems!");
 								outputStreamWriter.flush();
-								ServerMain.tagLog.addTag("Master","alive");
+								if(available)
+									ServerMain.tagLog.addTag(".Master","alive");
 							}catch (Exception e){
 								e.printStackTrace();
 							}

@@ -19,12 +19,12 @@ public class CheckMasterAlive extends TimerTask {
 						kill();
 					}
 				}}.start();
-				new Thread().sleep(1000);
+				new Thread().sleep(5000);
 				if (!alive)
 					kill();
 				else {
 					if(ServerMain.handleMaster.available)
-						ServerMain.tagLog.addTag("Master","alive");
+						ServerMain.tagLog.addTag(".Master","alive");
 				}
 			}
 		}catch (Exception e){

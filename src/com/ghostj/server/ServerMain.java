@@ -32,7 +32,7 @@ public class ServerMain {
 		if(new File("tagLog.json").exists()){
 			tagLog.load();
 		}
-		tagLog.addTag("ServerMain","login");
+		tagLog.addTag(".Server","login");
 		tagLog.pack();
 		//加载配置文件
 		port=config.getIntValue("port");
@@ -115,6 +115,12 @@ public class ServerMain {
 //        conn.stop();
 //    }
 	public static void stopServer(int status){
+		logAliveDevice();
+		try {
+			handleMaster.outputStreamWriter.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		System.exit(status);
 	}
 
@@ -123,9 +129,9 @@ public class ServerMain {
 			if(handleConn.avai)
 				tagLog.addTag(handleConn.hostName,"alive");
 		}
-		tagLog.addTag("ServerMain","alive");
+		tagLog.addTag(".Server","alive");
 		if(handleMaster.available)
-			tagLog.addTag("Master","alive");
+			tagLog.addTag(".Master","alive");
 		tagLog.pack();
 	}
 }

@@ -46,6 +46,7 @@ public class ClientTable extends JPanel {
 				}catch (Exception err){
 					err.printStackTrace();
 				}
+				MasterMain.initGUI.type.requestFocus();
 			});
 		}
 		@Override

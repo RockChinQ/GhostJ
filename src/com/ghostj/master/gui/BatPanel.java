@@ -87,12 +87,14 @@ public class BatPanel extends JPanel {
 
         add.addActionListener((e)->{
             showEditDialog("","",true);
+            MasterMain.initGUI.type.requestFocus();
         });
         del.addActionListener((e)->{
             bats.remove(whichSelected());
             packBats();
             loadBats();
             this.repaint();
+            MasterMain.initGUI.type.requestFocus();
         });
         run.addActionListener((e)->{
 //            int option=javax.swing.JOptionPane.showConfirmDialog(MasterMain.initGUI.mainwd,whichSelected().cmds,"确认命令"+whichSelected().name+"的内容",JOptionPane.INFORMATION_MESSAGE);
@@ -112,9 +114,13 @@ public class BatPanel extends JPanel {
                     Out.say("BatPanel","无法将批处理指令发送至服务端");
                 }
             }
+
+            MasterMain.initGUI.type.requestFocus();
         });
         edi.addActionListener((e)->{
             showEditDialog(whichSelected().name,whichSelected().cmds,false);
+
+            MasterMain.initGUI.type.requestFocus();
         });
 
 
@@ -218,7 +224,7 @@ public class BatPanel extends JPanel {
     }
     //将所有bat打包到json
     public void packBats(){
-        JSONObject jsonObject=new JSONObject();
+        JSONObject jsonObject=new JSONObject(true);
         for(bat bat:bats){
 //            aBat.put("cmds",bat.cmds);
             jsonObject.put(bat.name,bat.cmds);
