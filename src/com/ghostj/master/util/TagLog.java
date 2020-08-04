@@ -1,6 +1,7 @@
 package com.ghostj.master.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 
 import java.util.*;
 
@@ -34,13 +35,13 @@ public class TagLog {
 	//加载文件
 	public void load(){
 		allOwner.clear();
-		JSONObject jsonObject=JSONObject.parseObject(com.ghostj.util.FileRW.read("tagLog.json"));
+		JSONObject jsonObject=JSONObject.parseObject(com.ghostj.util.FileRW.read("tagLog.json"), Feature.OrderedField);
 		for(String ownerKey:jsonObject.keySet()){
-			JSONObject aowenr=JSONObject.parseObject(jsonObject.getString(ownerKey));
+			JSONObject aowenr=JSONObject.parseObject(jsonObject.getString(ownerKey), Feature.OrderedField);
 //			allOwner.put(ownerKey,new tagOwner());
 			tagOwner tagOwner=new tagOwner();
 			for(String tagKey:aowenr.keySet()){
-				JSONObject atag=JSONObject.parseObject(aowenr.getString(tagKey));
+				JSONObject atag=JSONObject.parseObject(aowenr.getString(tagKey), Feature.OrderedField);
 				tagOwner.tag tag=new tagOwner.tag();
 				tag.name=atag.getString("n");
 				tag.time=atag.getLongValue("t");
