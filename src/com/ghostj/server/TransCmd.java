@@ -145,6 +145,15 @@ public class TransCmd extends  Thread{
                     }
                     return;
                 }
+                case "!lstag":{
+                    Out.say("TransCmd-lstag","列表所有tagLog");
+                    int i=0;
+                    for(String owner:ServerMain.tagLog.allOwner.keySet()){
+                        Out.say(++i+" "+owner);
+                    }
+                    Out.say("TransCmd-lstag","列表完成");
+                    return;
+                }
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");
