@@ -1,6 +1,7 @@
 package com.ghostj.master.gui;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.ghostj.master.MasterMain;
 import com.ghostj.master.util.FileRW;
 import com.ghostj.master.util.Out;
@@ -207,7 +208,7 @@ public class BatPanel extends JPanel {
         panelForBats.removeAll();
         //从json载入所有批处理
         int yIndex=0;
-        JSONObject jsonObject=JSONObject.parseObject(FileRW.read("batList.json"));
+        JSONObject jsonObject=JSONObject.parseObject(FileRW.read("batList.json"), Feature.OrderedField);
         for(String name:jsonObject.keySet()){
             bat bat=new bat();
             bat.name=name;
