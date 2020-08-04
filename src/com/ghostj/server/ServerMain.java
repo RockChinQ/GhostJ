@@ -117,6 +117,8 @@ public class ServerMain {
 	public static void stopServer(int status){
 		logAliveDevice();
 		try {
+			ServerMain.handleMaster.outputStreamWriter.write("!relogin!");
+			ServerMain.handleMaster.outputStreamWriter.flush();
 			handleMaster.outputStreamWriter.close();
 		}catch (Exception e){
 			e.printStackTrace();
