@@ -5,6 +5,7 @@ import com.ghostj.util.Out;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class TransCmd extends  Thread{
@@ -119,6 +120,28 @@ public class TransCmd extends  Thread{
                         Out.say("TransCmd-chname", "无此名称连接");
                     } else {
                         Out.say("TransCmd-chname", "正确语法\n!chname <connName(wordStartWith)> <newName>");
+                    }
+                    return;
+                }
+                case "!rmtag":{
+                    if(cmd.length<2){
+                        Out.say("TransCmd-rmtag","正确语法\n!rmtag <tagOwnerName(wordStartWith)>");
+                        return;
+                    }
+                    ArrayList<String> delete=new ArrayList<>();
+                    for(String owner:ServerMain.tagLog.allOwner.keySet()){
+                        if(owner.startsWith(cmd[1])){
+                            delete.add(owner);
+                        }
+                    }
+                    if(delete.size()!=0){
+                        for(String dk:delete){
+                            Out.say("TransCmd-rmtag","清除tagLog:"+dk);
+                            ServerMain.tagLog.allOwner.remove(dk);
+                        }
+                        ServerMain.tagLog.pack();
+                    }else {
+                        Out.say("TransCmd-rmtag","未找到相应的tagOwner");
                     }
                     return;
                 }
