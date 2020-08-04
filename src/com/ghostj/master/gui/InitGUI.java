@@ -34,7 +34,7 @@ public class InitGUI {
 	public ArrayList<String> commandHistory=new ArrayList<>();
 	public int updownPosition=0;
 	public InitGUI(){
-		mainwd.setSize(830,920);
+		mainwd.setSize(870,920);
 		mainwd.setLocation(200,100);
 		mainwd.setLayout(null);
 		mainwd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -81,7 +81,7 @@ public class InitGUI {
 		clientTable.setLocation(10,45);
 		clientTable.setBackground(null);
 
-		onlineTimeChart.setBounds(220,45,580,175);
+		onlineTimeChart.setBounds(220,45,620,175);
 		onlineTimeChart.setBackground(Color.darkGray);
 		onlineTimeChart.setZoom(1000);
 		bgp.add(onlineTimeChart);
@@ -97,7 +97,7 @@ public class InitGUI {
 		onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%13]/onlineTimeChart.zoom));
 		bgp.add(displayRange);
 		//控制台
-		console.setBounds(220,225,580,570);
+		console.setBounds(220,225,620,570);
 		console.setBackground(Color.darkGray);
 		console.setForeground(new Color(255, 255, 255, 255));
 		console.setFont(cf);

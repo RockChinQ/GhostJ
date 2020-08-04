@@ -4,9 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ghostj.master.util.FileRW;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.*;
 
 public class TagLog {
 	public static class tagOwner{
@@ -26,7 +24,7 @@ public class TagLog {
 			}
 		}
 	}
-	HashMap<String,tagOwner> allOwner=new HashMap<>();
+	Map<String,tagOwner> allOwner=new LinkedHashMap<>();
 	private void addOwner(String indexName){
 		allOwner.put(indexName,new tagOwner());
 	}
