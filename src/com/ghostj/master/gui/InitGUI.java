@@ -91,12 +91,13 @@ public class InitGUI {
 		displayRange.setBounds(onlineTimeChart.getX(),up.getY(),150,up.getHeight());
 		displayRange.addActionListener((e)->{
 			rangeIndex++;
-			onlineTimeChart.setZoom((OnlineTimeChart.DISPLAY_RANGE[rangeIndex%13]/(long)onlineTimeChart.getWidth()));
-			onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%13]/onlineTimeChart.zoom));
+			int rangeList=OnlineTimeChart.DISPLAY_RANGE.length;
+			onlineTimeChart.setZoom((OnlineTimeChart.DISPLAY_RANGE[rangeIndex%rangeList]/(long)onlineTimeChart.getWidth()));
+			onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%rangeList]/onlineTimeChart.zoom));
 			onlineTimeChart.repaint();
-			displayRange.setText(OnlineTimeChart.DISPLAY_RANGE_DESCRI[rangeIndex%13]+" ("+OnlineTimeChart.DISPLAY_GRID_DESCRI[rangeIndex%13]+"/格)");
+			displayRange.setText(OnlineTimeChart.DISPLAY_RANGE_DESCRI[rangeIndex%rangeList]+" ("+OnlineTimeChart.DISPLAY_GRID_DESCRI[rangeIndex%rangeList]+"/格)");
 		});
-		onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%13]/onlineTimeChart.zoom));
+		onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%rangeIndex]/onlineTimeChart.zoom));
 		bgp.add(displayRange);
 		//控制台
 		console.setBounds(220,225,620,570);

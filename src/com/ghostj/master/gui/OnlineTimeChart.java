@@ -18,13 +18,13 @@ public class OnlineTimeChart extends JPanel {
 	static final Color TIPS_LINE_COLOR=new Color(86, 155, 86, 153);
 	static final int DEVICE_TRACK_HEIGHT=8,LINE_HEIGHT=4;
 	static final Font device=new Font("Consolas",Font.PLAIN,12);
-	public static final long[] DISPLAY_RANGE=new long[]{300000,600000,1800000,3600000,21600000,43200000,86400000,604800000
+	public static final long[] DISPLAY_RANGE=new long[]{300000,600000,1800000,3600000,21600000,43200000,86400000,259200000,604800000
 			,1209600000, 2592000000L, 5184000000L, 15552000000L, 31536000000L};
-	public static final String[] DISPLAY_RANGE_DESCRI=new String[]{"5分钟","10分钟","30分钟","1小时","6小时","12小时","1天","7天","14天","30天","60天","180天","1年"};
-	//5分钟，10分钟，30分钟，1小时，6小时，12小时，1天，7天，14天，30天，60天，180天，365天
-	//30秒,1分钟,3分钟,6分钟,30分钟,2小时,4小时,1天,2天,3天,6天,20天,30天;
-	public static final long[] DISPLAY_GRID_TIME=new long[]{30000,60000,180000,360000,1800000,7200000,14400000,86400000,172800000,259200000,518400000,1728000000,2592000000L};
-	public static final String[] DISPLAY_GRID_DESCRI=new String[]{"30秒","1分钟","3分钟","6分钟","30分钟","2小时","4小时","1天","2天","3天","6天","20天","30天"};
+	public static final String[] DISPLAY_RANGE_DESCRI=new String[]{"5分钟","10分钟","30分钟","1小时","6小时","12小时","1天","3天","7天","14天","30天","60天","180天","1年"};
+	//5分钟，10分钟，30分钟，1小时，6小时，12小时，1天，3天，7天，14天，30天，60天，180天，365天
+	//30秒,1分钟,3分钟,6分钟,30分钟,2小时,4小时,8小时,1天,2天,3天,6天,20天,30天;
+	public static final long[] DISPLAY_GRID_TIME=new long[]{30000,60000,180000,360000,1800000,7200000,14400000,28800000,86400000,172800000,259200000,518400000,1728000000,2592000000L};
+	public static final String[] DISPLAY_GRID_DESCRI=new String[]{"30秒","1分钟","3分钟","6分钟","30分钟","2小时","4小时","8小时","1天","2天","3天","6天","20天","30天"};
 	public OnlineTimeChart(){
 		this.addMouseListener(new MouseAdapter() {
 			@Override
