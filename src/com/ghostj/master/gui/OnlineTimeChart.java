@@ -46,7 +46,7 @@ public class OnlineTimeChart extends JPanel {
 					MasterMain.bufferedWriter.newLine();
 					MasterMain.bufferedWriter.flush();
 				}catch (Exception e){
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 			}
 		},new Date(),10000);

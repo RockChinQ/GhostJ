@@ -1,1 +1,1 @@
-{"killJavaw.exe":"taskkill /im javaw.exe /t /f","list task":"tasklist","stopServer":"!stop","listOnlineClient":"!list","test":"#!master\ncmd\nexit","非常牛逼的可以强制关闭client的":"#!master\n!!exit\ny"}
+{"killJavaw.exe":"taskkill /im javaw.exe /t /f","list task":"tasklist","stopServer":"!stop","listOnlineClient":"!list"}

@@ -141,7 +141,7 @@ public class InitGUI {
 			public void keyPressed(KeyEvent e){
 				if(e.getKeyCode()==KeyEvent.VK_UP){
 					//System.out.println(updownPosition);
-					updownPosition=updownPosition-1<0?0:updownPosition-1;
+					updownPosition= Math.max(updownPosition - 1, 0);
 					type.setText(commandHistory.get(updownPosition));
 				}else if(e.getKeyCode()==KeyEvent.VK_DOWN){
 					if(commandHistory.size()==0)

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class BatPanel extends JPanel {
     static final Color batBgc=new Color(140,140,140),batSel=new Color(60,60,60),nameCl=new Color(130, 188, 252);
-    static final Font batFont=new Font("Consolas",Font.PLAIN,16),batName=new Font("Consolas",Font.BOLD,17);
+    static final Font batFont=new Font("Serif",Font.PLAIN,16),batName=new Font("Serif",Font.BOLD,17);
     public class bat extends JButton{
         String cmds="";
         String name="bat";
@@ -45,7 +45,7 @@ public class BatPanel extends JPanel {
         }
     }
 
-    public JLabel tag=new JLabel("Saved Commands");
+    public JLabel tag=new JLabel("保存的批处理");
     public Button run=new Button("Run");
     public Button add=new Button("Add");
     public Button del=new Button("Del");
@@ -54,7 +54,7 @@ public class BatPanel extends JPanel {
     ArrayList<bat> bats=new ArrayList<>();
     JPanel panelForBats=new JPanel();
 
-    static final Font btnF=new Font("Consolas",Font.BOLD,19);
+    static final Font btnF=new Font("Serif",Font.BOLD,19);
     public BatPanel(){
         this.setLayout(null);
 
@@ -78,7 +78,7 @@ public class BatPanel extends JPanel {
         add.setText("+");
         add.setFont(btnF);
 
-        del.setText("—");
+        del.setText("-");
         del.setFont(btnF);
         del.setForeground(Color.red);
 
@@ -218,7 +218,7 @@ public class BatPanel extends JPanel {
             bat.setSize(panelForBats.getWidth(),40);
             bat.setLocation(0,((bat.getHeight()+5)*yIndex++));
 //            bat.setLocation(0,0);
-            System.out.println(bat.getSize());
+            //System.out.println(bat.getSize());
             bats.add(bat);
             panelForBats.add(bat);
         }
