@@ -1,11 +1,10 @@
 package com.ghostj.client;
 
-//import sun.awt.windows.WBufferStrategy;
-
 import com.ghostj.util.FileRW;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Date;
 
 public class HandleConn extends Thread{
@@ -80,13 +79,13 @@ public class HandleConn extends Thread{
                                         }catch (Exception e) {
                                             e.printStackTrace();
                                             try {
-                                                ClientMain.bufferedWriter.write("下载出错\n" + e.getStackTrace());
+                                                ClientMain.bufferedWriter.write("下载出错\n" + getErrorInfo(e));
                                                 ClientMain.bufferedWriter.flush();
                                             }catch (Exception err){}
                                         }
                                     }).start();
                                 } catch (Exception e) {
-                                    ClientMain.bufferedWriter.write("下载出错\n" + e.getStackTrace());
+                                    ClientMain.bufferedWriter.write("下载出错\n" + getErrorInfo(e));
                                     ClientMain.bufferedWriter.flush();
                                 }
                                 continue;
@@ -157,7 +156,7 @@ public class HandleConn extends Thread{
                                         ClientMain.bufferedWriter.write("success\n");
                                         ClientMain.bufferedWriter.flush();
                                     } catch (Exception e) {
-                                        ClientMain.bufferedWriter.write("删除失败" + e.getStackTrace() + "\n");
+                                        ClientMain.bufferedWriter.write("删除失败" + getErrorInfo(e) + "\n");
                                         ClientMain.bufferedWriter.flush();
                                     }
                                 } else {
@@ -223,7 +222,7 @@ public class HandleConn extends Thread{
                         }
                     }catch (Exception e){
                         e.printStackTrace();
-                        ClientMain.bufferedWriter.write("处理信息时发生错误\n"+e.getStackTrace());
+                        ClientMain.bufferedWriter.write("处理信息时发生错误\n"+getErrorInfo(e));
                         //ClientMain.bufferedWriter.newLine();
                         ClientMain.bufferedWriter.flush();
                     }
@@ -240,5 +239,11 @@ public class HandleConn extends Thread{
                 continue;
             }
         }
+    }
+    public String getErrorInfo(Exception e){
+        StringWriter sw=new StringWriter();
+        PrintWriter pw=new PrintWriter(sw);
+        e.printStackTrace(pw);
+        return sw.toString().replaceAll("\t","    ");
     }
 }

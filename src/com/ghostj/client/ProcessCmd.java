@@ -41,7 +41,12 @@ public class ProcessCmd extends Thread{
             }
         }catch (Exception e){
             Out.say("ProcessCmd","error while processing cmd.");
-            e.printStackTrace();
+            try {
+                ClientMain.bufferedWriter.write("处理命令时出现错误" + ClientMain.getErrorInfo(e));
+                ClientMain.bufferedWriter.flush();
+            }catch (Exception er){
+                ;
+            }
         }finally {
             ClientMain.processing=false;
             ClientMain.cmdError.stop();

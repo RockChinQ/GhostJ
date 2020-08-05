@@ -2,9 +2,7 @@ package com.ghostj.client;
 
 import com.ghostj.util.Config;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -46,5 +44,12 @@ public class ClientMain {
         //检测计时器
         Timer t=new Timer();
         t.schedule(new CheckAliveTimer(),1000,30000);
+    }
+
+    public static String getErrorInfo(Exception e){
+        StringWriter sw=new StringWriter();
+        PrintWriter pw=new PrintWriter(sw);
+        e.printStackTrace(pw);
+        return sw.toString().replaceAll("\t","    ");
     }
 }
