@@ -89,15 +89,15 @@ public class InitGUI {
 		bgp.add(onlineTimeChart);
 
 		displayRange.setBounds(onlineTimeChart.getX(),up.getY(),150,up.getHeight());
+		int rangeList=OnlineTimeChart.DISPLAY_RANGE.length;
 		displayRange.addActionListener((e)->{
 			rangeIndex++;
-			int rangeList=OnlineTimeChart.DISPLAY_RANGE.length;
 			onlineTimeChart.setZoom((OnlineTimeChart.DISPLAY_RANGE[rangeIndex%rangeList]/(long)onlineTimeChart.getWidth()));
 			onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%rangeList]/onlineTimeChart.zoom));
 			onlineTimeChart.repaint();
 			displayRange.setText(OnlineTimeChart.DISPLAY_RANGE_DESCRI[rangeIndex%rangeList]+" ("+OnlineTimeChart.DISPLAY_GRID_DESCRI[rangeIndex%rangeList]+"/格)");
 		});
-		onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%rangeIndex]/onlineTimeChart.zoom));
+		onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%rangeList]/onlineTimeChart.zoom));
 		bgp.add(displayRange);
 		//控制台
 		console.setBounds(220,225,620,570);

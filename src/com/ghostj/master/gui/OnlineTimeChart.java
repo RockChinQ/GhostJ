@@ -1,6 +1,7 @@
 package com.ghostj.master.gui;
 
 import com.ghostj.master.MasterMain;
+import com.ghostj.master.util.Out;
 import com.ghostj.master.util.TagLog;
 
 import javax.swing.*;
@@ -13,18 +14,18 @@ import java.util.TimerTask;
 
 public class OnlineTimeChart extends JPanel {
 	long startTime=0;
-	long zoom=0;
-	int sep=1000;
+	long zoom=1000;
+	int sep=60000;
 	static final Color TIPS_LINE_COLOR=new Color(86, 155, 86, 153);
 	static final int DEVICE_TRACK_HEIGHT=8,LINE_HEIGHT=4;
 	static final Font device=new Font("Consolas",Font.PLAIN,12);
 	public static final long[] DISPLAY_RANGE=new long[]{300000,600000,1800000,3600000,21600000,43200000,86400000,259200000,604800000
 			,1209600000, 2592000000L, 5184000000L, 15552000000L, 31536000000L};
 	public static final String[] DISPLAY_RANGE_DESCRI=new String[]{"5分钟","10分钟","30分钟","1小时","6小时","12小时","1天","3天","7天","14天","30天","60天","180天","1年"};
-	//5分钟，10分钟，30分钟，1小时，6小时，12小时，1天，3天，7天，14天，30天，60天，180天，365天
-	//30秒,1分钟,3分钟,6分钟,30分钟,2小时,4小时,8小时,1天,2天,3天,6天,20天,30天;
-	public static final long[] DISPLAY_GRID_TIME=new long[]{30000,60000,180000,360000,1800000,7200000,14400000,28800000,86400000,172800000,259200000,518400000,1728000000,2592000000L};
-	public static final String[] DISPLAY_GRID_DESCRI=new String[]{"30秒","1分钟","3分钟","6分钟","30分钟","2小时","4小时","8小时","1天","2天","3天","6天","20天","30天"};
+	//5分,10分,30分,1小时,6小时,12小时,1天,3天,7天,14天,30天,60天,180天,365天
+	//30秒,1分钟,3分钟,6分钟,30分钟,1小时,3小时,8小时,1天,2天,3天,6天,14天,30天;
+	public static final long[] DISPLAY_GRID_TIME=new long[]{30000,60000,180000,360000,1800000,3600000,10800000,28800000,86400000,172800000,259200000,518400000,1209600000,2592000000L};
+	public static final String[] DISPLAY_GRID_DESCRI=new String[]{"30秒","1分钟","3分钟","6分钟","30分钟","1小时","3小时","8小时","1天","2天","3天","6天","14天","30天"};
 	public OnlineTimeChart(){
 		this.addMouseListener(new MouseAdapter() {
 			@Override
@@ -71,12 +72,14 @@ public class OnlineTimeChart extends JPanel {
 		g.drawString("|",this.getWidth()-2,10);
 
 
-		int y=15;
+		int y=35;
 		//画格子
-
+		long endTime=startTime+this.getWidth()*zoom;
 		g.setColor(Color.lightGray);
 		for(int i=0;i*sep+71<this.getWidth();i++){
 			g.drawLine(this.getWidth()-i*sep-1,0,this.getWidth()-i*sep-1,this.getHeight());
+			Date date=new Date(endTime-i*sep*zoom);
+			g.drawString(date.getDate()+","+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds(),this.getWidth()-i*sep-30,i%2==0?20:31);
 		}
 
 		g.setColor(Color.white);
@@ -118,5 +121,6 @@ public class OnlineTimeChart extends JPanel {
 	}
 	public void setSep(int sep){
 		this.sep=sep;
+//		Out.say(sep+"");
 	}
 }
