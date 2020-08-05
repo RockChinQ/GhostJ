@@ -4,11 +4,10 @@ import com.ghostj.master.MasterMain;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.util.ArrayList;
 
 public class BatProcess {
-	public static boolean processing=false;
-	public static boolean finish=false;
-	public static boolean destroy=false;
+	public static ArrayList<String> cmds=new ArrayList<>();
 	public static void processBatch(String batStr,String[] args)throws Exception{
 		//替换所有参数引用
 		String bat=batStr;
@@ -25,27 +24,12 @@ public class BatProcess {
 		}
 	}
 	private static void masterProcess(String[] cmds){
-		processing=true;
 		nextCmd:for (int i=0;i<cmds.length;i++){
 			try {
-				MasterMain.bufferedWriter.write(cmds[i]);
-				MasterMain.bufferedWriter.flush();
-				finish=false;
-				destroy=false;
-				while (true){
-					if(destroy){
-						processing=false;
-						return;
-					}
-					if (finish){
-						continue nextCmd;
-					}
-					Thread.sleep(1000);
-				}
+				BatProcess.cmds.add(cmds[i]);
 			}catch (Exception e){
 				e.printStackTrace();
 			}
 		}
-		processing=false;
 	}
 }
