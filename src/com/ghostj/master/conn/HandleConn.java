@@ -83,6 +83,11 @@ public class HandleConn extends Thread{
 								}
 								continue;
 							}
+							case "!finish!":{
+								Out.say("HandleConn","未预期的finish消息");
+								MasterMain.initGUI.addStringToConsole.addStr("\n[HandleConn]收到未预期的finish消息\n");
+								continue;
+							}
 							default:{
 								Out.sayThisLine(cmds.toString());
 								continue;

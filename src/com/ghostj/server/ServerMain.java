@@ -136,4 +136,12 @@ public class ServerMain {
 			tagLog.addTag(".Master","alive");
 		tagLog.pack();
 	}
+	public static void cmdProcessFinish(){
+		try{
+			handleMaster.outputStreamWriter.write("!finish!");
+			handleMaster.outputStreamWriter.flush();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+	}
 }
