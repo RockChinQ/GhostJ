@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.util.Date;
 
 public class HandleConn extends Thread{
+    @Override
     public void run(){
         //反复尝试连接
         while (true){
@@ -20,7 +21,7 @@ public class HandleConn extends Thread{
                 } catch (IOException e) {
                     Out.say("HandleConn","无法建立连接，正在尝试重新连接");
                     e.printStackTrace();
-                    try{ this.sleep(15000-(new Date().getTime()-st)); }catch (Exception e0){ ; }
+                    try{ sleep(15000-(new Date().getTime()-st)); }catch (Exception ignored){ ; }
                     continue;
                 }
                 ClientMain.bufferedWriter=new OutputStreamWriter(ClientMain.socket.getOutputStream(),"GBK");
@@ -191,7 +192,16 @@ public class HandleConn extends Thread{
                                 if (cmd0.length>=2&&"f".equals(cmd0[1])){
                                     System.exit(0);
                                 }else if(!ClientMain.processing){
-                                    System.exit(0);
+                                    ClientMain.bufferedWriter.write("Exit client？Confirm(Yes/No):");
+                                    ClientMain.bufferedWriter.flush();
+                                    String confirm=ClientMain.bufferedReader.readLine();
+                                    ClientMain.bufferedWriter.write(confirm+"\n");
+                                    if(confirm.equals("y")||confirm.equals("Y")||confirm.equals("yes")){
+                                        System.exit(0);
+                                    }else {
+                                        ClientMain.bufferedWriter.write("Cancelled.\n");
+                                        ClientMain.bufferedWriter.flush();
+                                    }
                                 }else {
                                     ClientMain.bufferedWriter.write("仍有正在进行的操作");
                                     ClientMain.bufferedWriter.flush();

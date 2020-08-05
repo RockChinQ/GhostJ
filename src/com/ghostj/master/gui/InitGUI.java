@@ -4,6 +4,8 @@ import com.ghostj.master.MasterMain;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -172,6 +174,14 @@ public class InitGUI {
 
 		//mainwd.setSize(console.getX()+console.getWidth(),mainwd.getHeight());
 		mainwd.setVisible(true);
+/*
+		mainwd.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				bgp.setSize(mainwd.getSize());
+				console.setSize(mainwd.getWidth()-clientTable.getWidth()-10);
+			}
+		});*/
 
 		loginPanel=new LoginPanel(mainwd);
 	}
