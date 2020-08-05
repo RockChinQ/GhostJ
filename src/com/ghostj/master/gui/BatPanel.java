@@ -3,6 +3,7 @@ package com.ghostj.master.gui;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.ghostj.master.MasterMain;
+import com.ghostj.master.core.BatProcess;
 import com.ghostj.master.util.FileRW;
 import com.ghostj.master.util.Out;
 
@@ -102,14 +103,15 @@ public class BatPanel extends JPanel {
             int option=0;
             //System.out.println(option);
             if(option==0){
-                try {
+                try {/*
                     String cmdsp[]=whichSelected().cmds.split("\n\r");
                     for(String cmd:cmdsp){
-                        System.out.println(cmd);
                         MasterMain.bufferedWriter.write(cmd);
                         MasterMain.bufferedWriter.newLine();
                         MasterMain.bufferedWriter.flush();
-                    }
+                    }*/
+
+                    BatProcess.processBatch(whichSelected().cmds,new String[]{});
                 }catch (Exception er){
                     er.printStackTrace();
                     Out.say("BatPanel","无法将批处理指令发送至服务端");

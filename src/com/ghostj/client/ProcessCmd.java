@@ -56,6 +56,7 @@ public class ProcessCmd extends Thread{
                 //ClientMain.bufferedWriter.newLine();
                 ClientMain.bufferedWriter.flush();
             }catch (Exception e){}
+
         }
     }
 }

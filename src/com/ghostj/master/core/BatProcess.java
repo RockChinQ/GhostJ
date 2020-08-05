@@ -12,22 +12,29 @@ public class BatProcess {
 		//替换所有参数引用
 		String bat=batStr;
 		for(int i=0;i<args.length;i++){
-			bat=new String(bat.toString().replaceAll("%"+i+"%",args[i]));
+			bat= bat.replaceAll("%" + i + "%", args[i]);
 		}
-		String batLn[]=bat.toString().split("\n");
+		String batLn[]= bat.split("\n");
 		//解析出运行此bat的对象
 		//#!master或#!client
 		if(batLn[0].equals("#!master")){
-			masterProcess(batLn);
+			for (int i=1;i<batLn.length;i++){
+				BatProcess.cmds.add(batLn[i]);
+			}
+			masterProcess();
 		}else if(batLn[0].equals("#!client")){
 
 		}
 	}
-	private static void masterProcess(String[] cmds){
-		nextCmd:for (int i=0;i<cmds.length;i++){
+	public static void masterProcess(){
+		if(cmds.size()>0) {
+			String cm = BatProcess.cmds.get(0);
+			BatProcess.cmds.remove(0);
 			try {
-				BatProcess.cmds.add(cmds[i]);
-			}catch (Exception e){
+				MasterMain.bufferedWriter.write(cm);
+				MasterMain.bufferedWriter.newLine();
+				MasterMain.bufferedWriter.flush();
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

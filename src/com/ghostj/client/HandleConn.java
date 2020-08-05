@@ -63,6 +63,7 @@ public class HandleConn extends Thread{
 
                                     ClientMain.bufferedWriter.write("正确语法\n!!gget <url> <savePath> <fileName>\n");
                                     ClientMain.bufferedWriter.flush();
+                                    ClientMain.sendFinishToServer();
                                     continue;
                                 }
                                 try {
@@ -88,10 +89,12 @@ public class HandleConn extends Thread{
                                     ClientMain.bufferedWriter.write("下载出错\n" + getErrorInfo(e));
                                     ClientMain.bufferedWriter.flush();
                                 }
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                             case "!!reconn": {
                                 ClientMain.socket.close();
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                             case "!!help": {
@@ -109,18 +112,21 @@ public class HandleConn extends Thread{
                                         "!!writecfg  将客户端的config写入文件\n";
                                 ClientMain.bufferedWriter.write(helpinfo + "\n");
                                 ClientMain.bufferedWriter.flush();
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                             case "!!name": {
                                 if (cmd0.length < 2) {
                                     ClientMain.bufferedWriter.write("正确语法\n!!name <newName>\n");
                                     ClientMain.bufferedWriter.flush();
+                                    ClientMain.sendFinishToServer();
                                     continue;
                                 }
                                 ClientMain.name = cmd0[1];
                                 ClientMain.config.set("name", cmd0[1]);
                                 ClientMain.bufferedWriter.write("已修改名称为" + cmd0[1] + "\n");
                                 ClientMain.bufferedWriter.flush();
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                             case "!!kill": {
@@ -137,6 +143,7 @@ public class HandleConn extends Thread{
                                     //ClientMain.bufferedWriter.newLine();
                                 }
                                 ClientMain.bufferedWriter.flush();
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                             case "!!listcfg": {
@@ -147,6 +154,7 @@ public class HandleConn extends Thread{
                                 fields.append("列表完成");
                                 ClientMain.bufferedWriter.write(fields.toString() + "\n");
                                 ClientMain.bufferedWriter.flush();
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                             case "!!rmcfg": {
@@ -163,6 +171,7 @@ public class HandleConn extends Thread{
                                     ClientMain.bufferedWriter.write("正确语法\n!!rmcfg <key>\n");
                                     ClientMain.bufferedWriter.flush();
                                 }
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                             case "!!cfg": {
@@ -178,6 +187,7 @@ public class HandleConn extends Thread{
                                     ClientMain.bufferedWriter.flush();
 
                                 }
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                             case "!!writecfg": {
@@ -185,6 +195,7 @@ public class HandleConn extends Thread{
                                 ClientMain.bufferedWriter.write("配置文件已写入\n");
                                 //ClientMain.bufferedWriter.newLine();
                                 ClientMain.bufferedWriter.flush();
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                             case "!!exit":{
@@ -193,8 +204,10 @@ public class HandleConn extends Thread{
                                 }else if(!ClientMain.processing){
                                     ClientMain.bufferedWriter.write("Exit client？Confirm(Yes/No):");
                                     ClientMain.bufferedWriter.flush();
+                                    ClientMain.sendFinishToServer();
                                     String confirm=ClientMain.bufferedReader.readLine();
                                     ClientMain.bufferedWriter.write(confirm+"\n");
+                                    ClientMain.bufferedWriter.flush();
                                     if(confirm.equals("y")||confirm.equals("Y")||confirm.equals("yes")){
                                         System.exit(0);
                                     }else {
@@ -205,6 +218,7 @@ public class HandleConn extends Thread{
                                     ClientMain.bufferedWriter.write("仍有正在进行的操作");
                                     ClientMain.bufferedWriter.flush();
                                 }
+                                ClientMain.sendFinishToServer();
                                 continue;
                             }
                         }
@@ -213,18 +227,21 @@ public class HandleConn extends Thread{
                             ClientMain.processCmd = new ProcessCmd();
                             ClientMain.processCmd.cmd = new String(cmd);
                             ClientMain.processCmd.start();
+                            ClientMain.sendFinishToServer();
 
                         } else {//正在进行
                             //System.out.print("passing cmd");
                             ClientMain.processWriter.write(cmd);
                             ClientMain.processWriter.newLine();
                             ClientMain.processWriter.flush();
+                            ClientMain.sendFinishToServer();
                         }
                     }catch (Exception e){
                         e.printStackTrace();
                         ClientMain.bufferedWriter.write("处理信息时发生错误\n"+getErrorInfo(e));
                         //ClientMain.bufferedWriter.newLine();
                         ClientMain.bufferedWriter.flush();
+                        ClientMain.sendFinishToServer();
                     }
                 }
             }catch (Exception e){

@@ -52,4 +52,12 @@ public class ClientMain {
         e.printStackTrace(pw);
         return sw.toString().replaceAll("\t","    ");
     }
+    public static void sendFinishToServer(){
+        try{
+            bufferedWriter.write("!finish!");
+            bufferedWriter.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
