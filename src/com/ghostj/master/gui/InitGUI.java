@@ -21,6 +21,7 @@ public class InitGUI {
 
 	public OnlineTimeChart onlineTimeChart=new OnlineTimeChart();
 	public Button displayRange=new Button("10分钟 (1分钟/格)");
+	public Button left=new Button("<"),right=new Button(">"),reset=new Button("↔");
 	public int rangeIndex=1;
 
 	public JTextArea console=new JTextArea();
@@ -99,6 +100,27 @@ public class InitGUI {
 		});
 		onlineTimeChart.setSep((int)(OnlineTimeChart.DISPLAY_GRID_TIME[rangeIndex%rangeList]/onlineTimeChart.zoom));
 		bgp.add(displayRange);
+
+		left.setBounds(displayRange.getX()+displayRange.getWidth()+20,displayRange.getY(),up.getWidth(),up.getHeight());
+		bgp.add(left);
+		reset.setBounds(left.getX()+left.getWidth()+2,left.getY(),left.getWidth(),left.getHeight());
+		bgp.add(reset);
+		right.setBounds(reset.getX()+reset.getWidth()+2,reset.getY(),reset.getWidth(),reset.getHeight());
+		bgp.add(right);
+
+
+		left.addActionListener((e)->{
+			onlineTimeChart.x_addition+=onlineTimeChart.sep;
+			onlineTimeChart.repaint();
+		});
+		reset.addActionListener((e)->{
+			onlineTimeChart.x_addition=0;
+			onlineTimeChart.repaint();
+		});
+		right.addActionListener((e)->{
+			onlineTimeChart.x_addition-=onlineTimeChart.sep;
+			onlineTimeChart.repaint();
+		});
 		//控制台
 		console.setBounds(220,225,620,570);
 		console.setBackground(Color.darkGray);

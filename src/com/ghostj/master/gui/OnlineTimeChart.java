@@ -16,6 +16,7 @@ public class OnlineTimeChart extends JPanel {
 	long startTime=0;
 	long zoom=1000;
 	int sep=60000;
+	public int x_addition=0;
 	static final Color TIPS_LINE_COLOR=new Color(86, 155, 86, 153);
 	static final int DEVICE_TRACK_HEIGHT=8,LINE_HEIGHT=4;
 	static final Font device=new Font("Consolas",Font.PLAIN,12);
@@ -59,22 +60,23 @@ public class OnlineTimeChart extends JPanel {
 		g.fillRect(0,0,this.getWidth(),this.getHeight());
 
 		g.setColor(Color.GREEN);
-		Date d=new Date(startTime);
+		long t_addition=zoom*x_addition;
+		Date d=new Date(startTime-t_addition);
 		g.drawString("|"+(d.getMonth()+1)+"."+d.getDate()+","+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds(),0,10);
-		d=new Date(startTime+this.getWidth()*zoom/4);
+		d=new Date(startTime+this.getWidth()*zoom/4-t_addition);
 		g.drawString("|"+(d.getMonth()+1)+"."+d.getDate()+","+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds(),this.getWidth()/4,10);
-		d=new Date(startTime+this.getWidth()*zoom/4*2);
+		d=new Date(startTime+this.getWidth()*zoom/4*2-t_addition);
 		g.drawString("|"+(d.getMonth()+1)+"."+d.getDate()+","+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds(),this.getWidth()/4*2,10);
-		d=new Date(startTime+this.getWidth()*zoom/4*3);
+		d=new Date(startTime+this.getWidth()*zoom/4*3-t_addition);
 		g.drawString("|"+(d.getMonth()+1)+"."+d.getDate()+","+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds(),this.getWidth()/4*3,10);
-		d=new Date(startTime+this.getWidth()*zoom);
+		d=new Date(startTime+this.getWidth()*zoom-t_addition);
 		g.drawString((d.getMonth()+1)+"."+d.getDate()+","+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds(),this.getWidth()/4*3+76,10);
 		g.drawString("|",this.getWidth()-2,10);
 
 
 		int y=35;
 		//画格子
-		long endTime=startTime+this.getWidth()*zoom;
+		long endTime=startTime+this.getWidth()*zoom-t_addition;
 		g.setColor(Color.lightGray);
 		for(int i=0;i*sep+71<this.getWidth();i++){
 			g.drawLine(this.getWidth()-i*sep-1,0,this.getWidth()-i*sep-1,this.getHeight());
@@ -87,16 +89,17 @@ public class OnlineTimeChart extends JPanel {
 		for(String deviceKey: MasterMain.tagLog.allOwner.keySet()){
 			TagLog.tagOwner owner=MasterMain.tagLog.allOwner.get(deviceKey);
 			long loginTime=0;
-			//提示线
+			//横向提示线
 			g.setColor(TIPS_LINE_COLOR);
 			g.drawLine(0,y+4,this.getWidth(),y+4);
+			//每个device的taglog
 			for(TagLog.tagOwner.tag tag:owner.tags){
 				if(tag.name.equals("login"))
-					loginTime=tag.time;
+					loginTime=tag.time+t_addition;
 				else if(tag.name.equals("alive")&&loginTime!=0){
 					g.setColor(deviceKey.equals(".Server")||deviceKey.equals(".Master")?Color.gray:Color.white);
 					//System.out.println(deviceKey+" l"+loginTime+" a"+tag.time);
-					g.fillRect((int)getXByTime(loginTime),y+2,(int)getXByTime(tag.time)-(int)getXByTime(loginTime),LINE_HEIGHT);
+					g.fillRect((int)getXByTime(loginTime),y+2,(int)getXByTime(tag.time+t_addition)-(int)getXByTime(loginTime),LINE_HEIGHT);
 					loginTime=0;
 				}
 			}
