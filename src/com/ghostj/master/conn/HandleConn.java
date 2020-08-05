@@ -1,6 +1,7 @@
 package com.ghostj.master.conn;
 
 import com.ghostj.master.MasterMain;
+import com.ghostj.master.core.BatProcess;
 import com.ghostj.master.gui.ClientTable;
 import com.ghostj.master.gui.LoginPanel;
 import com.ghostj.master.util.FileRW;
@@ -18,7 +19,6 @@ public class HandleConn extends Thread{
 
 					if((char)c=='!'){
 						StringBuffer cmds=new StringBuffer("!");
-						int workInfoLen=0;
 						while(true){
 							int c0=MasterMain.inputStreamReader.read();
 							if((char)c0=='!') {
@@ -30,8 +30,7 @@ public class HandleConn extends Thread{
 								break;
 							}
 							cmds.append((char)c0);
-							workInfoLen++;
-//							if(workInfoLen>=25)
+							//							if(workInfoLen>=25)
 //								break;
 						}
 						//System.out.println(cmds);
@@ -84,8 +83,9 @@ public class HandleConn extends Thread{
 								continue;
 							}
 							case "!finish!":{
-								Out.say("HandleConn","未预期的finish消息");
-								MasterMain.initGUI.addStringToConsole.addStr("\n[HandleConn]收到未预期的finish消息\n");
+//								Out.say("HandleConn","未预期的finish消息");
+//								MasterMain.initGUI.addStringToConsole.addStr("\n[HandleConn]收到未预期的finish消息\n");
+								BatProcess.finish=true;
 								continue;
 							}
 							default:{

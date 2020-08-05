@@ -94,6 +94,10 @@ public class HandleConn extends Thread{
                             ServerMain.sendListToMaster();
                             continue;
                         }
+                        case "!finish":{
+                            ServerMain.cmdProcessFinish();
+                            continue;
+                        }
                         case "!info":{
                             if (cmd.length<4){
                                 Out.say("conn"+hostName,"客户端提供的info语法不正确");
