@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class BatPanel extends JPanel {
     static final Color batBgc=new Color(140,140,140),batSel=new Color(60,60,60),nameCl=new Color(130, 188, 252);
-    static final Font batFont=new Font("Serif",Font.PLAIN,16),batName=new Font("Serif",Font.BOLD,17);
+    static final Font batFont=new Font("",Font.PLAIN,13),batName=new Font("Serif",Font.BOLD,17);
     public class bat extends JButton{
         String cmds="";
         String name="bat";
@@ -54,7 +54,7 @@ public class BatPanel extends JPanel {
     ArrayList<bat> bats=new ArrayList<>();
     JPanel panelForBats=new JPanel();
 
-    static final Font btnF=new Font("Serif",Font.BOLD,19);
+    static final Font btnF=new Font("Serif",Font.BOLD,17);
     public BatPanel(){
         this.setLayout(null);
 
@@ -152,6 +152,7 @@ public class BatPanel extends JPanel {
 
         InputAreaField cmds=new InputAreaField("命令",340,100,50);
         cmds.setLocation(name.getX(),name.getY()+name.getHeight()+10);
+        cmds.input.setFont(btnF);
         cmds.setValue(cmdss);
         jDialog.add(cmds);
 
