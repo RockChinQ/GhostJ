@@ -81,7 +81,8 @@ public class ServerMain {
 	}
 	public static void killConn(HandleConn handleConn){
 		Out.say("ServerMain","kill:"+handleConn.hostName);
-		tagLog.addTag(handleConn.hostName,"alive");
+		if(handleConn.avai)
+			tagLog.addTag(handleConn.hostName,"alive");
 		if(handleConn==null)
 			return;
 		if(handleConn.equals(focusedConn))
