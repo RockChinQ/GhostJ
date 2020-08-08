@@ -1,9 +1,18 @@
-命令    参数                                     描述n\n
-!list                                         列表所有连接的主机\n
-!focus <connName(wordStartwith)>              聚焦\n
-!dfocus                                       退出聚焦\n
-!chname <connName(wordStartWith)> <newName>   修改客户端名称\n
-!stop                                         关闭服务端\n
-!close                                        关闭服务端\n
-!pw <newPassword>                             修改master连接的密码\n
-!test [timeout]                               测试每个客户端连接，period为超时时间\n
+命令    参数                                  描述ln
+[server相关]ln
+!list                                         列表所有连接的主机ln
+!stop                                         关闭服务端ln
+!close                                        关闭服务端ln
+ln
+[master相关]ln
+!pw <newPassword>                             修改master连接的密码ln
+ln
+[client相关]ln
+!focus <connName(wordStartwith)>              聚焦ln
+!dfocus                                       退出聚焦ln
+!chname <connName(wordStartWith)> <newName>   修改客户端名称ln
+!test [timeout]                               测试每个客户端连接，period为超时时间ln
+ln
+[TagLog(在线时间检测标记)相关]ln
+!lstag                                        列出所有taglogln
+!rmtag <tagOwnerName(wordStartWith)>          删除指定的taglogln

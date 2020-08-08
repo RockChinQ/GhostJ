@@ -77,11 +77,11 @@ public class HandleConn extends Thread{
                             Out.say("conn"+hostName,"名称"+cmd[1]);
                             this.hostName=new String(cmd[1]);
                             ServerMain.sendListToMaster();
-                            Out.putPrompt();
                             avai=true;
                             ServerMain.tagLog.addTag(this.hostName,"login");
                             ServerMain.tagLog.addTag(this.hostName,"alive");
                             ServerMain.tagLog.pack();
+                            Out.putPrompt();
                             continue;
                         }
                         case "!version":{
@@ -105,7 +105,6 @@ public class HandleConn extends Thread{
                                 continue;
                             }
                             Out.say("conn"+cmd[1],"name:"+cmd[1]+" version:"+cmd[2]+" sysStartTime:"+cmd[3]);
-                            Out.putPrompt();
                             avai=true;
                             this.hostName=cmd[1];
                             this.version=cmd[2];
@@ -115,6 +114,7 @@ public class HandleConn extends Thread{
                             ServerMain.tagLog.addTag(this.hostName,"login");
                             ServerMain.tagLog.addTag(this.hostName,"alive");
                             ServerMain.tagLog.pack();
+                            Out.putPrompt();
                             continue;
                         }
                         default:{

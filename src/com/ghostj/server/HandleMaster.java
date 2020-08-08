@@ -58,6 +58,7 @@ public class HandleMaster extends Thread{
 								ServerMain.acceptMaster.acceptable=true;
 								this.stop();
 							}
+							Out.putPrompt();
 							continue readMsg;
 						}
 						case "#alivem#":{

@@ -117,6 +117,7 @@ public class ServerMain {
 //        conn.stop();
 //    }
 	public static void stopServer(int status){
+		Out.say("ServerMain.stopServer","");
 		logAliveDevice();
 		try {
 			ServerMain.handleMaster.outputStreamWriter.write("!relogin!");
@@ -134,7 +135,7 @@ public class ServerMain {
 				tagLog.addTag(handleConn.hostName,"alive");
 		}
 		tagLog.addTag(".Server","alive");
-		if(handleMaster.available)
+		if(handleMaster!=null&&handleMaster.available)
 			tagLog.addTag(".Master","alive");
 		tagLog.pack();
 	}

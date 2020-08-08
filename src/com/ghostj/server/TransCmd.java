@@ -32,9 +32,9 @@ public class TransCmd extends  Thread{
             String cmd[]=typeCmd.split(" ");
             switch (cmd[0]) {
                 case "!help": {
-                    if(new File(("serverHelp.txt")).exists()){
-                        Out.say("TransCmd-help", FileRW.read("serverHelp.txt").replaceAll("\\n","\n"));
-                    }else {
+                    if(new File(("serverHelp.txt")).exists())
+                        Out.say("TransCmd-help", FileRW.read("serverHelp.txt").replaceAll("ln", "\n\r"));
+                    else {
                         Out.say("TransCme-help", "command      description\n!list   列表所有连接的主机\n!focus <connName(wordStartwith)>   聚焦\n!dfocus    退出聚焦\n!chname <connName(wordStartWith)> <newName>     修改客户端名称\n!stop    关闭服务端\n!close    关闭服务端" +
                                 "\n!pw <newPassword> 修改master连接的密码" +
                                 "\n!test [timeout] 测试每个客户端连接，period为超时时间");
@@ -51,6 +51,15 @@ public class TransCmd extends  Thread{
                     }
                     Out.say("TransCmd-info", "列表完成.");
                     ServerMain.cmdProcessFinish();
+                    return;
+                }
+                case "!echo":{
+                    if (cmd.length>1){
+                        Out.sayThisLine("[TransCmd-echo]");
+                        for(int i=1;i<cmd.length;i++){
+                            Out.sayThisLine(cmd[i]+" ");
+                        }
+                    }
                     return;
                 }
                 case "!pw": {
@@ -114,7 +123,6 @@ public class TransCmd extends  Thread{
                         time = 1500;
                     }
                     new CheckAliveMaster(time).start();
-                    ServerMain.cmdProcessFinish();
                     return;
                 }
                 case "!chname": {

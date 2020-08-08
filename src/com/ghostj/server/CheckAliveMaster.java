@@ -39,6 +39,7 @@ public class CheckAliveMaster extends Thread{
 		}
 		System.gc();
 		Out.say("CheckAliveMaster","已自动清除");
+		ServerMain.cmdProcessFinish();
 		ServerMain.manuallyTestConn=false;
 	}
 }
