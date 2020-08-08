@@ -60,6 +60,7 @@ public class TransCmd extends  Thread{
                             Out.sayThisLine(cmd[i]+" ");
                         }
                     }
+                    Out.sayThisLine("\n");
                     return;
                 }
                 case "!pw": {

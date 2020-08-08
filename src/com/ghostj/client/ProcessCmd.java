@@ -48,14 +48,14 @@ public class ProcessCmd extends Thread{
                 ;
             }
         }finally {
-            ClientMain.processing=false;
-            ClientMain.cmdError.stop();
             Out.say("ProcessCmd","命令已完成");
             try {
                 ClientMain.bufferedWriter.write("\n命令已完成\n");
                 //ClientMain.bufferedWriter.newLine();
                 ClientMain.bufferedWriter.flush();
             }catch (Exception e){}
+            ClientMain.processing=false;
+            ClientMain.cmdError.stop();
 
         }
     }
