@@ -33,7 +33,20 @@ public class HandleMaster extends Thread{
 				}
 				//处理指令
 				try{
-					String cmd[]=msg.split(" ");
+					String cmd[] = new String[0];
+					try {
+						cmd = msg.split(" ");
+					}catch (Exception er){
+
+						Out.say("HandleMaster","master发送了非法数据,正在关闭master连接");
+						er.printStackTrace();
+						ServerMain.tagLog.addTag(".Master","alive");
+						ServerMain.handleMaster.available=false;
+						ServerMain.acceptMaster.acceptable=true;
+						this.stop();
+					}
+
+					this.sleep(200);
 					//System.out.println(msg);
 					switch (cmd[0]){
 						case "#pw":{
