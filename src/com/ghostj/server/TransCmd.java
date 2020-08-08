@@ -1,8 +1,10 @@
 package com.ghostj.server;
 
+import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -30,9 +32,13 @@ public class TransCmd extends  Thread{
             String cmd[]=typeCmd.split(" ");
             switch (cmd[0]) {
                 case "!help": {
-                    Out.say("TransCme-help", "command      description\n!list   列表所有连接的主机\n!focus <connName(wordStartwith)>   聚焦\n!dfocus    退出聚焦\n!chname <connName(wordStartWith)> <newName>     修改客户端名称\n!stop    关闭服务端\n!close    关闭服务端" +
-                            "\n!pw <newPassword> 修改master连接的密码" +
-                            "\n!test [timeout] 测试每个客户端连接，period为超时时间");
+                    if(new File(("serverHelp.txt")).exists()){
+                        Out.say("TransCmd-help", FileRW.read("serverHelp.txt").replaceAll("\\n","\n"));
+                    }else {
+                        Out.say("TransCme-help", "command      description\n!list   列表所有连接的主机\n!focus <connName(wordStartwith)>   聚焦\n!dfocus    退出聚焦\n!chname <connName(wordStartWith)> <newName>     修改客户端名称\n!stop    关闭服务端\n!close    关闭服务端" +
+                                "\n!pw <newPassword> 修改master连接的密码" +
+                                "\n!test [timeout] 测试每个客户端连接，period为超时时间");
+                    }
                     ServerMain.cmdProcessFinish();
                     return;
                 }

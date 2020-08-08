@@ -78,6 +78,7 @@ public class ServerMain {
 //				}
 //			}
 //		},new Date(),5000);
+		Out.putPrompt();
 	}
 	public static void killConn(HandleConn handleConn){
 		Out.say("ServerMain","kill:"+handleConn.hostName);
@@ -142,7 +143,8 @@ public class ServerMain {
 			handleMaster.outputStreamWriter.write("!finish!");
 			handleMaster.outputStreamWriter.flush();
 		}catch (Exception e){
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
+		Out.putPrompt();
 	}
 }

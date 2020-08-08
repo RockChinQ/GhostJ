@@ -13,7 +13,7 @@ import java.util.Date;
 public class HandleConn extends Thread{
     Socket socket=null;
     BufferedWriter bufferedWriter=null;
-    String hostName=new Date().getTime()+"";
+    public String hostName=new Date().getTime()+"";
     boolean avai=false;
     long connTime=0;
     long sysStartTime=0;
@@ -73,11 +73,11 @@ public class HandleConn extends Thread{
                             success=true;
                             continue;
                         }
-                        case "!name":{
+                        case "!name":{//此开关已过时，新版本的client使用info指令传输属性信息
                             Out.say("conn"+hostName,"名称"+cmd[1]);
                             this.hostName=new String(cmd[1]);
                             ServerMain.sendListToMaster();
-
+                            Out.putPrompt();
                             avai=true;
                             ServerMain.tagLog.addTag(this.hostName,"login");
                             ServerMain.tagLog.addTag(this.hostName,"alive");
@@ -101,10 +101,11 @@ public class HandleConn extends Thread{
                         case "!info":{
                             if (cmd.length<4){
                                 Out.say("conn"+hostName,"客户端提供的info语法不正确");
+                                Out.say("conn"+hostName,"info:"+cmds);
                                 continue;
                             }
                             Out.say("conn"+cmd[1],"name:"+cmd[1]+" version:"+cmd[2]+" sysStartTime:"+cmd[3]);
-
+                            Out.putPrompt();
                             avai=true;
                             this.hostName=cmd[1];
                             this.version=cmd[2];
