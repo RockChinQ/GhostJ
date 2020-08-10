@@ -111,7 +111,15 @@ public class HandleConn extends Thread{
                                         "!!listcfg  列出客户端的config所有字段\n" +
                                         "!!rmcfg <fieldKey>  删除客户端的config中指定字段\n" +
                                         "!!cfg <key> <value>  修改/增加客户端config中指定字段的值\n" +
-                                        "!!writecfg  将客户端的config写入文件\n";
+                                        "!!writecfg  将客户端的config写入文件\n" +
+                                        "!!proc <oper> [param]  多任务控制系列指令\n" +
+                                        "      oper列表:\n" +
+                                        "      new <name> [初始指令]   新建名为name的任务，并指定初始指令\n" +
+                                        "                             若未指定初始指令将自动以cmd启动新任务\n" +
+                                        "      ls   列出所有此客户端的任务\n" +
+                                        "      focus <name(wordStartWith)>  聚焦到name以参数开头的任务\n" +
+                                        "      disc <fullName>  断连name为参数的任务\n" +
+                                        "                       !!警告:这个命令不会杀死任务中启动的进程,并且会使client与此进程失去连接\n";
                                 ClientMain.bufferedWriter.write(helpinfo + "\n");
                                 ClientMain.bufferedWriter.flush();
                                 ClientMain.sendFinishToServer();
@@ -254,13 +262,13 @@ public class HandleConn extends Thread{
                                         }
                                         ClientMain.bufferedWriter.write("新建进程:"+cmd0[2]+"\n");
                                         if(cmd0.length>=4){//如果有初始执行指令
-                                            ProcessCmd processCmd = new ProcessCmd();
+                                            ProcessCmd processCmd = new ProcessCmd(cmd0[2]);
                                             processCmd.cmd = cmd0[3];
                                             ClientMain.processList.put(cmd0[2],processCmd);
                                             processCmd.start();
                                             ClientMain.sendFinishToServer();
                                         }else {
-                                            ProcessCmd processCmd = new ProcessCmd();
+                                            ProcessCmd processCmd = new ProcessCmd(cmd0[2]);
                                             processCmd.cmd ="cmd";
                                             ClientMain.processList.put(cmd0[2],processCmd);
                                             processCmd.start();
@@ -282,8 +290,7 @@ public class HandleConn extends Thread{
                                         if(ClientMain.processList.containsKey(cmd0[2])){
                                             try {
                                                 ClientMain.processList.get(cmd0[2]).process.destroy();
-                                                ClientMain.processList.get(cmd0[2]).stop();
-                                                ClientMain.processList.remove(cmd0[2]);
+                                                ClientMain.removeProcess(cmd0[2]);
                                             }catch (Exception e){
                                                 ClientMain.bufferedWriter.write("断连process时出现错误\n"+getErrorInfo(e));
                                                 ClientMain.bufferedWriter.flush();

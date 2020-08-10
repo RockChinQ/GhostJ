@@ -14,6 +14,10 @@ public class ProcessCmd extends Thread{
     public String name="";//进程名字，与processlist中的key对应
 
     public long startTime=0;//此进程创建时间
+
+    public ProcessCmd(String name){
+        this.name=name;
+    }
     public void run(){
         try{
 //            ClientMain.processing=true;

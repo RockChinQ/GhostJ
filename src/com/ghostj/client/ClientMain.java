@@ -63,7 +63,15 @@ public class ClientMain {
         }
     }
     public static void removeProcess(String key){
-        processList.remove(key);
+        if(focusedProcess==processList.get(key))
+            focusedProcess=null;
+        try{
+            System.out.println(processList.size()+" "+key);
+            processList.remove(key);
+            System.out.println(processList.size());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
     public static boolean processing(){
         return processList.size()!=0;
