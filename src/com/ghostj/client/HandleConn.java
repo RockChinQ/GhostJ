@@ -1,6 +1,7 @@
 package com.ghostj.client;
 
 import com.ghostj.util.FileRW;
+import com.ghostj.util.TimeUtil;
 import com.sun.xml.internal.bind.v2.TODO;
 
 import java.io.*;
@@ -131,7 +132,7 @@ public class HandleConn extends Thread{
                                 continue;
                             }
                             //TODO 修改kill的机制
-                            /*case "!!kill": {
+                            case "!!kill": {/*
                                 if (ClientMain.processing()) {
                                     ClientMain.cmdError.stop();
                                     ClientMain.processCmd.process.destroy();
@@ -143,11 +144,12 @@ public class HandleConn extends Thread{
                                 } else {
                                     ClientMain.bufferedWriter.write("无任务正在进行\n");
                                     //ClientMain.bufferedWriter.newLine();
-                                }
+                                }*/
+                                ClientMain.bufferedWriter.write("kill命令已过时,使用!!proc disc指令\n");
                                 ClientMain.bufferedWriter.flush();
                                 ClientMain.sendFinishToServer();
                                 continue;
-                            }*/
+                            }
                             case "!!listcfg": {
                                 StringBuffer fields = new StringBuffer("客户端" + ClientMain.name + "的配置文件字段\n");
                                 for (String key : ClientMain.config.field.keySet()) {
@@ -199,6 +201,83 @@ public class HandleConn extends Thread{
                                 ClientMain.bufferedWriter.flush();
                                 ClientMain.sendFinishToServer();
                                 continue;
+                            }
+                            case "!!proc":{
+                                if(cmd0.length<2){
+                                    ClientMain.bufferedWriter.write("proc命令语法不正确.");
+                                    ClientMain.bufferedWriter.flush();
+                                    ClientMain.sendFinishToServer();
+                                    continue;
+                                }
+                                switch (cmd0[1]){
+                                    case "focus":{
+                                        if(cmd0.length<3){
+                                            ClientMain.bufferedWriter.write("proc focus命令语法不正确.");
+                                            ClientMain.bufferedWriter.flush();
+                                            ClientMain.sendFinishToServer();
+                                            continue;
+                                        }
+                                        for(String key:ClientMain.processList.keySet()){
+                                            if(key.startsWith(cmd0[2])){
+                                                ClientMain.focusedProcess=ClientMain.processList.get(key);
+                                                ClientMain.bufferedWriter.write("聚焦process:"+key);
+                                                ClientMain.bufferedWriter.flush();
+                                                ClientMain.sendFinishToServer();
+                                                continue;
+                                            }
+                                        }
+                                        ClientMain.bufferedWriter.write("找不到"+cmd0[2]+"开头的process");
+                                        ClientMain.bufferedWriter.flush();
+                                        ClientMain.sendFinishToServer();
+                                        continue;
+                                        /*ClientMain.bufferedWriter.write("聚焦process:");
+                                        ClientMain.bufferedWriter.flush();*/
+                                    }
+                                    case "ls":{
+                                        ClientMain.bufferedWriter.write("列表所有此客户端已连接的process("+ClientMain.processList.size()+")\nkey\tinitCmd\tstartTime");
+                                        ClientMain.bufferedWriter.flush();
+                                        for(String key:ClientMain.processList.keySet()){
+                                            ClientMain.bufferedWriter.write(key+"\t"+ClientMain.processList.get(key).cmd+"\t"+ TimeUtil.millsToMMDDHHmmSS(ClientMain.processList.get(key).startTime));
+                                        }
+                                        ClientMain.bufferedWriter.flush();
+                                        ClientMain.sendFinishToServer();
+                                        continue;
+                                    }
+                                    case "new":{
+                                        if(cmd0.length<3){
+                                            ClientMain.bufferedWriter.write("proc new命令语法不正确.");
+                                            ClientMain.bufferedWriter.flush();
+                                            ClientMain.sendFinishToServer();
+                                            continue;
+                                        }
+                                        ClientMain.bufferedWriter.write("新建进程:"+cmd0[2]);
+                                        if(cmd0.length>=4){//如果有初始执行指令
+                                            ProcessCmd processCmd = new ProcessCmd();
+                                            processCmd.cmd = cmd0[3];
+                                            ClientMain.processList.put(cmd0[2],processCmd);
+                                            processCmd.start();
+                                            ClientMain.sendFinishToServer();
+                                        }else {
+                                            ProcessCmd processCmd = new ProcessCmd();
+                                            processCmd.cmd ="cmd";
+                                            ClientMain.processList.put(cmd0[2],processCmd);
+                                            processCmd.start();
+                                            ClientMain.sendFinishToServer();
+                                        }
+                                        ClientMain.bufferedWriter.flush();
+                                        continue;
+                                    }
+                                    case "disc":{
+                                        if(cmd0.length<3){
+                                            ClientMain.bufferedWriter.write("proc disc命令语法不正确.");
+                                            ClientMain.bufferedWriter.flush();
+                                            ClientMain.sendFinishToServer();
+                                            continue;
+                                        }
+                                        //注意！！这里仅仅是断开与进程的连接而不是结束进程
+
+                                    }
+                                }
                             }
                             case "!!exit":{
                                 if (cmd0.length>=2&&"f".equals(cmd0[1])){

@@ -8,10 +8,12 @@ public class ProcessCmd extends Thread{
     public Process process=null;
 
 
-    public static BufferedWriter processWriter=null;
-    public static CmdError cmdError=null;
+    public BufferedWriter processWriter=null;//向process写数据
+    public CmdError cmdError=null;
 
-    public String name="";
+    public String name="";//进程名字，与processlist中的key对应
+
+    public long startTime=0;//此进程创建时间
     public void run(){
         try{
 //            ClientMain.processing=true;
@@ -54,10 +56,10 @@ public class ProcessCmd extends Thread{
                 ;
             }
         }finally {
-            Out.say("ProcessCmd","命令已完成");
+            Out.say("ProcessCmd","命令已完成,索引已删除");
             ClientMain.removeProcess(name);
             try {
-                ClientMain.bufferedWriter.write("\n命令已完成\n");
+                ClientMain.bufferedWriter.write("\n命令已完成,process索引已自动删除\n");
                 //ClientMain.bufferedWriter.newLine();
                 ClientMain.bufferedWriter.flush();
             }catch (Exception e){}

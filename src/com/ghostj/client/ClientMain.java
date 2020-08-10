@@ -23,7 +23,7 @@ public class ClientMain {
     public static String name="";
 
 //    public static boolean processing=false;
-    public static ProcessCmd focusedProcess=new ProcessCmd();
+    public static ProcessCmd focusedProcess=null;
 
     //以下是多任务支持的
     public static LinkedHashMap<String,ProcessCmd> processList=new LinkedHashMap<>();
