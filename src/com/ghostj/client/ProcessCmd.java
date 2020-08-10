@@ -6,16 +6,22 @@ import java.nio.charset.Charset;
 public class ProcessCmd extends Thread{
     public String cmd="";
     public Process process=null;
+
+
+    public static BufferedWriter processWriter=null;
+    public static CmdError cmdError=null;
+
+    public String name="";
     public void run(){
         try{
-            ClientMain.processing=true;
+//            ClientMain.processing=true;
 
             Out.say("ProcessCmd","执行命令");
             process=Runtime.getRuntime().exec(cmd);
-            ClientMain.processWriter=new BufferedWriter(new OutputStreamWriter(process.getOutputStream(),"GBK"));
+            processWriter=new BufferedWriter(new OutputStreamWriter(process.getOutputStream(),"GBK"));
 
-            ClientMain.cmdError=new CmdError(new BufferedReader(new InputStreamReader(process.getErrorStream(),"GBK")));
-            ClientMain.cmdError.start();
+            cmdError=new CmdError(new BufferedReader(new InputStreamReader(process.getErrorStream(),"GBK")));
+            cmdError.start();
             Out.say("ProcessCmd","已启动err监听器");
 
 //            BufferedReader proReader=new BufferedReader(new InputStreamReader(process.getInputStream(), "GBK"));
@@ -49,13 +55,14 @@ public class ProcessCmd extends Thread{
             }
         }finally {
             Out.say("ProcessCmd","命令已完成");
+            ClientMain.removeProcess(name);
             try {
                 ClientMain.bufferedWriter.write("\n命令已完成\n");
                 //ClientMain.bufferedWriter.newLine();
                 ClientMain.bufferedWriter.flush();
             }catch (Exception e){}
-            ClientMain.processing=false;
-            ClientMain.cmdError.stop();
+        //            ClientMain.processing=false;
+            cmdError.stop();
 
         }
     }

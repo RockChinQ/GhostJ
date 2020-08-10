@@ -1,6 +1,7 @@
 package com.ghostj.client;
 
 import com.ghostj.util.FileRW;
+import com.sun.xml.internal.bind.v2.TODO;
 
 import java.io.*;
 import java.net.Socket;
@@ -129,13 +130,14 @@ public class HandleConn extends Thread{
                                 ClientMain.sendFinishToServer();
                                 continue;
                             }
-                            case "!!kill": {
-                                if (ClientMain.processing) {
+                            //TODO 修改kill的机制
+                            /*case "!!kill": {
+                                if (ClientMain.processing()) {
                                     ClientMain.cmdError.stop();
                                     ClientMain.processCmd.process.destroy();
                                     ClientMain.processCmd.process.destroyForcibly();
                                     ClientMain.processCmd.stop();
-                                    ClientMain.processing = false;
+//                                    ClientMain.processing = false;
                                     ClientMain.bufferedWriter.write("已终止当前任务\n");
                                     //ClientMain.bufferedWriter.newLine();
                                 } else {
@@ -145,7 +147,7 @@ public class HandleConn extends Thread{
                                 ClientMain.bufferedWriter.flush();
                                 ClientMain.sendFinishToServer();
                                 continue;
-                            }
+                            }*/
                             case "!!listcfg": {
                                 StringBuffer fields = new StringBuffer("客户端" + ClientMain.name + "的配置文件字段\n");
                                 for (String key : ClientMain.config.field.keySet()) {
@@ -201,7 +203,7 @@ public class HandleConn extends Thread{
                             case "!!exit":{
                                 if (cmd0.length>=2&&"f".equals(cmd0[1])){
                                     System.exit(0);
-                                }else if(!ClientMain.processing){
+                                }else if(!ClientMain.processing()){
                                     ClientMain.bufferedWriter.write("Exit client？Confirm(Yes/No):");
                                     ClientMain.bufferedWriter.flush();
                                     ClientMain.sendFinishToServer();
@@ -222,21 +224,21 @@ public class HandleConn extends Thread{
                                 continue;
                             }
                         }
-                        Out.say("HandleConn","get:"+cmd+" processing?"+ClientMain.processing);
+                        Out.say("HandleConn","get:"+cmd+" processing?"+ClientMain.processing());
                         //处理收到的消息
-                        if (!ClientMain.processing) {//无正在进行的操作
+                        //TODO 修改传递命令的机制
+                        /*if (!ClientMain.processing()) {//无正在进行的操作
                             ClientMain.processCmd = new ProcessCmd();
                             ClientMain.processCmd.cmd = new String(cmd);
                             ClientMain.processCmd.start();
                             ClientMain.sendFinishToServer();
-
                         } else {//正在进行
                             //System.out.print("passing cmd");
                             ClientMain.processWriter.write(cmd);
                             ClientMain.processWriter.newLine();
                             ClientMain.processWriter.flush();
                             ClientMain.sendFinishToServer();
-                        }
+                        }*/
                     }catch (Exception e){
                         e.printStackTrace();
                         ClientMain.bufferedWriter.write("处理信息时发生错误\n"+getErrorInfo(e));

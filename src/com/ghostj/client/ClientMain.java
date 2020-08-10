@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Timer;
 
 public class ClientMain {
@@ -21,10 +22,11 @@ public class ClientMain {
     public static HandleConn handleConn=null;
     public static String name="";
 
-    public static boolean processing=false;
-    public static BufferedWriter processWriter=null;
-    public static ProcessCmd processCmd=new ProcessCmd();
-    public static CmdError cmdError=null;
+//    public static boolean processing=false;
+    public static ProcessCmd focusedProcess=new ProcessCmd();
+
+    //以下是多任务支持的
+    public static LinkedHashMap<String,ProcessCmd> processList=new LinkedHashMap<>();
 
     public static boolean success=false;
 
@@ -59,5 +61,11 @@ public class ClientMain {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+    public static void removeProcess(String key){
+        processList.remove(key);
+    }
+    public static boolean processing(){
+        return processList.size()!=0;
     }
 }
