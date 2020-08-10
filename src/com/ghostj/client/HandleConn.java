@@ -42,7 +42,7 @@ public class HandleConn extends Thread{
                 //发送info
                 ClientMain.bufferedWriter.write("!info "+ClientMain.name+" c"+FileRW.read("nowVer.txt")+" "+ClientMain.sysStartTime+"!");
                 ClientMain.bufferedWriter.flush();
-                while(true){
+                readMsg:while(true){
                     String cmd= ClientMain.bufferedReader.readLine();
                     //接收到数据
                     //Out.say("HandleConn",""+cmd);
@@ -204,7 +204,7 @@ public class HandleConn extends Thread{
                             }
                             case "!!proc":{
                                 if(cmd0.length<2){
-                                    ClientMain.bufferedWriter.write("proc命令语法不正确.");
+                                    ClientMain.bufferedWriter.write("proc命令语法不正确.\n");
                                     ClientMain.bufferedWriter.flush();
                                     ClientMain.sendFinishToServer();
                                     continue;
@@ -212,7 +212,7 @@ public class HandleConn extends Thread{
                                 switch (cmd0[1]){
                                     case "focus":{
                                         if(cmd0.length<3){
-                                            ClientMain.bufferedWriter.write("proc focus命令语法不正确.");
+                                            ClientMain.bufferedWriter.write("proc focus命令语法不正确.\n");
                                             ClientMain.bufferedWriter.flush();
                                             ClientMain.sendFinishToServer();
                                             continue;
@@ -220,13 +220,13 @@ public class HandleConn extends Thread{
                                         for(String key:ClientMain.processList.keySet()){
                                             if(key.startsWith(cmd0[2])){
                                                 ClientMain.focusedProcess=ClientMain.processList.get(key);
-                                                ClientMain.bufferedWriter.write("聚焦process:"+key);
+                                                ClientMain.bufferedWriter.write("聚焦process:"+key+"\n");
                                                 ClientMain.bufferedWriter.flush();
                                                 ClientMain.sendFinishToServer();
-                                                continue;
+                                                continue readMsg;
                                             }
                                         }
-                                        ClientMain.bufferedWriter.write("找不到"+cmd0[2]+"开头的process");
+                                        ClientMain.bufferedWriter.write("找不到"+cmd0[2]+"开头的process\n");
                                         ClientMain.bufferedWriter.flush();
                                         ClientMain.sendFinishToServer();
                                         continue;
@@ -234,23 +234,25 @@ public class HandleConn extends Thread{
                                         ClientMain.bufferedWriter.flush();*/
                                     }
                                     case "ls":{
-                                        ClientMain.bufferedWriter.write("列表所有此客户端已连接的process("+ClientMain.processList.size()+")\nkey\tinitCmd\tstartTime");
+                                        ClientMain.bufferedWriter.write("列表所有此客户端已连接的process("+ClientMain.processList.size()+")\nkey\tinitCmd\tstartTime\tstate\n");
                                         ClientMain.bufferedWriter.flush();
                                         for(String key:ClientMain.processList.keySet()){
-                                            ClientMain.bufferedWriter.write(key+"\t"+ClientMain.processList.get(key).cmd+"\t"+ TimeUtil.millsToMMDDHHmmSS(ClientMain.processList.get(key).startTime));
+                                            ClientMain.bufferedWriter.write(key+"      "+ClientMain.processList.get(key).cmd+"         "
+                                                    + TimeUtil.millsToMMDDHHmmSS(ClientMain.processList.get(key).startTime)+"   "+(ClientMain.focusedProcess==ClientMain.processList.get(key))+"\n");
                                         }
+                                        ClientMain.bufferedWriter.write("列表完成.\n");
                                         ClientMain.bufferedWriter.flush();
                                         ClientMain.sendFinishToServer();
                                         continue;
                                     }
                                     case "new":{
                                         if(cmd0.length<3){
-                                            ClientMain.bufferedWriter.write("proc new命令语法不正确.");
+                                            ClientMain.bufferedWriter.write("proc new命令语法不正确.\n");
                                             ClientMain.bufferedWriter.flush();
                                             ClientMain.sendFinishToServer();
                                             continue;
                                         }
-                                        ClientMain.bufferedWriter.write("新建进程:"+cmd0[2]);
+                                        ClientMain.bufferedWriter.write("新建进程:"+cmd0[2]+"\n");
                                         if(cmd0.length>=4){//如果有初始执行指令
                                             ProcessCmd processCmd = new ProcessCmd();
                                             processCmd.cmd = cmd0[3];
@@ -264,18 +266,34 @@ public class HandleConn extends Thread{
                                             processCmd.start();
                                             ClientMain.sendFinishToServer();
                                         }
+                                        ClientMain.focusedProcess=ClientMain.processList.get(cmd0[2]);
+                                        ClientMain.bufferedWriter.write("聚焦process:"+cmd0[2]+"\n");
                                         ClientMain.bufferedWriter.flush();
                                         continue;
                                     }
                                     case "disc":{
                                         if(cmd0.length<3){
-                                            ClientMain.bufferedWriter.write("proc disc命令语法不正确.");
+                                            ClientMain.bufferedWriter.write("proc disc命令语法不正确.\n");
                                             ClientMain.bufferedWriter.flush();
                                             ClientMain.sendFinishToServer();
                                             continue;
                                         }
                                         //注意！！这里仅仅是断开与进程的连接而不是结束进程
-
+                                        if(ClientMain.processList.containsKey(cmd0[2])){
+                                            try {
+                                                ClientMain.processList.get(cmd0[2]).process.destroy();
+                                                ClientMain.processList.get(cmd0[2]).stop();
+                                                ClientMain.processList.remove(cmd0[2]);
+                                            }catch (Exception e){
+                                                ClientMain.bufferedWriter.write("断连process时出现错误\n"+getErrorInfo(e));
+                                                ClientMain.bufferedWriter.flush();
+                                            }
+                                        }else {
+                                            ClientMain.bufferedWriter.write("仅能使用全名来断连process\n");
+                                            ClientMain.bufferedWriter.flush();
+                                        }
+                                        ClientMain.sendFinishToServer();
+                                        continue;
                                     }
                                 }
                             }
@@ -296,7 +314,7 @@ public class HandleConn extends Thread{
                                         ClientMain.bufferedWriter.flush();
                                     }
                                 }else {
-                                    ClientMain.bufferedWriter.write("仍有正在进行的操作");
+                                    ClientMain.bufferedWriter.write("仍有正在进行的操作\n");
                                     ClientMain.bufferedWriter.flush();
                                 }
                                 ClientMain.sendFinishToServer();
@@ -318,6 +336,16 @@ public class HandleConn extends Thread{
                             ClientMain.processWriter.flush();
                             ClientMain.sendFinishToServer();
                         }*/
+                        if(ClientMain.focusedProcess==null){
+                            ClientMain.bufferedWriter.write("客户端没有聚焦process,使用!!proc focus以聚焦\n");
+                            ClientMain.bufferedWriter.flush();
+                        }else {
+
+                            ClientMain.focusedProcess.processWriter.write(cmd);
+                            ClientMain.focusedProcess.processWriter.newLine();
+                            ClientMain.focusedProcess.processWriter.flush();
+                        }
+                        ClientMain.sendFinishToServer();
                     }catch (Exception e){
                         e.printStackTrace();
                         ClientMain.bufferedWriter.write("处理信息时发生错误\n"+getErrorInfo(e));
