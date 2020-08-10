@@ -10,7 +10,7 @@ public class Out {
     public static void say(String msg){
         System.out.print((isPromptEnd?"\n":"")+msg+"\n");
         try {
-            if(!ServerMain.handleMaster.available||ServerMain.handleMaster==null||ServerMain.handleMaster.outputStreamWriter==null)
+            if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;
             ServerMain.handleMaster.outputStreamWriter.write((isPromptEnd?"\n":"")+msg+"\n");
             ServerMain.handleMaster.outputStreamWriter.flush();
@@ -35,7 +35,7 @@ public class Out {
 
         System.out.print((isPromptEnd?"\n":"")+msg);
         try {
-            if(!ServerMain.handleMaster.available||ServerMain.handleMaster==null||ServerMain.handleMaster.outputStreamWriter==null)
+            if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;
             ServerMain.handleMaster.outputStreamWriter.write((isPromptEnd?"\n":"")+msg);
             ServerMain.handleMaster.outputStreamWriter.flush();
@@ -47,7 +47,7 @@ public class Out {
     public static void sayThisLine(String msg){
         System.out.print((isPromptEnd?"\n":"")+msg);
         try {
-            if(!ServerMain.handleMaster.available||ServerMain.handleMaster==null||ServerMain.handleMaster.outputStreamWriter==null)
+            if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;
             ServerMain.handleMaster.outputStreamWriter.write((isPromptEnd?"\n":"")+msg);
             ServerMain.handleMaster.outputStreamWriter.flush();
