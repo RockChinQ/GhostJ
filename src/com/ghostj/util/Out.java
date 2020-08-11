@@ -1,6 +1,8 @@
 package com.ghostj.util;
 
 import com.ghostj.master.MasterMain;
+import com.ghostj.server.AcceptMaster;
+import com.ghostj.server.HandleMaster;
 import com.ghostj.server.ServerMain;
 
 import java.util.Date;
@@ -10,10 +12,11 @@ public class Out {
     public static void say(String msg){
         System.out.print((isPromptEnd?"\n":"")+msg+"\n");
         try {
-            if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
-                return;
-            ServerMain.handleMaster.outputStreamWriter.write((isPromptEnd?"\n":"")+msg+"\n");
-            ServerMain.handleMaster.outputStreamWriter.flush();
+            /*if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
+                return;*/
+            for(HandleMaster master: AcceptMaster.masters) {
+                master.sentMsg((isPromptEnd ? "\n" : "") + msg + "\n");
+            }
         }catch (Exception e){
             ;
         }
@@ -35,10 +38,11 @@ public class Out {
 
         System.out.print((isPromptEnd?"\n":"")+msg);
         try {
-            if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
-                return;
-            ServerMain.handleMaster.outputStreamWriter.write((isPromptEnd?"\n":"")+msg);
-            ServerMain.handleMaster.outputStreamWriter.flush();
+           /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
+                return;*/
+            for(HandleMaster master: AcceptMaster.masters) {
+                master.sentMsg((isPromptEnd ? "\n" : "") + msg + "\n");
+            }
         }catch (Exception e){
             ;
         }
@@ -47,10 +51,11 @@ public class Out {
     public static void sayThisLine(String msg){
         System.out.print((isPromptEnd?"\n":"")+msg);
         try {
-            if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
-                return;
-            ServerMain.handleMaster.outputStreamWriter.write((isPromptEnd?"\n":"")+msg);
-            ServerMain.handleMaster.outputStreamWriter.flush();
+           /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
+                return;*/
+            for(HandleMaster master: AcceptMaster.masters) {
+                master.sentMsg((isPromptEnd ? "\n" : "") + msg + "\n");
+            }
         }catch (Exception e){
             ;
         }

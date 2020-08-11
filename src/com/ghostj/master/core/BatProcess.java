@@ -2,9 +2,8 @@ package com.ghostj.master.core;
 
 import com.ghostj.master.MasterMain;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class BatProcess {
 	public static ArrayList<String> cmds=new ArrayList<>();
@@ -17,12 +16,10 @@ public class BatProcess {
 		String batLn[]= bat.split("\n");
 		//解析出运行此bat的对象
 		//#!master或#!client
-		if(batLn[0].equals("#!master")){
-			for (int i=1;i<batLn.length;i++){
-				BatProcess.cmds.add(batLn[i]);
-			}
+		if(batLn[0].equals("#!master")){//master级别的批处理
+			BatProcess.cmds.addAll(Arrays.asList(batLn).subList(1, batLn.length));
 			masterProcess();
-		}else if(batLn[0].equals("#!client")){
+		}else if(batLn[0].equals("#!client")){//client级别的批处理
 
 		}
 	}

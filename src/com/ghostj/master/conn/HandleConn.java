@@ -13,9 +13,9 @@ public class HandleConn extends Thread{
 	public void run(){
 		int c=0;
 		try {
-			while (true) {
+			while ((c=MasterMain.inputStreamReader.read())!=-1) {
 				try{
-					c=MasterMain.inputStreamReader.read();
+					;
 
 					if((char)c=='!'){
 						StringBuffer cmds=new StringBuffer("!");
@@ -104,6 +104,7 @@ public class HandleConn extends Thread{
 					MasterMain.initGUI.bgp.setVisible(false);
 				}
 			}
+			kill("server被关闭");
 		}catch (Exception e){
 			Out.say("HandleConn","处理连接数据时出错 非致命错误");
 			e.printStackTrace();

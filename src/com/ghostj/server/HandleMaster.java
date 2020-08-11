@@ -16,6 +16,7 @@ public class HandleMaster extends Thread{
 		this.socket=socket;
 	}
 
+	public boolean alive=true;
 	@Override
 	public void run() {
 		try{
@@ -27,9 +28,10 @@ public class HandleMaster extends Thread{
 					Out.say("HandleMaster","处理master连接时出错，正在重置连接");
 					e.printStackTrace();
 					ServerMain.tagLog.addTag(".Master","alive");
-					ServerMain.handleMaster.available=false;
-					ServerMain.acceptMaster.acceptable=true;
-					this.stop();
+//					ServerMain.handleMaster.available=false;
+//					ServerMain.acceptMaster.acceptable=true;
+//					this.stop();
+					CheckMasterAlive.kill(this);
 				}
 				//处理指令
 				try{
@@ -41,12 +43,11 @@ public class HandleMaster extends Thread{
 						Out.say("HandleMaster","master发送了非法数据,正在关闭master连接");
 						er.printStackTrace();
 						ServerMain.tagLog.addTag(".Master","alive");
-						ServerMain.handleMaster.available=false;
+						/*ServerMain.handleMaster.available=false;
 						ServerMain.acceptMaster.acceptable=true;
-						this.stop();
+						this.stop();*/
+						CheckMasterAlive.kill(this);
 					}
-
-					this.sleep(200);
 					//System.out.println(msg);
 					switch (cmd[0]){
 						case "#pw":{
@@ -63,12 +64,11 @@ public class HandleMaster extends Thread{
 							}else {
 								outputStreamWriter.write("!passErr!");
 								outputStreamWriter.flush();
-								socket.close();
+								/*socket.close();
 								outputStreamWriter.close();
-								bufferedReader.close();
+								bufferedReader.close();*/
+								CheckMasterAlive.kill(this);
 								Out.say("HandleMaster","密码错误");
-
-								ServerMain.acceptMaster.acceptable=true;
 								this.stop();
 							}
 							Out.putPrompt();
@@ -100,7 +100,7 @@ public class HandleMaster extends Thread{
 								Out.say("HandleMaster","关闭连接失败");
 								e.printStackTrace();
 							}
-							ServerMain.acceptMaster.acceptable=true;
+							CheckMasterAlive.kill(this);
 							this.stop();
 							continue readMsg;
 						}
@@ -126,6 +126,14 @@ public class HandleMaster extends Thread{
 			}
 		}catch (Exception e){
 			Out.say("HandleMaster","处理master的数据失败  非致命错误");
+			e.printStackTrace();
+		}
+	}
+	public void sentMsg(String msg){
+		try{
+			outputStreamWriter.write(msg);
+			outputStreamWriter.flush();
+		}catch (Exception e){
 			e.printStackTrace();
 		}
 	}

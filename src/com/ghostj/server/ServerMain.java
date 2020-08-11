@@ -21,7 +21,7 @@ public class ServerMain {
 
 	public static boolean manuallyTestConn=false;
 
-	public static HandleMaster handleMaster=null;
+//	public static HandleMaster handleMaster=null;
 
 	public static String masterPw="master123456";
 
@@ -102,15 +102,21 @@ public class ServerMain {
 	}
 	public static void sendListToMaster() throws IOException {
 		//Out.say("ServerMain","尝试将列表发至master");
-		if(acceptMaster.acceptable|| !handleMaster.available){
-			return;
-		}
+		//打包clients数据
 		StringBuffer msg=new StringBuffer("!clients");
 		for(HandleConn handleConn:socketArrayList){
 			msg.append(" "+handleConn.rtIndex+" "+handleConn.hostName+" "+handleConn.connTime+" "+(handleConn==focusedConn)+" "+handleConn.version+" "+handleConn.sysStartTime);
 		}
+		msg.append("!");
+		//发送到每个master
+		for (HandleMaster master:AcceptMaster.masters) {
+			master.sentMsg(msg.toString());
+		}
+		/*if(acceptMaster.acceptable|| !handleMaster.available){
+			return;
+		}
 		handleMaster.outputStreamWriter.write(msg.toString()+"!");
-		handleMaster.outputStreamWriter.flush();
+		handleMaster.outputStreamWriter.flush();*/
 	}
 	//    public static void deleteConn(HandleConn conn){
 //        socketArrayList.remove(conn);
@@ -120,9 +126,18 @@ public class ServerMain {
 		Out.say("ServerMain.stopServer","");
 		logAliveDevice();
 		try {
-			ServerMain.handleMaster.outputStreamWriter.write("!relogin!");
+			//向每一个master发送退出信息
+			for(HandleMaster master:AcceptMaster.masters){
+				try {
+					master.sentMsg("!relogin!");
+					master.outputStreamWriter.close();
+				}catch (Exception e){
+					e.printStackTrace();
+				}
+			}
+			/*ServerMain.handleMaster.outputStreamWriter.write("!relogin!");
 			ServerMain.handleMaster.outputStreamWriter.flush();
-			handleMaster.outputStreamWriter.close();
+			handleMaster.outputStreamWriter.close();*/
 		}catch (Exception e){
 			e.printStackTrace();
 		}
@@ -135,14 +150,19 @@ public class ServerMain {
 				tagLog.addTag(handleConn.hostName,"alive");
 		}
 		tagLog.addTag(".Server","alive");
-		if(handleMaster!=null&&handleMaster.available)
+		if(AcceptMaster.masterOnline())
 			tagLog.addTag(".Master","alive");
 		tagLog.pack();
 	}
+	//TODO 向所有master发送finish信息会出现问题，非 脚本执行者 的master也会收到信息
 	public static void cmdProcessFinish(){
 		try{
-			handleMaster.outputStreamWriter.write("!finish!");
-			handleMaster.outputStreamWriter.flush();
+			//向所有master发送finish，这个是非常非常非常非常不安全的
+			/*handleMaster.outputStreamWriter.write("!finish!");
+			handleMaster.outputStreamWriter.flush();*/
+			for(HandleMaster master:AcceptMaster.masters){
+				master.sentMsg("!finish!");
+			}
 		}catch (Exception e){
 			//e.printStackTrace();
 		}
