@@ -41,7 +41,7 @@ public class Out {
            /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;*/
             for(HandleMaster master: AcceptMaster.masters) {
-                master.sentMsg((isPromptEnd ? "\n" : "") + msg + "\n");
+                master.sentMsg((isPromptEnd ? "\n" : "") + msg );
             }
         }catch (Exception e){
             ;
@@ -54,7 +54,7 @@ public class Out {
            /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;*/
             for(HandleMaster master: AcceptMaster.masters) {
-                master.sentMsg((isPromptEnd ? "\n" : "") + msg + "\n");
+                master.sentMsg((isPromptEnd ? "\n" : "") + msg);
             }
         }catch (Exception e){
             ;

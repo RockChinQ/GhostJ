@@ -69,7 +69,6 @@ public class HandleConn extends Thread{
                                     continue;
                                 }
                                 try {
-
                                     ClientMain.bufferedWriter.write("正在下载\n");
                                     ClientMain.bufferedWriter.flush();
                                     new Thread(() -> {
@@ -112,6 +111,7 @@ public class HandleConn extends Thread{
                                         "!!rmcfg <fieldKey>  删除客户端的config中指定字段\n" +
                                         "!!cfg <key> <value>  修改/增加客户端config中指定字段的值\n" +
                                         "!!writecfg  将客户端的config写入文件\n" +
+                                        "\n" +
                                         "!!proc <oper> [param]  多任务控制系列指令\n" +
                                         "      oper列表:\n" +
                                         "      new <name> [初始指令]   新建名为name的任务，并指定初始指令\n" +
@@ -119,7 +119,16 @@ public class HandleConn extends Thread{
                                         "      ls   列出所有此客户端的任务\n" +
                                         "      focus <name(wordStartWith)>  聚焦到name以参数开头的任务\n" +
                                         "      disc <fullName>  断连name为参数的任务\n" +
-                                        "                       !!警告:这个命令不会杀死任务中启动的进程,并且会使client与此进程失去连接\n";
+                                        "                       !!警告:这个命令不会杀死任务中启动的进程,并且会使client与此进程失去连接\n" +
+                                        "   *process:未聚集时直接输入的指令将自动创建一个临时process\n" +
+                                        "\n" +
+                                        "!!bat <oper> [param]  客户端侧批处理文件系列指令\n" +
+                                        "      oper列表:\n" +
+                                        "      reset        清空现有批处理文件内容\n" +
+                                        "      view         查看批处理文件内容\n" +
+                                        "      add <命令...> 添加一行批处理命令\n" +
+                                        "      run          执行批处理文件\n" +
+                                        "   *客户端侧批处理文件:只有一个批处理文件被客户端操作\n";
                                 ClientMain.bufferedWriter.write(helpinfo + "\n");
                                 ClientMain.bufferedWriter.flush();
                                 ClientMain.sendFinishToServer();
@@ -302,6 +311,10 @@ public class HandleConn extends Thread{
                                         ClientMain.sendFinishToServer();
                                         continue;
                                     }
+                                    default:{
+                                        writeToServer("!!proc 命令语法不正确\n");
+                                        continue readMsg;
+                                    }
                                 }
                             }
                             case "!!exit":{
@@ -327,6 +340,60 @@ public class HandleConn extends Thread{
                                 ClientMain.sendFinishToServer();
                                 continue;
                             }
+                            //批处理系列命令
+                            case "!!bat":{
+                                if(cmd0.length<2){
+                                    writeToServer("!!bat语法不正确\n");
+                                    ClientMain.sendFinishToServer();
+                                    continue readMsg;
+                                }
+                                if(!new File("batch.bat").exists()){
+                                    FileRW.write("batch.bat","");
+                                }
+                                switch (cmd0[1]){
+                                    case "reset":{
+                                        FileRW.write("batch.bat","");
+                                        writeToServer("已清空bat文件\n");
+                                        ClientMain.sendFinishToServer();
+                                        continue readMsg;
+                                    }
+                                    case "add":{
+                                        if(cmd0.length<3){
+                                            writeToServer("!!bat add语法不正确\n");
+                                            ClientMain.sendFinishToServer();
+                                            continue readMsg;
+                                        }
+                                        StringBuffer newLine=new StringBuffer();
+                                        for(int i=2;i<cmd0.length;i++){
+                                            newLine.append(cmd0[i]+" ");
+                                        }
+                                        FileRW.write("batch.bat",FileRW.read("batch.bat")+newLine.toString()+"\n");
+                                        writeToServer("已添加"+newLine+"\n");
+                                        ClientMain.sendFinishToServer();
+                                        continue readMsg;
+                                    }
+                                    case "view":{
+                                        String fileStr=FileRW.read("batch.bat");
+                                        writeToServer("客户端的batch文件内容:\n"+fileStr+"\n共"+fileStr.length()+"个字符\n");
+                                        ClientMain.sendFinishToServer();
+                                        continue readMsg;
+                                    }
+                                    case "run":{
+                                        writeToServer("正在启动batch.bat批处理文件.\n");
+
+                                        ProcessCmd processCmd = new ProcessCmd("batchFile");
+                                        processCmd.cmd ="batch.bat";
+                                        ClientMain.processList.put("batchFile",processCmd);
+                                        processCmd.start();
+                                        ClientMain.sendFinishToServer();
+                                        continue readMsg;
+                                    }
+                                    default:{
+                                        writeToServer("!!bat 命令语法不正确\n");
+                                        continue readMsg;
+                                    }
+                                }
+                            }
                         }
                         Out.say("HandleConn","get:"+cmd+" processing?"+ClientMain.processing());
                         //处理收到的消息
@@ -344,8 +411,18 @@ public class HandleConn extends Thread{
                             ClientMain.sendFinishToServer();
                         }*/
                         if(ClientMain.focusedProcess==null){
-                            ClientMain.bufferedWriter.write("客户端没有聚焦process,使用!!proc focus以聚焦\n");
-                            ClientMain.bufferedWriter.flush();
+                            /*ClientMain.bufferedWriter.write("客户端没有聚焦process,使用!!proc focus以聚焦\n");
+                            ClientMain.bufferedWriter.flush();*/
+                            //自动创建一个以现在时间为名的process
+                            writeToServer("自动新建一个process\n");
+
+                            String name=(new Date().getTime()+"");
+                            String realName=name.substring(name.length()-10,name.length());
+                            ProcessCmd processCmd = new ProcessCmd(realName);
+                            processCmd.cmd = cmd;
+                            ClientMain.processList.put(realName,processCmd);
+                            ClientMain.focusedProcess=processCmd;
+                            processCmd.start();
                         }else {
 
                             ClientMain.focusedProcess.processWriter.write(cmd);
@@ -379,5 +456,14 @@ public class HandleConn extends Thread{
         PrintWriter pw=new PrintWriter(sw);
         e.printStackTrace(pw);
         return sw.toString().replaceAll("\t","    ");
+    }
+    public void writeToServer(String msg){
+
+        try {
+            ClientMain.bufferedWriter.write(msg);
+            ClientMain.bufferedWriter.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

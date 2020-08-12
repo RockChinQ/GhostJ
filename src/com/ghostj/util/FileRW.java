@@ -16,4 +16,24 @@ public class FileRW {
             return "";
         }
     }
+    public static void write(String filePath,String str){
+        BufferedWriter bufferedWriter=null;
+        try{
+            File configFile=new File(filePath);
+            bufferedWriter=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(configFile)));
+            bufferedWriter.write(str);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        }catch (Exception e){
+            System.out.println("Write file error.");
+            e.printStackTrace();
+        }finally {
+            try{
+                bufferedWriter.close();
+            }catch (Exception e){
+                System.out.println("Close writer failed.");
+                e.printStackTrace();
+            }
+        }
+    }
 }
