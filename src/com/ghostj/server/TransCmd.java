@@ -29,6 +29,7 @@ public class TransCmd extends  Thread{
     }
     public void handleCommand(String typeCmd) throws IOException {
         try {
+            Out.say(typeCmd);
             String cmd[]=typeCmd.split(" ");
             switch (cmd[0]) {
                 case "!help": {

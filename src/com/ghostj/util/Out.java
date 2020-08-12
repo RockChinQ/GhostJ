@@ -10,12 +10,12 @@ import java.util.Date;
 public class Out {
     public static boolean isPromptEnd=false;
     public static void say(String msg){
-        System.out.print((isPromptEnd?"\n":"")+msg+"\n");
+        System.out.print(msg+"\n");
         try {
             /*if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;*/
             for(HandleMaster master: AcceptMaster.masters) {
-                master.sentMsg((isPromptEnd ? "\n" : "") + msg + "\n");
+                master.sentMsg( msg + "\n");
             }
         }catch (Exception e){
             ;
@@ -24,7 +24,7 @@ public class Out {
     }
     public static void say(String sub,String msg){
         Date d=new Date();
-        say(d.getDate()+"."+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"["+sub+"]"+msg);
+        say((isPromptEnd ? "\n" : "") +d.getDate()+"."+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+"["+sub+"]"+msg);
     }
     public static void putPrompt(){
         if(ServerMain.focusedConn!=null)

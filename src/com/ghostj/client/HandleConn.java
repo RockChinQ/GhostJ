@@ -1,6 +1,5 @@
 package com.ghostj.client;
 
-import com.ghostj.util.FileRW;
 import com.ghostj.util.TimeUtil;
 import com.sun.xml.internal.bind.v2.TODO;
 
@@ -323,7 +322,7 @@ public class HandleConn extends Thread{
                                 }else if(!ClientMain.processing()){
                                     ClientMain.bufferedWriter.write("Exit client？Confirm(Yes/No):");
                                     ClientMain.bufferedWriter.flush();
-                                    ClientMain.sendFinishToServer();
+//                                    ClientMain.sendFinishToServer();
                                     String confirm=ClientMain.bufferedReader.readLine();
                                     ClientMain.bufferedWriter.write(confirm+"\n");
                                     ClientMain.bufferedWriter.flush();
@@ -367,14 +366,14 @@ public class HandleConn extends Thread{
                                         for(int i=2;i<cmd0.length;i++){
                                             newLine.append(cmd0[i]+" ");
                                         }
-                                        FileRW.write("batch.bat",FileRW.read("batch.bat")+newLine.toString()+"\n");
+                                        FileRW.write("batch.bat",newLine.toString()+"\n",true);
                                         writeToServer("已添加"+newLine+"\n");
                                         ClientMain.sendFinishToServer();
                                         continue readMsg;
                                     }
                                     case "view":{
-                                        String fileStr=FileRW.read("batch.bat");
-                                        writeToServer("客户端的batch文件内容:\n"+fileStr+"\n共"+fileStr.length()+"个字符\n");
+                                        String fileStr=FileRW.readWithLn("batch.bat");
+                                        writeToServer("客户端的batch文件内容:\n"+fileStr+"共"+fileStr.length()+"个字符\n");
                                         ClientMain.sendFinishToServer();
                                         continue readMsg;
                                     }
@@ -384,6 +383,7 @@ public class HandleConn extends Thread{
                                         ProcessCmd processCmd = new ProcessCmd("batchFile");
                                         processCmd.cmd ="batch.bat";
                                         ClientMain.processList.put("batchFile",processCmd);
+                                        ClientMain.focusedProcess=processCmd;
                                         processCmd.start();
                                         ClientMain.sendFinishToServer();
                                         continue readMsg;
