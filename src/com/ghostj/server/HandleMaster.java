@@ -6,12 +6,14 @@ import com.ghostj.util.Out;
 import java.io.BufferedReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.Date;
 
 public class HandleMaster extends Thread{
 	Socket socket=null;
 	BufferedReader bufferedReader=null;
 	public OutputStreamWriter outputStreamWriter=null;
 	public boolean available=false;//验证密码成功后才设置available=true
+	public long connTime=new Date().getTime();
 	public HandleMaster(Socket socket){
 		this.socket=socket;
 	}

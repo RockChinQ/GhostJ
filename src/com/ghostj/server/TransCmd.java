@@ -2,6 +2,7 @@ package com.ghostj.server;
 
 import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
+import com.ghostj.util.TimeUtil;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -191,6 +192,16 @@ public class TransCmd extends  Thread{
                         Out.say(++i+" "+owner);
                     }
                     Out.say("TransCmd-lstag","列表完成");
+                    ServerMain.cmdProcessFinish();
+                    return;
+                }
+                case "!lsmst":{
+                    Out.say("TransCmd-lsmst","列出所有在线master的信息");
+                    int i=0;
+                    for(HandleMaster master:AcceptMaster.masters){
+                        Out.say(i+++"  ip"+master.socket.getInetAddress()+"  t"+ TimeUtil.millsToMMDDHHmmSS(master.connTime));
+                    }
+                    Out.say("TransCmd-lsmst","列表完成");
                     ServerMain.cmdProcessFinish();
                     return;
                 }
