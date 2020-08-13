@@ -88,24 +88,33 @@ public class TransCmd extends  Thread{
                     if (cmd[1].startsWith("&")) {
                         try {
                             long i = Integer.parseInt(cmd[1].substring(1));
+                            if(ServerMain.focusedConn!=null&&ServerMain.focusedConn.rtIndex==i)//已经聚焦到目标
+                                return;
                             //Out.say("index:" + i);
                             for (HandleConn conn : ServerMain.socketArrayList) {
                                 if (conn.rtIndex == i) {
                                     ServerMain.focusedConn = conn;
                                     Out.say("TransCmd-focus", "聚焦" + ServerMain.focusedConn.hostName);
+                                    ServerMain.focusedConn.showHistory();
+                                    Out.say("TransCmd-focus","===========历史消息==========");
                                     ServerMain.sendListToMaster();
                                     ServerMain.cmdProcessFinish();
                                     return;
                                 }
                             }
                         } catch (Exception e) {
-                            Out.say("TransCmd-focus", "正确语法\n!focus %<index>");
+                            Out.say("TransCmd-focus", "正确语法\n!focus &<index>");
                         }
                     } else {
+                        if(ServerMain.focusedConn!=null&&ServerMain.focusedConn.hostName.startsWith(cmd[1])){//已经聚焦到目标
+                            return;
+                        }
                         for (HandleConn conn : ServerMain.socketArrayList) {
                             if (conn.hostName.startsWith(cmd[1])) {
                                 ServerMain.focusedConn = conn;
                                 Out.say("TransCmd-focus", "聚焦" + ServerMain.focusedConn.hostName);
+                                ServerMain.focusedConn.showHistory();
+                                Out.say("=========历史消息========");
                                 ServerMain.sendListToMaster();
                                 ServerMain.cmdProcessFinish();
                                 return;

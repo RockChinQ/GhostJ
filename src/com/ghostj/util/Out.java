@@ -9,8 +9,10 @@ import java.util.Date;
 
 public class Out {
     public static boolean isPromptEnd=false;
+    public static StringBuffer history=new StringBuffer();
     public static void say(String msg){
         System.out.print(msg+"\n");
+        history.append(msg+"\n");
         try {
             /*if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;*/
@@ -20,6 +22,7 @@ public class Out {
         }catch (Exception e){
             ;
         }
+        checkHistory();
         isPromptEnd=false;
     }
     public static void say(String sub,String msg){
@@ -37,6 +40,7 @@ public class Out {
     public static void sayThisLine(char msg){
 
         System.out.print((isPromptEnd?"\n":"")+msg);
+        history.append((isPromptEnd?"\n":"")+msg);
         try {
            /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;*/
@@ -46,10 +50,12 @@ public class Out {
         }catch (Exception e){
             ;
         }
+        checkHistory();
         isPromptEnd=false;
     }
     public static void sayThisLine(String msg){
         System.out.print((isPromptEnd?"\n":"")+msg);
+        history.append((isPromptEnd?"\n":"")+msg);
         try {
            /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;*/
@@ -59,6 +65,14 @@ public class Out {
         }catch (Exception e){
             ;
         }
+        checkHistory();
         isPromptEnd=false;
+    }
+
+    static final int HISTORY_CHAR_LEN=1000;
+    public static void checkHistory(){
+        if(history.length()>HISTORY_CHAR_LEN){
+            history=new StringBuffer(history.substring(history.length()-HISTORY_CHAR_LEN,history.length()));
+        }
     }
 }

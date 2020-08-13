@@ -19,6 +19,13 @@ public class HandleMaster extends Thread{
 	public boolean alive=true;
 	@Override
 	public void run() {
+		//新建master连接，向其发送最近的一些消息
+		try{
+			outputStreamWriter.write(Out.history.toString());
+			outputStreamWriter.flush();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
 		try{
 			readMsg:while (true){
 				String msg=null;

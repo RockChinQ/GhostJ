@@ -17,7 +17,8 @@ public class HandleConn extends Thread{
     boolean avai=false;
     long connTime=0;
     long sysStartTime=0;
-    ArrayList<String> msg=new ArrayList<>();//在没有焦点的时候存储收到的消息
+    StringBuffer history=new StringBuffer();
+    static final int HISTORY_LENGTH=1000;
     long rtIndex=-1;
 
     String version=null;
@@ -126,14 +127,22 @@ public class HandleConn extends Thread{
                 //输出消息
                 if(this.equals(ServerMain.focusedConn)){
                     Out.sayThisLine((char)c);
-                }else {
-                    this.msg.add((char)c+"");
                 }
+                history.append((char)c);
+                checkHistory();
             }
         }catch(Exception e){
             Out.say("conn"+hostName,"处理工作连接时错误，工作连接已关闭");
             e.printStackTrace();
             ServerMain.killConn(this);
         }
+    }
+    void checkHistory(){
+        if(history.length()>HISTORY_LENGTH){
+            history=new StringBuffer(history.substring(history.length()-HISTORY_LENGTH,history.length()));
+        }
+    }
+    void showHistory(){
+        Out.say(history.toString());
     }
 }
