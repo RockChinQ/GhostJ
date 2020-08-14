@@ -2,6 +2,11 @@ package com.ghostj.server;
 
 import com.ghostj.util.Config;
 import com.ghostj.util.Out;
+import com.rft.core.client.FileSender;
+import com.rft.core.server.BufferedFileReceiver;
+import com.rft.core.server.FileReceiver;
+import com.rft.core.server.FileServer;
+import com.rft.core.server.ParallelFileServer;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +33,10 @@ public class ServerMain {
 	public static CheckMasterAlive checkMasterAlive=new CheckMasterAlive();
 	//tag
 	public static TagLog tagLog=new TagLog();
+
+	//fileserver
+	static FileReceiver fileReceiver=null;
+	static FileServer fileServer=null;
 	public static void main(String[] args){
 		if(new File("tagLog.json").exists()){
 			tagLog.load();
@@ -78,14 +87,25 @@ public class ServerMain {
 //				}
 //			}
 //		},new Date(),5000);
+		//启动文件服务器
+		fileReceiver=new BufferedFileReceiver();
+		fileReceiver.setRootPath("receivedFiles"+File.separatorChar);
+		fileServer=new ParallelFileServer(1035,fileReceiver);
+		fileServer.setTaskEvent(new FileReceiveEvent());
+		try {
+			fileServer.start();
+			Out.say("ServerMain","文件服务器已启动 port:1035");
+		} catch (Exception e) {
+			e.printStackTrace();
+			Out.say("ServerMain","文件服务器启动失败");
+		}
+
 		Out.putPrompt();
 	}
 	public static void killConn(HandleConn handleConn){
 		Out.say("ServerMain","kill:"+handleConn.hostName);
 		if(handleConn.avai)
 			tagLog.addTag(handleConn.hostName,"alive");
-		if(handleConn==null)
-			return;
 		if(handleConn.equals(focusedConn))
 			focusedConn=null;
 		socketArrayList.remove(handleConn);

@@ -7,6 +7,7 @@
       </element>
       <element id="module-output" name="GhostJ" />
       <element id="extracted-dir" path="$PROJECT_DIR$/libs/fastjson-1.2.53.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/RFT.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

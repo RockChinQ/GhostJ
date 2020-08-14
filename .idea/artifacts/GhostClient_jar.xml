@@ -6,6 +6,7 @@
         <element id="file-copy" path="$PROJECT_DIR$/src/client/META-INF/MANIFEST.MF" />
       </element>
       <element id="module-output" name="GhostJ" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/RFT.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

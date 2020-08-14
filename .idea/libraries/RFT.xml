@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="RFT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/RFT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
