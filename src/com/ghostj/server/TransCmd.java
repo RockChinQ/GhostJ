@@ -205,6 +205,15 @@ public class TransCmd extends  Thread{
                     ServerMain.cmdProcessFinish();
                     return;
                 }
+                case "!chrftd":{
+                    if(cmd.length<2){
+                        Out.say("TransCmd-chrftd","命令语法不正确");
+                        return;
+                    }
+                    ServerMain.fileReceiver.setRootPath(cmd[1]);
+                    Out.say("TransCmd-chrftd","文件接收根目录为:"+ServerMain.fileReceiver.getRootPath());
+                    return;
+                }
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");

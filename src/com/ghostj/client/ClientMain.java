@@ -14,7 +14,8 @@ import java.util.Timer;
 public class ClientMain {
     public static Config config;
     public static String ip;
-    public static int port=33;
+    public static int port=1033;
+    public static int rft_port=1035;
     public static SocketAddress socketAddress=null;
     public static Socket socket=null;
     public static BufferedReader bufferedReader=null;
@@ -35,8 +36,13 @@ public class ClientMain {
         sysStartTime=new Date().getTime();
         //加载配置文件
         config=new Config("ghostjc.ini");
+        if(!config.field.containsKey("rft.port")){
+            config.set("rft.port",1035);
+            config.write();
+        }
         port=config.getIntValue("port");
         ip=config.getStringValue("ip");
+        rft_port=config.getIntValue("rft.port");
         socketAddress=new InetSocketAddress(ip,port);
         name=new String(config.getStringValue("name"));
         Out.say("ClientMain","config load done.port:"+port);

