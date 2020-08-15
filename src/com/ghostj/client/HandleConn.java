@@ -417,6 +417,10 @@ public class HandleConn extends Thread{
                                         FileSender.sendFile(new File(cmd0[2]),cmd0[3],new Date().getTime()+"", ClientMain.ip,ClientMain.rft_port);
                                         continue readMsg;
                                     }
+                                    default:{
+                                        writeToServer("!!rft命令语法不正确,无此二级命令");
+                                        continue readMsg;
+                                    }
                                 }
                             }
                         }
