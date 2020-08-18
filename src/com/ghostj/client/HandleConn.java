@@ -439,24 +439,24 @@ public class HandleConn extends Thread{
                                 try {
                                     Thread t=new Thread(() -> {
 	                                    try {
-		                                    writeToServer("正在创建屏幕截图");
+		                                    writeToServer("正在创建屏幕截图\n");
 		                                    PrtScreen.saveScreen(cmd0[1]);
 		                                    writeToServer("成功将截图保存到 " + cmd0[1] + "\n");
 	                                    } catch (Exception e) {
-		                                    writeToServer("获取屏幕截图失败:" + getErrorInfo(e));
+		                                    writeToServer("获取屏幕截图失败:" + getErrorInfo(e)+"\n");
 	                                    }
 	                                    try {
 		                                    //发送到服务器
 		                                    FileSender.sendFile(new File(cmd0[1]), "prtscr", "prtscr" + new Date().getTime(), ClientMain.ip, ClientMain.port);
-	                                        writeToServer("成功上传截图到:"+ClientMain.ip);
+	                                        writeToServer("成功上传截图到:"+ClientMain.ip+"\n");
 	                                    }catch (Exception e){
-	                                    	writeToServer("无法将截图上传至服务器");
+	                                    	writeToServer("无法将截图上传至服务器"+"\n");
 	                                    }
                                         ClientMain.sendFinishToServer();
                                     });
                                     t.start();
                                 }catch (Exception e){
-                                    writeToServer("获取屏幕截图失败:" + getErrorInfo(e));
+                                    writeToServer("获取屏幕截图失败:" + getErrorInfo(e)+"\n");
                                 }
 //                                ClientMain.sendFinishToServer();
                                 continue readMsg;
