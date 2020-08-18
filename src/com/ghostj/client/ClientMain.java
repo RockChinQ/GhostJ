@@ -2,6 +2,8 @@ package com.ghostj.client;
 
 import com.ghostj.util.Config;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -32,6 +34,21 @@ public class ClientMain {
     public static boolean success=false;
 
     public static long sysStartTime=-1;
+
+
+
+/*
+    public static final Rectangle screen=new Rectangle(20,20);
+    public static Robot robot=null;
+    static {
+        try {
+            robot = new Robot();
+        }catch (Exception e){}
+    }
+    public static final BufferedImage image=robot.createScreenCapture(screen);*/
+
+
+
     public static void main(String[] args){
         sysStartTime=new Date().getTime();
         //加载配置文件

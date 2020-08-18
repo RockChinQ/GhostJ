@@ -127,7 +127,8 @@ public class HandleMaster extends Thread{
 					}
 					//已处理完master级别指令
 					//不是指令的发送至下一级
-					ServerMain.transCmd.handleCommand(msg);
+					if(available)
+						ServerMain.transCmd.handleCommand(msg);
 				}catch (Exception e){
 					Out.say("HandleMaster","处理master指令时出现错误");
 					e.printStackTrace();

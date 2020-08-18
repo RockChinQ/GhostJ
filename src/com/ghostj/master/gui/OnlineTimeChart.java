@@ -51,7 +51,7 @@ public class OnlineTimeChart extends JPanel {
 					//e.printStackTrace();
 				}
 			}
-		},new Date(),10000);
+		},new Date(),20000);
 	}
 	@Override
 	public void paint(Graphics g){

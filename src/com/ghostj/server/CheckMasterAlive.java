@@ -66,10 +66,10 @@ public class CheckMasterAlive extends TimerTask {
 			}catch (Exception e){
 
 			}
+			AcceptMaster.masters.remove(master);
 			master.outputStreamWriter.close();
 			master.socket.close();
 			master.stop();
-			AcceptMaster.masters.remove(master);
 			Out.say("CheckMasterAlive","Master已断连，正在重置连接");
 		}catch (Exception e){
 			e.printStackTrace();
