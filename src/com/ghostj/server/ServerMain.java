@@ -35,7 +35,7 @@ public class ServerMain {
 	public static TagLog tagLog=new TagLog();
 
 	//fileserver
-	static FileReceiver fileReceiver=null;
+	static BufferedFileReceiver fileReceiver=null;
 	static FileServer fileServer=null;
 	public static void main(String[] args){
 		if(new File("tagLog.json").exists()){
@@ -89,7 +89,7 @@ public class ServerMain {
 //		},new Date(),5000);
 		//启动文件服务器
 		fileReceiver=new BufferedFileReceiver();
-		fileReceiver.setRootPath("receivedFiles"+File.separatorChar);
+		fileReceiver.setRootPath("received"+File.separatorChar);
 		fileServer=new ParallelFileServer(1035,fileReceiver);
 		fileServer.setTaskEvent(new FileReceiveEvent());
 		try {

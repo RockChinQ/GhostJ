@@ -3,6 +3,7 @@ package com.ghostj.server;
 import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 import com.ghostj.util.TimeUtil;
+import com.rft.core.server.BufferedFileReceiver;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class TransCmd extends  Thread{
 
@@ -205,6 +207,37 @@ public class TransCmd extends  Thread{
                     ServerMain.cmdProcessFinish();
                     return;
                 }
+                case "!rft":{
+                    if(cmd.length<2){
+                        Out.say("TransCmd-rft","命令语法不正确");
+                        ServerMain.cmdProcessFinish();
+                        return;
+                    }
+                    switch (cmd[1]){
+                        case "chdir":{//修改文件保存根目录
+                            if(cmd.length<3){
+                                Out.say("TransCmd-rft chdir","命令语法不正确");
+                                ServerMain.cmdProcessFinish();
+                                return;
+                            }
+                            ServerMain.fileReceiver.setRootPath(cmd[2]);
+                            Out.say("TransCmd-rft chdir","已修改文件服务器的保存根目录为"+cmd[2]);
+                            ServerMain.cmdProcessFinish();
+                            return;
+                        }
+                        case "dir":{
+                            Out.say("TransCmd-rft dir","文件服务器的根目录是"+ServerMain.fileReceiver.getRootPath());
+                            ServerMain.cmdProcessFinish();
+                            return;
+                        }
+                        case "task":{
+                            
+                        }
+                    }
+                    ServerMain.cmdProcessFinish();
+                    return;
+                }
+                //TODO 删除这个过时命令
                 case "!chrftd":{
                     if(cmd.length<2){
                         Out.say("TransCmd-chrftd","命令语法不正确");
