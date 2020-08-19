@@ -448,9 +448,9 @@ public class HandleConn extends Thread{
 
 	                                    try {
 		                                    //发送到服务器
-		                                    FileSender.sendFile(new File(cmd0[1]), "prtscr", "prtscr" + new Date().getTime(), ClientMain.ip, ClientMain.rft_port);
-	                                        writeToServer("成功上传截图到:"+ClientMain.ip+"\n");
-	                                        writeToServer("!sendpicurl prtscr/"+cmd0[1]+"!");
+		                                    FileSender.sendFileMethod(new File(cmd0[1]), "prtscr/"+ClientMain.name, "prtscr" + new Date().getTime(), ClientMain.ip, ClientMain.rft_port);
+	                                        //writeToServer("成功上传截图到:"+ClientMain.ip+"\n");
+	                                        writeToServer("!sendpicurl prtscr/"+ClientMain.name+"/"+cmd0[1]+"!");
 	                                    }catch (Exception e){
 	                                    	writeToServer("无法将截图上传至服务器"+"\n");
 	                                    }

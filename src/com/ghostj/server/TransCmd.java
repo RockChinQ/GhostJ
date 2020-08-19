@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class TransCmd extends  Thread{
@@ -231,13 +232,43 @@ public class TransCmd extends  Thread{
                             return;
                         }
                         case "task":{
-                            
+                            try {
+                                Map<String, BufferedFileReceiver.ReceiveTask> taskMap = ServerMain.fileReceiver.getTaskMap();
+                                Out.say("TransCmd-rft task","遍历所有正在进行的文件接收任务\ntoken    fileName    length    received   savePath");
+                                for (String token:taskMap.keySet()){
+                                    Out.say(token+"   "+taskMap.get(token).getInfo().getName()+"   "+taskMap.get(token).getInfo().getSize()+"    "+taskMap.get(token).getReceivedSize()+"   "+ServerMain.fileReceiver.getRootPath()+taskMap.get(token).getInfo().getSavePath());
+                                }
+                                Out.say("TransCmd-rft task","列表完成");
+                            }catch (Exception e){
+                                Out.say("TransCmd-rft task","无法遍历所有task");
+                            }
+                            ServerMain.cmdProcessFinish();
+                            return;
+                        }
+                        case "stop":{
+                            if(cmd.length<2){
+                                Out.say("TransCmd-rft stop","命令语法不正确");
+                                ServerMain.cmdProcessFinish();
+                                return;
+                            }
+
+                            Map<String, BufferedFileReceiver.ReceiveTask> taskMap = ServerMain.fileReceiver.getTaskMap();
+//                            Out.say("TransCmd-rft task","遍历所有正在进行的文件接收任务\ntoken    fileName    length    received   savePath");
+                            for (String token:taskMap.keySet()){
+//                                Out.say(token+"   "+taskMap.get(token).getInfo().getName()+"   "+taskMap.get(token).getInfo().getSize()+"    "+taskMap.get(token).getReceivedSize()+"   "+ServerMain.fileReceiver.getRootPath()+taskMap.get(token).getInfo().getSavePath());
+                                if(token.startsWith(cmd[1])){
+                                    ServerMain.fileReceiver.interruptFile(token);
+                                    Out.say("TransCmd-rft stop","已停止文件接收任务:"+token);
+                                }
+                            }
+                            ServerMain.cmdProcessFinish();
+                            return;
                         }
                     }
                     ServerMain.cmdProcessFinish();
                     return;
                 }
-                //TODO 删除这个过时命令
+                /*//TODO 删除这个过时命令
                 case "!chrftd":{
                     if(cmd.length<2){
                         Out.say("TransCmd-chrftd","命令语法不正确");
@@ -246,7 +277,7 @@ public class TransCmd extends  Thread{
                     ServerMain.fileReceiver.setRootPath(cmd[1]);
                     Out.say("TransCmd-chrftd","文件接收根目录为:"+ServerMain.fileReceiver.getRootPath());
                     return;
-                }
+                }*/
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");
