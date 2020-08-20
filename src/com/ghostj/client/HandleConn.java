@@ -258,15 +258,21 @@ public class HandleConn extends Thread{
                                         ClientMain.bufferedWriter.flush();*/
                                     }
                                     case "ls":{
-                                        ClientMain.bufferedWriter.write("列表所有此客户端已连接的process("+ClientMain.processList.size()+")\nkey\tinitCmd\tstartTime\tstate\n");
-                                        ClientMain.bufferedWriter.flush();
-                                        for(String key:ClientMain.processList.keySet()){
-                                            ClientMain.bufferedWriter.write(key+"      "+ClientMain.processList.get(key).cmd+"         "
-                                                    + TimeUtil.millsToMMDDHHmmSS(ClientMain.processList.get(key).startTime)+"   "+(ClientMain.focusedProcess==ClientMain.processList.get(key))+"\n");
-                                        }
-                                        ClientMain.bufferedWriter.write("列表完成.\n");
-                                        ClientMain.bufferedWriter.flush();
-                                        ClientMain.sendFinishToServer();
+                                        new Thread(()-> {
+                                            try {
+                                                ClientMain.bufferedWriter.write("列表所有此客户端已连接的process(" + ClientMain.processList.size() + ")\nkey\tinitCmd\tstartTime\tstate\n");
+                                                ClientMain.bufferedWriter.flush();
+                                                for (String key : ClientMain.processList.keySet()) {
+                                                    ClientMain.bufferedWriter.write(key + "      " + ClientMain.processList.get(key).cmd + "         "
+                                                            + TimeUtil.millsToMMDDHHmmSS(ClientMain.processList.get(key).startTime) + "   " + (ClientMain.focusedProcess == ClientMain.processList.get(key)) + "\n");
+                                                }
+                                                ClientMain.bufferedWriter.write("列表完成.\n");
+                                                ClientMain.bufferedWriter.flush();
+                                                ClientMain.sendFinishToServer();
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }).start();
                                         continue;
                                     }
                                     case "new":{
@@ -431,26 +437,27 @@ public class HandleConn extends Thread{
                                 }
                             }
                             case "!!scr":{
-                                if(cmd0.length<2){
-                                    writeToServer("!!scr 命令语法不正确");
-                                    ClientMain.sendFinishToServer();
-                                    continue readMsg;
-                                }
+                                String param="scr.png";
+                                if(cmd0.length>=2)
+                                    param=cmd0[1];
+                                else
+                                    param="scr.png";
                                 try {
+                                    String finalParam = param;
                                     Thread t=new Thread(() -> {
 	                                    try {
 		                                    writeToServer("正在创建屏幕截图\n");
-		                                    PrtScreen.saveScreen(cmd0[1]);
-		                                    writeToServer("成功将截图保存到 " + cmd0[1] + "\n");
+		                                    PrtScreen.saveScreen(finalParam);
+		                                    writeToServer("成功将截图保存到 " + finalParam + "\n");
 	                                    } catch (Exception e) {
 		                                    writeToServer("获取屏幕截图失败:" + getErrorInfo(e)+"\n");
 	                                    }
 
 
-                                        writeToServer("!sendpicurl prtscr/"+ClientMain.name+"/"+cmd0[1]+"!");
+//                                        writeToServer("!sendpicurl prtscr/"+ClientMain.name+"/"+finalParam+"!");
 	                                    try {
 		                                    //发送到服务器
-		                                    FileSender.sendFile(new File(cmd0[1]), "prtscr/"+ClientMain.name, "prtscr" + new Date().getTime(), ClientMain.ip, ClientMain.rft_port);
+		                                    FileSender.sendFile(new File(finalParam), "prtscr/"+ClientMain.name, "prtscr" + new Date().getTime(), ClientMain.ip, ClientMain.rft_port);
 //	                                        writeToServer("成功上传截图到:"+ClientMain.ip+"\n");
 //	                                        writeToServer("!sendpicurl prtscr/"+ClientMain.name+"/"+cmd0[1]+"!");
 	                                    }catch (Exception e){

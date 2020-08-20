@@ -84,7 +84,7 @@ public class InitGUI {
 		clientTable.setLocation(10,45);
 		clientTable.setBackground(null);
 
-		onlineTimeChart.setBounds(220,45,620,175);
+		onlineTimeChart.setBounds(220,45,620,225);
 		onlineTimeChart.setBackground(Color.darkGray);
 		onlineTimeChart.setZoom(1000);
 		bgp.add(onlineTimeChart);
@@ -122,7 +122,7 @@ public class InitGUI {
 			onlineTimeChart.repaint();
 		});
 		//控制台
-		console.setBounds(220,225,620,570);
+		console.setBounds(220,onlineTimeChart.getY()+onlineTimeChart.getHeight()+10,620,bgp.getHeight()-onlineTimeChart.getHeight()-onlineTimeChart.getY()-115);
 		console.setBackground(Color.darkGray);
 		console.setForeground(new Color(255, 255, 255, 255));
 		console.setFont(cf);
