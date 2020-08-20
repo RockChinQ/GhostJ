@@ -1,5 +1,6 @@
 package com.ghostj.master.conn;
 
+import COUNTLINE.Main;
 import com.ghostj.master.MasterMain;
 import com.ghostj.master.util.Out;
 
@@ -34,6 +35,7 @@ public class CreateConn extends Thread{
 					MasterMain.bufferedWriter.flush();
 					Out.say("CreateConn","已发送密码");
 					MasterMain.initGUI.bgp.setVisible(true);
+					MasterMain.initGUI.mainwd.setTitle("已连接到:"+ MasterMain.initGUI.loginPanel.ipInput.getValue());
 				}catch (Exception e){
 					Out.say("CreateConn","无法建立连接");
 					MasterMain.initGUI.loginPanel.setTitle("Login-连接失败");

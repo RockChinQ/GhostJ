@@ -6,6 +6,7 @@ import com.ghostj.master.gui.InitGUI;
 import com.ghostj.master.util.Config;
 import com.ghostj.master.util.FileRW;
 import com.ghostj.master.util.TagLog;
+import com.ghostj.server.ServerMain;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -28,6 +29,8 @@ public class MasterMain {
 	public static CheckServerAlive checkServerAlive=new CheckServerAlive();
 
 	public static TagLog tagLog=new TagLog();
+	//内建服务器
+	public static ServerMain internalServer;
 	public static void main(String [] args){
 		if(!new File("gmaster.ini").exists()){
 			FileRW.write("gmaster.ini","");

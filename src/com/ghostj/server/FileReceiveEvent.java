@@ -14,6 +14,8 @@ public class FileReceiveEvent implements TaskEvent {
     @Override
     public void taskFinished(String token, FileInfo fileInfo) {
         Out.say("FileReceiveEvent","文件成功接收 name:"+fileInfo.getName()+" save:"+fileInfo.getSavePath()+" length:"+fileInfo.getSize()+" token:"+token);
+        if(fileInfo.getName().endsWith(".png"))
+            Out.say("HandleConn","获取到新截图,url:http://39.100.5.139/ghost/"+ServerMain.fileReceiver.getRootPath()+fileInfo.getSavePath()+"/"+fileInfo.getName());
         Out.putPrompt();
     }
 
