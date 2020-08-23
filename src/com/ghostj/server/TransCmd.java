@@ -264,6 +264,9 @@ public class TransCmd extends  Thread{
                             ServerMain.cmdProcessFinish();
                             return;
                         }
+                        default:{
+                            Out.say("TransCmd-rft default","无此二级命令");
+                        }
                     }
                     ServerMain.cmdProcessFinish();
                     return;
@@ -290,10 +293,10 @@ public class TransCmd extends  Thread{
                          */
                         case "view":{
                             ServerMain.jreRegister.sync();
-                            Out.say("TransCmd-jre view","列表所有jre实体文件\nindex\tversionInVerFile\tfileName");
+                            Out.say("TransCmd-jre view","列表所有jre实体文件\nindex\tversionInVerFile\tfileName\t    tag");
                             int index=0;
                             for(JRERegister.jreFile jreFile:ServerMain.jreRegister.files){
-                                Out.say(index+++"\t"+jreFile.version+"\t"+jreFile.fileName);
+                                Out.say(index+++"\t"+jreFile.version+"\t"+jreFile.fileName+"\t"+jreFile.filePath+"\t"+jreFile.tag);
                             }
                             ServerMain.cmdProcessFinish();
                             return;
@@ -309,7 +312,7 @@ public class TransCmd extends  Thread{
                                 if(index.equals("all")){
                                     for(JRERegister.jreFile jreFile:ServerMain.jreRegister.getFiles()){
                                         jreFile.version=Long.parseLong(cmd[2]);
-                                        Out.say(cmd[2]+"\t"+jreFile.fileName);
+                                        Out.say(cmd[2]+"\t"+jreFile.filePath+"\t"+jreFile.fileName+"\t"+jreFile.tag);
                                     }
                                     break;
                                 }
@@ -318,10 +321,64 @@ public class TransCmd extends  Thread{
                                     continue;
                                 }
                                 ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).version=Long.parseLong(cmd[2]);
-                                Out.say(cmd[2]+"\t"+ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).fileName);
+                                Out.say(cmd[2]+"\t"+ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).filePath+"\t"+ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).fileName);
                             }
                             ServerMain.jreRegister.writeToFile();
                             Out.say("TransCmd-jre reg","已写入文件");
+                            ServerMain.cmdProcessFinish();
+                            return;
+                        }
+                        case "tag":{//为字段打标记
+                            if(cmd.length<4){
+                                Out.say("TransCmd-jre tag","命令语法不正确");
+                                ServerMain.cmdProcessFinish();
+                                return;
+                            }
+                            String fileIndexs[]=cmd[3].split(",");
+                            for(String index:fileIndexs){
+                                if(index.equals("all")){
+                                    for(JRERegister.jreFile jreFile:ServerMain.jreRegister.getFiles()){
+                                        jreFile.tag=cmd[2];
+                                        Out.say(cmd[2]+"\t"+jreFile.filePath+"\t"+jreFile.fileName+"\t"+jreFile.tag);
+                                    }
+                                    break;
+                                }
+                                if(Integer.parseInt(index)>=ServerMain.jreRegister.getFiles().size()||Integer.parseInt(index)<0){
+                                    Out.say("无index为"+index+"的文件");
+                                    continue;
+                                }
+                                ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).tag=cmd[2];
+                                Out.say(cmd[2]+"\t"+ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).filePath+"\t"+ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).fileName);
+                            }
+                            ServerMain.jreRegister.writeToFile();
+                            Out.say("TransCmd-jre tag","已写入文件");
+                            ServerMain.cmdProcessFinish();
+                            return;
+                        }
+                        case "rmtag":{
+                            if(cmd.length<4){
+                                Out.say("TransCmd-jre rmtag","命令语法不正确");
+                                ServerMain.cmdProcessFinish();
+                                return;
+                            }
+                            String fileIndexs[]=cmd[3].split(",");
+                            for(String index:fileIndexs){
+                                if(index.equals("all")){
+                                    for(JRERegister.jreFile jreFile:ServerMain.jreRegister.getFiles()){
+                                        jreFile.tag="";
+                                        Out.say("清除tag\t"+jreFile.filePath+"\t"+jreFile.fileName+"\t"+jreFile.tag);
+                                    }
+                                    break;
+                                }
+                                if(Integer.parseInt(index)>=ServerMain.jreRegister.getFiles().size()||Integer.parseInt(index)<0){
+                                    Out.say("无index为"+index+"的文件");
+                                    continue;
+                                }
+                                ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).tag="";
+                                Out.say("清除tag\t"+ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).filePath+"\t"+ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).fileName);
+                            }
+                            ServerMain.jreRegister.writeToFile();
+                            Out.say("TransCmd-jre rmtag","已写入文件");
                             ServerMain.cmdProcessFinish();
                             return;
                         }
