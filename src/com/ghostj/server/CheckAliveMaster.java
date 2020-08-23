@@ -5,7 +5,7 @@ import com.ghostj.util.Out;
 import java.util.ArrayList;
 
 public class CheckAliveMaster extends Thread{
-	int time=1500;
+	int time;
 	CheckAliveMaster(int time){
 		this.time=time;
 	}

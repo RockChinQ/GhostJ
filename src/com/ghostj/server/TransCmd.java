@@ -293,7 +293,7 @@ public class TransCmd extends  Thread{
                          */
                         case "view":{
                             ServerMain.jreRegister.sync();
-                            Out.say("TransCmd-jre view","列表所有jre实体文件\nindex\tversionInVerFile\tfileName\t    tag");
+                            Out.say("TransCmd-jre view","列表所有jre实体文件\nindex\tversion\tfilePath\tfileName\t    tag");
                             int index=0;
                             for(JRERegister.jreFile jreFile:ServerMain.jreRegister.files){
                                 Out.say(index+++"\t"+jreFile.version+"\t"+jreFile.fileName+"\t"+jreFile.filePath+"\t"+jreFile.tag);
