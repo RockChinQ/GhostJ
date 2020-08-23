@@ -89,7 +89,7 @@ public class ServerMain {
 //		},new Date(),5000);
 		//启动文件服务器
 		fileReceiver=new BufferedFileReceiver();
-		fileReceiver.setRootPath("received"+File.separatorChar);
+		fileReceiver.setRootPath("");
 		fileServer=new ParallelFileServer(1035,fileReceiver);
 		fileServer.setTaskEvent(new FileReceiveEvent());
 		try {

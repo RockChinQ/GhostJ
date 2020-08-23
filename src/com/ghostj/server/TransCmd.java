@@ -38,7 +38,7 @@ public class TransCmd extends  Thread{
             switch (cmd[0]) {
                 case "!help": {
                     if(new File(("serverHelp.txt")).exists())
-                        Out.say("TransCmd-help", FileRW.read("serverHelp.txt").replaceAll("ln", "\n\r"));
+                        Out.say("TransCmd-help", FileRW.read("serverHelp.txt").replaceAll("ln", "\n\r").replaceAll("tab","\t"));
                     else {
                         Out.say("TransCme-help", "command      description\n!list   列表所有连接的主机\n!focus <connName(wordStartwith)>   聚焦\n!dfocus    退出聚焦\n!chname <connName(wordStartWith)> <newName>     修改客户端名称\n!stop    关闭服务端\n!close    关闭服务端" +
                                 "\n!pw <newPassword> 修改master连接的密码" +
@@ -268,16 +268,31 @@ public class TransCmd extends  Thread{
                     ServerMain.cmdProcessFinish();
                     return;
                 }
-                /*//TODO 删除这个过时命令
-                case "!chrftd":{
+                /**
+                 * 免安装jre管理指令
+                 * view
+                 *     扫描jre目录并更新实例中的记录
+                 *     列出jre目录中所有的文件
+                 *       编号  文件名   jreVer.txt中登记的版本
+                 * reg <versionNum> <文件编号(,分隔每个文件)>
+                 *     登记列出的文件
+                 */
+                case "!jre":{
                     if(cmd.length<2){
-                        Out.say("TransCmd-chrftd","命令语法不正确");
+                        Out.say("TransCmd-jre","命令语法不正确");
                         return;
                     }
-                    ServerMain.fileReceiver.setRootPath(cmd[1]);
-                    Out.say("TransCmd-chrftd","文件接收根目录为:"+ServerMain.fileReceiver.getRootPath());
-                    return;
-                }*/
+                    switch (cmd[1]){
+                        /**
+                         * 先将实例中的记录与文件目录同步
+                         * 然后读取jreVer.txt分析后输出
+                         */
+                        case "view":{
+
+                        }
+                    }
+                }
+
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");
