@@ -96,7 +96,7 @@ public class JRERegister {
 //				this.files.add(new jreFile(file.getPath(),fileFields.containsKey(file.getPath())?fileFields.get(file.getPath()):2100000000));
 				try {
 					jreFile jreFile=getFileField(getFilePath(file.getPath()), file.getName());
-					jreFile toAdd=new jreFile(file.getName(), getFilePath(file.getPath()),  jreFile==null?2100000000:jreFile.version);
+					jreFile toAdd=new jreFile(file.getName(), getFilePath(file.getPath()),  jreFile==null?0:jreFile.version);
 					if(jreFile!=null)
 						toAdd.tag=jreFile.tag;
 					this.files.add(toAdd);

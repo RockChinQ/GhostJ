@@ -2,6 +2,7 @@ package com.ghostj.client;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.util.Date;
 
 public class ProcessCmd extends Thread{
     public String cmd="";
@@ -17,6 +18,7 @@ public class ProcessCmd extends Thread{
 
     public ProcessCmd(String name){
         this.name=name;
+        startTime=new Date().getTime();
     }
     public void run(){
         try{
