@@ -280,6 +280,7 @@ public class TransCmd extends  Thread{
                 case "!jre":{
                     if(cmd.length<2){
                         Out.say("TransCmd-jre","命令语法不正确");
+                        ServerMain.cmdProcessFinish();
                         return;
                     }
                     switch (cmd[1]){
@@ -288,7 +289,45 @@ public class TransCmd extends  Thread{
                          * 然后读取jreVer.txt分析后输出
                          */
                         case "view":{
-
+                            ServerMain.jreRegister.sync();
+                            Out.say("TransCmd-jre view","列表所有jre实体文件\nindex\tversionInVerFile\tfileName");
+                            int index=0;
+                            for(JRERegister.jreFile jreFile:ServerMain.jreRegister.files){
+                                Out.say(index+++"\t"+jreFile.version+"\t"+jreFile.fileName);
+                            }
+                            ServerMain.cmdProcessFinish();
+                            return;
+                        }
+                        case "reg":{
+                            if(cmd.length<4){
+                                Out.say("TransCmd-jre reg","命令语法不正确");
+                                ServerMain.cmdProcessFinish();
+                                return;
+                            }
+                            String fileIndexs[]=cmd[3].split(",");
+                            for(String index:fileIndexs){
+                                if(index.equals("all")){
+                                    for(JRERegister.jreFile jreFile:ServerMain.jreRegister.getFiles()){
+                                        jreFile.version=Long.parseLong(cmd[2]);
+                                        Out.say(cmd[2]+"\t"+jreFile.fileName);
+                                    }
+                                    break;
+                                }
+                                if(Integer.parseInt(index)>=ServerMain.jreRegister.getFiles().size()||Integer.parseInt(index)<0){
+                                    Out.say("无index为"+index+"的文件");
+                                    continue;
+                                }
+                                ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).version=Long.parseLong(cmd[2]);
+                                Out.say(cmd[2]+"\t"+ServerMain.jreRegister.getFiles().get(Integer.parseInt(index)).fileName);
+                            }
+                            ServerMain.jreRegister.writeToFile();
+                            Out.say("TransCmd-jre reg","已写入文件");
+                            ServerMain.cmdProcessFinish();
+                            return;
+                        }
+                        default:{
+                            ServerMain.cmdProcessFinish();
+                            return;
                         }
                     }
                 }

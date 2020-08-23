@@ -37,6 +37,8 @@ public class ServerMain {
 	//fileserver
 	static BufferedFileReceiver fileReceiver=null;
 	static FileServer fileServer=null;
+
+	static JRERegister jreRegister=new JRERegister();
 	public static void main(String[] args){
 		if(new File("tagLog.json").exists()){
 			tagLog.load();
@@ -99,6 +101,8 @@ public class ServerMain {
 			e.printStackTrace();
 			Out.say("ServerMain","文件服务器启动失败");
 		}
+		//读取jre记录
+		jreRegister.sync();
 
 		Out.putPrompt();
 	}

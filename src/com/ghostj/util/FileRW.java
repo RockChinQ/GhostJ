@@ -16,6 +16,19 @@ public class FileRW {
             return "";
         }
     }
+    public static String readMultiLine(String path){
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
+            StringBuffer result=new StringBuffer();
+            String line="";
+            while ((line=bufferedReader.readLine())!=null){
+                result.append(line+"\n");
+            }
+            return result.toString();
+        }catch (Exception e){
+            return "";
+        }
+    }
     public static void write(String filePath,String str){
         BufferedWriter bufferedWriter=null;
         try{
