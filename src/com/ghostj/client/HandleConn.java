@@ -135,7 +135,7 @@ public class HandleConn extends Thread{
                                         "      oper列表:\n" +
                                         "      upload <filePathOnClient> <savePathOnServer>  上传一个文件\n" +
                                         "\n" +
-                                        "!!scr <picFile.png>  把屏幕截图保存到文件(png格式)\n";
+                                        "!!scr [picFile.png]  把屏幕截图保存到文件(png格式)并上传至server\n";
                                 ClientMain.bufferedWriter.write(helpinfo + "\n");
                                 ClientMain.bufferedWriter.flush();
                                 ClientMain.sendFinishToServer();

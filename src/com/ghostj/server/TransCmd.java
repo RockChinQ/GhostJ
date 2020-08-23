@@ -246,7 +246,7 @@ public class TransCmd extends  Thread{
                             return;
                         }
                         case "stop":{
-                            if(cmd.length<2){
+                            if(cmd.length<3){
                                 Out.say("TransCmd-rft stop","命令语法不正确");
                                 ServerMain.cmdProcessFinish();
                                 return;
@@ -256,7 +256,7 @@ public class TransCmd extends  Thread{
 //                            Out.say("TransCmd-rft task","遍历所有正在进行的文件接收任务\ntoken    fileName    length    received   savePath");
                             for (String token:taskMap.keySet()){
 //                                Out.say(token+"   "+taskMap.get(token).getInfo().getName()+"   "+taskMap.get(token).getInfo().getSize()+"    "+taskMap.get(token).getReceivedSize()+"   "+ServerMain.fileReceiver.getRootPath()+taskMap.get(token).getInfo().getSavePath());
-                                if(token.startsWith(cmd[1])){
+                                if(token.startsWith(cmd[2])){
                                     ServerMain.fileReceiver.interruptFile(token);
                                     Out.say("TransCmd-rft stop","已停止文件接收任务:"+token);
                                 }
