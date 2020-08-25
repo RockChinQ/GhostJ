@@ -53,7 +53,7 @@ public class Downloader {
      * @param savePath
      * @param token
      * */
-    public static void downloadFromUrl(String urlStr,String fileName,String savePath,String token)throws Exception{
+    /*public static void downloadFromUrl(String urlStr,String fileName,String savePath,String token)throws Exception{
         URL url=new URL(urlStr);
         HttpURLConnection conn=(HttpURLConnection)url.openConnection();
 
@@ -91,7 +91,7 @@ public class Downloader {
         if (inputStreamReader!=null){
             inputStreamReader.close();
         }
-    }
+    }*/
 
 
 

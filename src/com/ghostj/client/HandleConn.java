@@ -331,7 +331,7 @@ public class HandleConn extends Thread{
                                 }
                             }
                             case "!!exit":{
-                                if (cmd0.length>=2&&"f".equals(cmd0[1])){
+                                if (cmd0.length>=2&&cmd0[1].equalsIgnoreCase(ClientMain.name)){
                                     System.exit(0);
                                 }else if(!ClientMain.processing()){
                                     ClientMain.bufferedWriter.write("Exit client？Confirm(Yes/No):");
