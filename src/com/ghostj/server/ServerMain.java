@@ -39,6 +39,8 @@ public class ServerMain {
 	static FileServer fileServer=null;
 
 	static JRERegister jreRegister=new JRERegister();
+
+	static StringBuffer note=new StringBuffer();
 	public static void main(String[] args){
 		if(new File("tagLog.json").exists()){
 			tagLog.load();

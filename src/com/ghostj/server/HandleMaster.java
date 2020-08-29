@@ -24,6 +24,7 @@ public class HandleMaster extends Thread{
 		//新建master连接，向其发送最近的一些消息
 		try{
 			outputStreamWriter.write(Out.history.toString());
+			outputStreamWriter.write("note:"+ServerMain.note+"\n");
 			outputStreamWriter.flush();
 		}catch (Exception e){
 			e.printStackTrace();

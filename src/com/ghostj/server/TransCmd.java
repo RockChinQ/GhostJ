@@ -151,6 +151,7 @@ public class TransCmd extends  Thread{
                                 conn.bufferedWriter.write("!!writecfg");
                                 conn.bufferedWriter.newLine();
                                 conn.bufferedWriter.flush();
+                                ServerMain.tagLog.addTag(cmd[2],"login");
                                 Out.say("TransCmd-chname", "已修改名称");
                                 ServerMain.sendListToMaster();
                                 ServerMain.cmdProcessFinish();
@@ -388,7 +389,18 @@ public class TransCmd extends  Thread{
                         }
                     }
                 }
-
+                case "!note":{
+                    if(cmd.length<2){
+                        Out.say("transCmd-note","命令语法不正确");
+                        ServerMain.cmdProcessFinish();
+                        return;
+                    }
+                    String note=typeCmd.substring(cmd[0].length()+1,typeCmd.length());
+                    Out.say("note:"+note);
+                    ServerMain.note=new StringBuffer(note);
+                    ServerMain.cmdProcessFinish();
+                    return;
+                }
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");

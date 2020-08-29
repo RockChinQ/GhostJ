@@ -12,6 +12,7 @@ import java.net.SocketAddress;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Timer;
+import java.util.TimerTask;
 
 public class ClientMain {
     public static Config config;
@@ -69,6 +70,14 @@ public class ClientMain {
         //检测计时器
         Timer t=new Timer();
         t.schedule(new CheckAliveTimer(),1000,30000);
+
+        //为daemon的alive
+        t.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                FileRW.write("alive",""+new Date().getTime()/1000);
+            }
+        },new Date(),2*60*1000);
     }
 
     public static String getErrorInfo(Exception e){
