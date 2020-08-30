@@ -10,8 +10,8 @@ import java.util.Date;
 
 public class ClientTable extends JPanel {
 
-	static Font btnf=new Font("Consolas",Font.PLAIN,20);
-	static Font dscf=new Font("Consolas",Font.ITALIC,14);
+	static Font btnf=new Font("Consolas",Font.BOLD,17);
+	static Font dscf=new Font("Consolas",Font.ITALIC,11);
 	public static class clientInfo{
 		public long id=-1;
 		public String name=null;
@@ -56,15 +56,15 @@ public class ClientTable extends JPanel {
 			g.fillRect(0,0,this.getWidth(),this.getHeight());
 			g.setFont(this.getFont());
 			g.setColor(Color.white);
-			g.drawString(clientInfo.id+" "+clientInfo.name,3,15);
+			g.drawString(clientInfo.id+" "+clientInfo.name,3,11);
 			g.setFont(dscf);
-			g.drawString(clientInfo.sysStartTimeStr+" "+clientInfo.version,3,32);
+			g.drawString(clientInfo.sysStartTimeStr+" "+clientInfo.version,3,21);
 			g.setColor(Color.green);
-			g.drawString(clientInfo.connTimeStr,3,45);
+			g.drawString(clientInfo.connTimeStr,3,29);
 		}
 	}
 
-	public static final int entryHeight=50;
+	public static final int entryHeight=30;
 	public ClientTable(){
 		this.setLayout(null);
 	}
