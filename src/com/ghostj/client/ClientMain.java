@@ -77,7 +77,7 @@ public class ClientMain {
             public void run() {
                 FileRW.write("alive",""+new Date().getTime()/1000);
             }
-        },new Date(),2*60*1000);
+        },new Date(),(int)(1.5*60*1000));
     }
 
     public static String getErrorInfo(Exception e){
