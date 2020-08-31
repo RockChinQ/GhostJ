@@ -28,6 +28,8 @@ public class InitGUI {
 	JScrollPane scrollPane=new JScrollPane();
 	public JScrollBar scrollBar=null;
 	public JTextField type=new JTextField();
+	//echo模式或指令模式
+	public Button typeMode=new Button("Echo×");
 	public AddStringToConsole addStringToConsole=null;
 
 	public BatPanel batPanel;
@@ -36,6 +38,7 @@ public class InitGUI {
 
 	public ArrayList<String> commandHistory=new ArrayList<>();
 	public int updownPosition=0;
+
 	public InitGUI(){
 		mainwd.setSize(900,920);
 		mainwd.setLocation(200,100);
@@ -136,7 +139,7 @@ public class InitGUI {
 		addStringToConsole=new AddStringToConsole();
 		bgp.add(scrollPane);
 
-		type.setBounds(console.getX(),console.getY()+console.getHeight()+10,console.getWidth(),40);
+		type.setBounds(console.getX(),console.getY()+console.getHeight()+10,console.getWidth()-70,40);
 		type.setBackground(console.getBackground());
 		type.setForeground(console.getForeground());
 		type.setFont(console.getFont());
@@ -149,10 +152,11 @@ public class InitGUI {
 				if(e.getKeyChar()==KeyEvent.VK_ENTER){
 					try{
 
-						MasterMain.bufferedWriter.write(type.getText());
+						String cmd=typeMode.isSelected()?("!echo "+type.getText()):type.getText();
+						MasterMain.bufferedWriter.write(cmd);
 						MasterMain.bufferedWriter.newLine();
 						MasterMain.bufferedWriter.flush();
-						commandHistory.add(type.getText());
+						commandHistory.add(cmd);
 						type.setText("");
 						updownPosition=commandHistory.size();
 					}catch (Exception err){
@@ -177,12 +181,27 @@ public class InitGUI {
 					updownPosition=updownPosition+1>=commandHistory.size()?commandHistory.size()-1:updownPosition+1;
 					type.setText(commandHistory.get(updownPosition));
 
+				}else if((e.getExtendedKeyCode()=='e'||e.getExtendedKeyCode()=='E')&&e.isControlDown()){
+					typeMode.setSelected(!typeMode.isSelected());
+					typeMode.setText("Echo"+(typeMode.isSelected()?"√":"×"));
+					type.requestFocus();
 				}
+//				System.out.println(e.getKeyChar());
 			}
 		});
 		type.requestFocus();
-
 		bgp.add(type);
+
+
+		typeMode.setBounds(type.getX()+type.getWidth()+10,console.getY()+console.getHeight()+10,70,40);
+		typeMode.addActionListener((e)->{
+			typeMode.setSelected(!typeMode.isSelected());
+//			System.out.println(typeMode.isSelected());
+			typeMode.setText("Echo"+(typeMode.isSelected()?"√":"×"));
+			type.requestFocus();
+		});
+		typeMode.setVisible(true);
+		bgp.add(typeMode);
 
 		//批处理指令列表
 		batPanel=new BatPanel();
