@@ -70,4 +70,23 @@ public class TagLog {
 		}
 		FileRW.write("tagLog.json",jsonObject.toString());
 	}
+	//ownerName:time tag,time2 tag2;ownerName:time tag;
+	public void smallerPack(){
+		StringBuffer fileStr=new StringBuffer();
+		for(String ownerName:allOwner.keySet()){
+			StringBuffer aownerStr=new StringBuffer(ownerName+":");
+			tagOwner owner=allOwner.get(ownerName);
+			int index=0;
+			for(tagOwner.tag tag:owner.tags){
+				aownerStr.append(tag.time+" "+tag.name);
+				aownerStr.append(index==owner.tags.size()-1?"":",");
+				index++;
+			}
+			fileStr.append(aownerStr+";");
+		}
+		FileRW.write("tagLog.txt",fileStr.toString());
+	}
+	public void smallLoad(){
+
+	}
 }

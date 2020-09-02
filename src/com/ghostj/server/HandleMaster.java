@@ -128,6 +128,7 @@ public class HandleMaster extends Thread{
 					}
 					//已处理完master级别指令
 					//不是指令的发送至下一级
+					//调用TransCmd的handlecommand
 					if(available)
 						ServerMain.transCmd.handleCommand(msg);
 				}catch (Exception e){

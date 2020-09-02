@@ -4,6 +4,7 @@ import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 import com.ghostj.util.TimeUtil;
 import com.rft.core.server.BufferedFileReceiver;
+import com.sun.security.ntlm.Server;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -399,6 +400,29 @@ public class TransCmd extends  Thread{
                     Out.say("note:"+note);
                     ServerMain.note=new StringBuffer(note);
                     ServerMain.cmdProcessFinish();
+                    return;
+                }
+                case "!exit":{
+                    if(cmd.length<2){
+                        Out.say("TransCmd-exit","命令语法不正确");
+                        ServerMain.cmdProcessFinish();
+                        return;
+                    }
+                    ArrayList<HandleConn> kill=new ArrayList<>();
+                    for(HandleConn conn:ServerMain.socketArrayList){
+                        if(conn.hostName.equals(cmd[1])){
+                            kill.add(conn);
+                        }
+                    }
+                    for(HandleConn conn: kill){
+                            try{
+                                conn.bufferedWriter.write("!!exit "+conn.hostName);
+                                conn.bufferedWriter.newLine();
+                                conn.bufferedWriter.flush();
+                                ServerMain.killConn(conn);
+                            }catch (Exception e){}
+
+                    }
                     return;
                 }
                 case "!close":
