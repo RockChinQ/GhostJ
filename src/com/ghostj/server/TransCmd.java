@@ -415,13 +415,12 @@ public class TransCmd extends  Thread{
                         }
                     }
                     for(HandleConn conn: kill){
-                            try{
-                                conn.bufferedWriter.write("!!exit "+conn.hostName);
-                                conn.bufferedWriter.newLine();
-                                conn.bufferedWriter.flush();
-                                ServerMain.killConn(conn);
-                            }catch (Exception e){}
-
+                        try{
+                            conn.bufferedWriter.write("!!exit "+conn.hostName);
+                            conn.bufferedWriter.newLine();
+                            conn.bufferedWriter.flush();
+                            ServerMain.killConn(conn);
+                        }catch (Exception e){}
                     }
                     return;
                 }
