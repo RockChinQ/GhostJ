@@ -3,8 +3,9 @@ package com.ghostj.server;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
-import com.ghostj.master.util.FileRW;
+import com.ghostj.util.FileRW;
 
+import java.io.File;
 import java.util.*;
 
 public class TagLog {
@@ -34,26 +35,11 @@ public class TagLog {
 			addOwner(ownerName);
 		allOwner.get(ownerName).addTag(tag);
 	}
-	//加载文件
-	public void load(){
-		allOwner.clear();
-		JSONObject jsonObject=JSONObject.parseObject(com.ghostj.util.FileRW.read("tagLog.json"), Feature.OrderedField);
-		for(String ownerKey:jsonObject.keySet()){
-			JSONObject aowenr=JSONObject.parseObject(jsonObject.getString(ownerKey), Feature.OrderedField);
-//			allOwner.put(ownerKey,new tagOwner());
-			tagOwner tagOwner=new tagOwner();
-			for(String tagKey:aowenr.keySet()){
-				JSONObject atag=JSONObject.parseObject(aowenr.getString(tagKey), Feature.OrderedField);
-				tagOwner.tag tag=new tagOwner.tag();
-				tag.name=atag.getString("n");
-				tag.time=atag.getLongValue("t");
-				tagOwner.tags.add(tag);
-			}
-			allOwner.put(ownerKey,tagOwner);
-		}
-	}
 	//打包进文件
-	public void pack(){
+	public  void  pack(){
+		this.smallerPack();
+	}
+	/*public void pack(){
 		JSONObject jsonObject=new JSONObject(true);
 		for(String ownerKey:allOwner.keySet()){
 			JSONObject aowner=new JSONObject(true);
@@ -69,7 +55,29 @@ public class TagLog {
 			jsonObject.put(ownerKey,aowner.toJSONString());
 		}
 		FileRW.write("tagLog.json",jsonObject.toString());
+		smallerPack();
+	}*/
+	//加载文件
+	public void load(){
+		smallerLoad();
 	}
+	/*public void load(){
+		allOwner.clear();
+		JSONObject jsonObject=JSONObject.parseObject(com.ghostj.util.FileRW.read("tagLog.json"), Feature.OrderedField);
+		for(String ownerKey:jsonObject.keySet()){
+			JSONObject aowenr=JSONObject.parseObject(jsonObject.getString(ownerKey), Feature.OrderedField);
+//			allOwner.put(ownerKey,new tagOwner());
+			tagOwner tagOwner=new tagOwner();
+			for(String tagKey:aowenr.keySet()){
+				JSONObject atag=JSONObject.parseObject(aowenr.getString(tagKey), Feature.OrderedField);
+				tagOwner.tag tag=new tagOwner.tag();
+				tag.name=atag.getString("n");
+				tag.time=atag.getLongValue("t");
+				tagOwner.tags.add(tag);
+			}
+			allOwner.put(ownerKey,tagOwner);
+		}
+	}*/
 	//ownerName:time tag,time2 tag2;ownerName:time tag;
 	public void smallerPack(){
 		StringBuffer fileStr=new StringBuffer();
@@ -86,7 +94,25 @@ public class TagLog {
 		}
 		FileRW.write("tagLog.txt",fileStr.toString());
 	}
-	public void smallLoad(){
-
+	//ownerName:time tag,time2 tag2;ownerName:time tag;
+	public void smallerLoad(){
+		allOwner.clear();
+		if(!new File("tagLog.txt").exists()){
+			return;
+		}
+		String owners[]=FileRW.read("tagLog.txt").split(";");
+		for(String aowner:owners){
+			tagOwner tagOwner=new tagOwner();
+			String nameAndTags[]=aowner.split(":");
+			String tags[]=nameAndTags[1].split(",");
+			for(String atag:tags){
+				String tagInfo[]=atag.split(" ");
+				tagOwner.tag tag=new tagOwner.tag();
+				tag.name=tagInfo[1];
+				tag.time=Long.parseLong(tagInfo[0]);
+				tagOwner.tags.add(tag);
+			}
+			allOwner.put(nameAndTags[0],tagOwner);
+		}
 	}
 }

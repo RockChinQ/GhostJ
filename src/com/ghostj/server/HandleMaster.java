@@ -117,7 +117,9 @@ public class HandleMaster extends Thread{
 						case "#taglog#":{
 							try {
 								ServerMain.logAliveDevice();
-								outputStreamWriter.write("!taglog " + FileRW.read("tagLog.json") + "!");
+								String  write="!taglog " + FileRW.read("tagLog.txt") + "!";
+//								System.out.println(write);
+								outputStreamWriter.write(write);
 								outputStreamWriter.flush();
 							}catch (Exception e){
 								Out.say("HandleMaster","发送tagLog到master失败");

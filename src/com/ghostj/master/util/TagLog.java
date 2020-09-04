@@ -1,8 +1,11 @@
 package com.ghostj.master.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
+import com.ghostj.util.FileRW;
 
+import java.io.File;
 import java.util.*;
 
 public class TagLog {
@@ -32,8 +35,33 @@ public class TagLog {
 			addOwner(ownerName);
 		allOwner.get(ownerName).addTag(tag);
 	}
+	//打包进文件
+	public  void  pack(){
+		this.smallerPack();
+	}
+	/*public void pack(){
+		JSONObject jsonObject=new JSONObject(true);
+		for(String ownerKey:allOwner.keySet()){
+			JSONObject aowner=new JSONObject(true);
+			tagOwner owner=allOwner.get(ownerKey);
+			int index=0;
+			for(tagOwner.tag tag:owner.tags){
+				JSONObject atag=new JSONObject();
+				atag.put("n",tag.name);
+				atag.put("t",tag.time);
+				aowner.put(""+(index),atag.toJSONString());
+				index++;
+			}
+			jsonObject.put(ownerKey,aowner.toJSONString());
+		}
+		FileRW.write("tagLog.json",jsonObject.toString());
+		smallerPack();
+	}*/
 	//加载文件
 	public void load(){
+		smallerLoad();
+	}
+	/*public void load(){
 		allOwner.clear();
 		JSONObject jsonObject=JSONObject.parseObject(com.ghostj.util.FileRW.read("tagLog.json"), Feature.OrderedField);
 		for(String ownerKey:jsonObject.keySet()){
@@ -49,24 +77,44 @@ public class TagLog {
 			}
 			allOwner.put(ownerKey,tagOwner);
 		}
-		System.gc();
-	}
-	//打包进文件
-	public void pack(){
-		JSONObject jsonObject=new JSONObject(true);
-		for(String ownerKey:allOwner.keySet()){
-			JSONObject aowner=new JSONObject(true);
-			TagLog.tagOwner owner=allOwner.get(ownerKey);
+	}*/
+	//ownerName:time tag,time2 tag2;ownerName:time tag;
+	public void smallerPack(){
+		StringBuffer fileStr=new StringBuffer();
+		for(String ownerName:allOwner.keySet()){
+			StringBuffer aownerStr=new StringBuffer(ownerName+":");
+			tagOwner owner=allOwner.get(ownerName);
 			int index=0;
-			for(TagLog.tagOwner.tag tag:owner.tags){
-				JSONObject atag=new JSONObject();
-				atag.put("n",tag.name);
-				atag.put("t",tag.time);
-				aowner.put(""+(index),atag.toJSONString());
+			for(tagOwner.tag tag:owner.tags){
+				aownerStr.append(tag.time+" "+tag.name);
+				aownerStr.append(index==owner.tags.size()-1?"":",");
 				index++;
 			}
-			jsonObject.put(ownerKey,aowner.toJSONString());
+			fileStr.append(aownerStr+";");
 		}
-		FileRW.write("tagLog.json",jsonObject.toString());
+		FileRW.write("tagLog.txt",fileStr.toString());
+	}
+	//ownerName:time tag,time2 tag2;ownerName:time tag;
+	public void smallerLoad(){
+		allOwner.clear();
+		if(!new File("tagLog.txt").exists()){
+			return;
+		}
+		String owners[]=FileRW.read("tagLog.txt").split(";");
+		for(String aowner:owners){
+			tagOwner tagOwner=new tagOwner();
+			String nameAndTags[]=aowner.split(":");
+			if(nameAndTags.length>1) {
+				String tags[] = nameAndTags[1].split(",");
+				for (String atag : tags) {
+					String tagInfo[] = atag.split(" ");
+					tagOwner.tag tag = new tagOwner.tag();
+					tag.name = tagInfo[1];
+					tag.time = Long.parseLong(tagInfo[0]);
+					tagOwner.tags.add(tag);
+				}
+			}
+			allOwner.put(nameAndTags[0],tagOwner);
+		}
 	}
 }

@@ -19,7 +19,7 @@ public class CheckServerAlive extends TimerTask {
 					MasterMain.bufferedWriter.newLine();
 					MasterMain.bufferedWriter.flush();
 				} catch (Exception e) {
-					MasterMain.handleConn.kill("server已断连0");
+					MasterMain.handleConn.kill("server已断连");
 					e.printStackTrace();
 				}
 				new Thread().sleep(3000);

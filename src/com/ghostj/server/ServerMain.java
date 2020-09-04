@@ -42,7 +42,7 @@ public class ServerMain {
 
 	static StringBuffer note=new StringBuffer();
 	public static void main(String[] args){
-		if(new File("tagLog.json").exists()){
+		if(new File("tagLog.txt").exists()){
 			tagLog.load();
 		}
 		tagLog.addTag(".Server","login");

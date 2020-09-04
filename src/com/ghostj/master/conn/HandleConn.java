@@ -33,7 +33,7 @@ public class HandleConn extends Thread{
 							//							if(workInfoLen>=25)
 //								break;
 						}
-						//System.out.println(cmds);
+//						System.out.println(cmds);
 						String cmd[]=cmds.toString().substring(0,cmds.length()-1).split(" ");
 						switch (cmd[0]){
 							case "!relogin":{
@@ -73,7 +73,8 @@ public class HandleConn extends Thread{
 							}
 							case "!taglog":{
 								try {
-									FileRW.write("tagLog.json", cmd[1]);
+									FileRW.write("tagLog.txt",cmds.substring(8,cmds.length()));
+//									System.out.println(cmd[1]);
 									MasterMain.tagLog.load();
 									MasterMain.initGUI.onlineTimeChart.repaint();
 								}catch (Exception e){
