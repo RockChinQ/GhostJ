@@ -119,7 +119,7 @@ public class TransCmd extends  Thread{
                                 ServerMain.focusedConn = conn;
                                 Out.say("TransCmd-focus", "聚焦" + ServerMain.focusedConn.hostName);
                                 ServerMain.focusedConn.showHistory();
-                                Out.say("=========历史消息========");
+                                Out.say("TransCmd-focus","===========client:"+conn.hostName+"的历史消息==========");
                                 ServerMain.sendListToMaster();
                                 ServerMain.cmdProcessFinish();
                                 return;

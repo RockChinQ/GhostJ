@@ -12,6 +12,7 @@ public class ClientTable extends JPanel {
 
 	static Font btnf=new Font("Consolas",Font.BOLD,17);
 	static Font dscf=new Font("Consolas",Font.ITALIC,11);
+	static Font totalf=new Font("Consolas",Font.ITALIC,14);
 	public static class clientInfo{
 		public long id=-1;
 		public String name=null;
@@ -69,7 +70,7 @@ public class ClientTable extends JPanel {
 	public ClientTable(){
 		this.setLayout(null);
 		total.setBounds(5,0,70,15);
-		total.setFont(dscf);
+		total.setFont(totalf);
 		total.setForeground(Color.white);
 	}
 
