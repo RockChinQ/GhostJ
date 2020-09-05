@@ -3,10 +3,10 @@ package com.ghostj.client.func;
 import com.ghostj.client.cmd.AbstractFunc;
 import com.ghostj.client.cmd.AbstractProcessor;
 
-public class FuncTest implements AbstractFunc {
+public class FuncDefault implements AbstractFunc {
     @Override
     public String getFuncName() {
-        return "!test";
+        return "";
     }
 
     @Override
@@ -16,11 +16,11 @@ public class FuncTest implements AbstractFunc {
 
     @Override
     public String getDescription() {
-        return null;
+        return "直接发送到命令行的指令";
     }
 
     @Override
     public void run(String[] params, String cmd, AbstractProcessor processor) {
-        System.out.println("test被call"+"\n参数"+params.length+" "+params.toString()+" cmd"+cmd+" \nprocessorClass:"+processor.getClass());
+
     }
 }
