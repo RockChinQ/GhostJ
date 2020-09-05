@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  * 定义了命令解码器的模板
- * methods
  * @author Rock Chin
  */
 public abstract class AbstractProcessor {

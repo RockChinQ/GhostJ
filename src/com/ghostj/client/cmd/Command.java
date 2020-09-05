@@ -14,6 +14,10 @@ public class Command extends Thread{
      * 此命令的参数
      */
     private String[] params;
+    /**
+     * 此命令的完整内容s
+     */
+    private String cmd;
 
     /**
      *
@@ -24,6 +28,7 @@ public class Command extends Thread{
     public Command(String name,String[] params,String cmd){
         this.funcName=name;
         this.params=params;
+        this.cmd=cmd;
     }
 
     /**
@@ -62,6 +67,6 @@ public class Command extends Thread{
      */
     @Override
     public void run(){
-        func.run(params,processor);
+        func.run(params,cmd,processor);
     }
 }
