@@ -73,7 +73,7 @@ public class HandleConn extends Thread{
 							}
 							case "!taglog":{
 								try {
-									FileRW.write("tagLog.txt",cmds.substring(8,cmds.length()));
+									FileRW.write("tagLog.txt",cmds.substring(8,cmds.length()-1));
 //									System.out.println(cmd[1]);
 									MasterMain.tagLog.load();
 									MasterMain.initGUI.onlineTimeChart.repaint();

@@ -1,8 +1,12 @@
 package com.ghostj.server;
 
+import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
+import com.sun.org.apache.xpath.internal.operations.String;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.TimerTask;
 
 public class CheckAliveTimer extends TimerTask {
@@ -31,14 +35,23 @@ public class CheckAliveTimer extends TimerTask {
                         e.printStackTrace();
                     }
                 }
-                for(HandleConn tag:ServerMain.socketArrayList){
-                    if(tag.avai)
-                        ServerMain.tagLog.addTag(tag.hostName,"alive");
+                StringBuffer allOnlineClientList=new StringBuffer();
+                for(HandleConn client:ServerMain.socketArrayList){
+                    //写taglog
+                    //写列表到文件以便rescueServer检测未启动客户端的机器
+                    if(client.avai) {
+                        ServerMain.tagLog.addTag(client.hostName, "alive");
+                        allOnlineClientList.append("r"+client.hostName+" ");
+                    }
                 }
+                FileRW.write("rescue"+ File.separatorChar+"onlineClients.txt",allOnlineClientList.toString());
                 ServerMain.tagLog.addTag(".Server","alive");
                 ServerMain.tagLog.pack();
                 System.gc();
-            }catch (Exception e){
+
+            }catch (ConcurrentModificationException e){
+                ;
+            } catch (Exception e){
                 Out.say("CheckAliveTimer","检测连接时出错");
                 e.printStackTrace();
             }

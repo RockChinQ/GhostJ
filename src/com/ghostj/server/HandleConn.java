@@ -83,6 +83,7 @@ public class HandleConn extends Thread{
                             ServerMain.tagLog.addTag(this.hostName,"alive");
                             ServerMain.tagLog.pack();
                             Out.putPrompt();
+                            ServerMain.saveOnlineClients();
                             continue;
                         }
                         case "!version":{
@@ -121,6 +122,7 @@ public class HandleConn extends Thread{
                             this.sysStartTime=Long.parseLong(cmd[3]);
                             ServerMain.sendListToMaster();
 
+                            ServerMain.saveOnlineClients();
                             ServerMain.tagLog.addTag(this.hostName,"login");
                             ServerMain.tagLog.addTag(this.hostName,"alive");
                             ServerMain.tagLog.pack();

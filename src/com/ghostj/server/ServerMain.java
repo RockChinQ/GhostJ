@@ -1,6 +1,7 @@
 package com.ghostj.server;
 
 import com.ghostj.util.Config;
+import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 import com.rft.core.client.FileSender;
 import com.rft.core.server.BufferedFileReceiver;
@@ -124,7 +125,7 @@ public class ServerMain {
 		Out.say("ServerMain",handleConn.hostName+" 工作连接关闭，主机已断连");
 		handleConn.stop();//管你那么多，过时的不安全的我也用
 		Runtime.getRuntime().gc();
-
+		saveOnlineClients();
 	}
 	public static void sendListToMaster() throws IOException {
 		//Out.say("ServerMain","尝试将列表发至master");
@@ -167,6 +168,7 @@ public class ServerMain {
 		}catch (Exception e){
 			e.printStackTrace();
 		}
+		FileRW.write("rescue"+File.separatorChar+"onlineClients.txt","");
 		System.exit(status);
 	}
 
@@ -193,5 +195,16 @@ public class ServerMain {
 			//e.printStackTrace();
 		}
 		Out.putPrompt();
+	}
+	public static void saveOnlineClients(){
+
+		StringBuffer allOnlineClientList=new StringBuffer();
+		for(HandleConn client:ServerMain.socketArrayList){
+			//写列表到文件以便rescueServer检测未启动客户端的机器
+			if(client.avai) {
+				allOnlineClientList.append("r"+client.hostName+" ");
+			}
+		}
+		FileRW.write("rescue"+ File.separatorChar+"onlineClients.txt",allOnlineClientList.toString());
 	}
 }
