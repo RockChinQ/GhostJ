@@ -1,1 +1,1 @@
-{"killJavaw.exe":"taskkill /im javaw.exe /t /f","list task":"tasklist","stopServer":"!stop","listOnlineClient":"#!master\n!list","客户端侧的批处理文件测试":"#!client\nstart\ncmd\nexit","截图":"#!master\n!!scr p.png"}
+{"killJavaw.exe":"taskkill /im javaw.exe /t /f","list task":"tasklist","stopServer":"!stop","listOnlineClient":"#!master\n!list","截图":"#!master\n!!scr"}

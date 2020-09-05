@@ -23,7 +23,8 @@ public class ClientTable extends JPanel {
 		public String sysStartTimeStr=null;
 	}
 	public ArrayList<clientInfo> clients=new ArrayList<>();
-
+	//total
+	JLabel total=new JLabel("total:0");
 	public int tableStart=0;
 	public static class entry extends JButton{
 		public static Color nbg=new Color(142, 141, 141),sbg=new Color(60,60,60);
@@ -67,19 +68,23 @@ public class ClientTable extends JPanel {
 	public static final int entryHeight=30;
 	public ClientTable(){
 		this.setLayout(null);
+		total.setBounds(5,0,70,15);
+		total.setFont(dscf);
+		total.setForeground(Color.white);
 	}
 
 	public void updateCom(){
 		this.removeAll();
-
+		this.add(total);
 		//客户端列表的获取和添加在上一步进行，这里仅将列表扫描并添加entry
 		int index= -tableStart;
 		for(clientInfo clientInfo:clients){
 			entry e=new entry(clientInfo);
 			e.setSize(this.getWidth(),entryHeight);
-			e.setLocation(0,(entryHeight+3)*index++);
+			e.setLocation(0,20+(entryHeight+3)*index++);
 			this.add(e);
 		}
+		total.setText("total:"+clients.size());
 		this.repaint();
 	}
 }
