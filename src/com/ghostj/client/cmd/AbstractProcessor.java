@@ -40,7 +40,7 @@ public abstract class AbstractProcessor {
      * @param name
      * @return
      */
-    private AbstractFunc indexFunc(String name){
+    protected AbstractFunc indexFunc(String name){
         for(AbstractFunc func:funcs){
             if( (ignoreCase&&func.getFuncName().equalsIgnoreCase(name))||(!ignoreCase&&func.getFuncName().equals(name))){
                 return func;
@@ -76,17 +76,17 @@ public abstract class AbstractProcessor {
      * 并行执行一个命令
      * @param cmdStr
      */
-    public void start(String cmdStr){
+    public void start(String cmdStr)throws CommandProcessException{
         run(cmdStr,false);
     }
     /**
      * 等待命令执行
      * @param cmdStr
      */
-    public void run(String cmdStr){
+    public void run(String cmdStr)throws CommandProcessException{
         run(cmdStr,true);
     }
-    private void run(String cmdStr,boolean wait){
+    private void run(String cmdStr,boolean wait)throws CommandProcessException{
         Command cmd=parse(cmdStr);
         AbstractFunc func;
         //如果cmd是null，就在此自动创建一个
@@ -103,7 +103,11 @@ public abstract class AbstractProcessor {
         }
         //仍然是null则退出
         if(func==null){
-            return;
+            throw new CommandProcessException("no such func and no default func.");
+        }
+        //检查参数数量是否正常
+        if(cmd.getParams().length<func.getParamsModel().length){
+            throw new CommandProcessException("params not enough.");
         }
         cmd.setRuntime(func,this);
         //检查是否要等待执行完毕

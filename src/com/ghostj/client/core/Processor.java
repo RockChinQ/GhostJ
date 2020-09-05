@@ -18,7 +18,7 @@ public class Processor extends AbstractProcessor {
         if(spt[0].startsWith("!")){
             return new Command(spt[0],spt,cmdStr);
         }else {
-            return new Command("",spt,cmdStr);
+            return null;
         }
     }
 }

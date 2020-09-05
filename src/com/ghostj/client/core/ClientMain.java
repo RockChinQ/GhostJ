@@ -11,6 +11,6 @@ public class ClientMain {
     public static void main(String[] args){
         processor.registerFunc(new FuncTest());
         //测试
-        processor.start("!test 1 2 3 4 5");
+//        processor.start("!test 1 2 3 4 5");
     }
 }
