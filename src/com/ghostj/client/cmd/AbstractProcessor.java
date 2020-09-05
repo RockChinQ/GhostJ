@@ -88,8 +88,15 @@ public abstract class AbstractProcessor {
     }
     private void run(String cmdStr,boolean wait){
         Command cmd=parse(cmdStr);
-        //获取func对象
-        AbstractFunc func=indexFunc(cmd.getFuncName());
+        AbstractFunc func;
+        //如果cmd是null，就在此自动创建一个
+        if (cmd==null){
+            func=null;
+            cmd=new Command(null,new String[0],cmdStr);
+        }else {
+            //获取func对象
+            func = indexFunc(cmd.getFuncName());
+        }
         //检查是否是null,是则执行default
         if(func==null){
             func=getDefaultFunc();
