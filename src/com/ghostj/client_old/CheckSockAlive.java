@@ -1,4 +1,4 @@
-package com.ghostj.client;
+package com.ghostj.client_old;
 
 public class CheckSockAlive extends Thread{
     public boolean success=false;

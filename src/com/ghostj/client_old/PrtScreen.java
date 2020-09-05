@@ -1,4 +1,4 @@
-package com.ghostj.client;
+package com.ghostj.client_old;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

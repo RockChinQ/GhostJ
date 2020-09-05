@@ -1,13 +1,10 @@
-package com.ghostj.client;
+package com.ghostj.client_old;
 
 import com.ghostj.util.TimeUtil;
 import com.rft.core.client.FileSender;
-import com.sun.xml.internal.bind.v2.TODO;
-import test.ClientTest;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.Date;
 
 public class HandleConn extends Thread{

@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="ClientMain" type="Application" factoryName="Application">
-    <option name="MAIN_CLASS_NAME" value="com.ghostj.client.ClientMain" />
+    <option name="MAIN_CLASS_NAME" value="com.ghostj.client_old.ClientMain" />
     <module name="GhostJ" />
     <option name="VM_PARAMETERS" value="-Dfile.encoding=UTF-8" />
     <method v="2">

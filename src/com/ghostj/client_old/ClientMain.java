@@ -1,11 +1,8 @@
-package com.ghostj.client;
+package com.ghostj.client_old;
 
 import com.ghostj.util.Config;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketAddress;

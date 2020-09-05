@@ -1,4 +1,4 @@
-package com.ghostj.client;
+package com.ghostj.client_old;
 
 public class Out {
     public static void say(String msg){

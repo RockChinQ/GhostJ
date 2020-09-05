@@ -1,6 +1,5 @@
 package com.ghostj.master.gui;
 
-import com.ghostj.client.ClientMain;
 import com.ghostj.master.MasterMain;
 import com.ghostj.master.conn.CreateConn;
 import com.ghostj.server.ServerMain;
