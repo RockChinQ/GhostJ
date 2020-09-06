@@ -22,7 +22,7 @@ public class ClientMain {
     public static OutputStreamWriter bufferedWriter=null;
     public static HandleConn handleConn=null;
     public static String name="";
-
+    public static long sysStartTime=-1;
 //    public static boolean processing=false;
     public static ProcessCmd focusedProcess=null;
 
@@ -31,7 +31,6 @@ public class ClientMain {
 
     public static boolean success=false;
 
-    public static long sysStartTime=-1;
 
 
 

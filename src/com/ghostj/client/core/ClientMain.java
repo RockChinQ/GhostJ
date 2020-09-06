@@ -2,12 +2,26 @@ package com.ghostj.client.core;
 
 import com.ghostj.client.func.FuncDefault;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.LinkedHashMap;
+
 /**
  * 客户端启动类
  * @author Rock Chin
  */
 public class ClientMain {
     static Processor processor=new Processor();
+    /**
+     * 保存了本客户端的相关信息
+     */
+    public static String name="";
+    public static long sysStartTime=-1;
+
+    /**
+     * 客户端入口
+     * @param args
+     */
     public static void main(String[] args){
 
         registerAllFunc();
@@ -20,4 +34,28 @@ public class ClientMain {
 
         processor.setDefaultFunc(new FuncDefault());
     }
+
+    /**
+     * 从一个exception对象获取完整的报错信息
+     * @param e
+     * @return
+     */
+    public static String getErrorInfo(Exception e){
+        StringWriter sw=new StringWriter();
+        PrintWriter pw=new PrintWriter(sw);
+        e.printStackTrace(pw);
+        return sw.toString().replaceAll("\t","    ");
+    }
+
+    /**
+     * 向服务端发送命令执行完毕的信息
+     */
+    public static void sendFinishToServer(){
+        try{
+            HandleConn.writeToServer("!finish!");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }
