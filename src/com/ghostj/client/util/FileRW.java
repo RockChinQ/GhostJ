@@ -1,4 +1,4 @@
-package com.ghostj.client.core;
+package com.ghostj.client.util;
 
 import java.io.*;
 

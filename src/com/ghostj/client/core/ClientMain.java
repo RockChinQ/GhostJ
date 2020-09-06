@@ -1,6 +1,7 @@
 package com.ghostj.client.core;
 
 import com.ghostj.client.func.FuncDefault;
+import com.ghostj.client.func.FuncExit;
 import com.ghostj.client.func.FuncProcess;
 
 import java.io.PrintWriter;
@@ -12,7 +13,7 @@ import java.util.LinkedHashMap;
  * @author Rock Chin
  */
 public class ClientMain {
-    static Processor processor=new Processor();
+    public static Processor processor=new Processor();
     /**
      * 保存了本客户端的相关信息
      */
@@ -33,6 +34,7 @@ public class ClientMain {
      */
     private static void registerAllFunc(){
         processor.registerFunc(new FuncProcess());
+        processor.registerFunc(new FuncExit());
         processor.setDefaultFunc(new FuncDefault());
     }
 

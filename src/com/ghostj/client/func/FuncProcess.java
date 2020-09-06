@@ -3,10 +3,14 @@ package com.ghostj.client.func;
 import com.ghostj.client.cmd.AbstractFunc;
 import com.ghostj.client.cmd.AbstractProcessor;
 import com.ghostj.client.core.ClientMain;
-import com.ghostj.client.core.HandleConn;
+import com.ghostj.client.conn.HandleConn;
 import com.ghostj.client.core.ProcessCmd;
 import com.ghostj.util.TimeUtil;
 
+/**
+ * 增删改查每个命令行执行对象的指令
+ * @author Rock Chin
+ */
 public class FuncProcess implements AbstractFunc {
     @Override
     public String getFuncName() {

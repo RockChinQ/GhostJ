@@ -2,15 +2,17 @@ package com.ghostj.client.func;
 
 import com.ghostj.client.cmd.AbstractFunc;
 import com.ghostj.client.cmd.AbstractProcessor;
-import com.ghostj.client.core.ClientMain;
 import com.ghostj.client.core.ProcessCmd;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
-import static com.ghostj.client.core.HandleConn.writeToServer;
+import static com.ghostj.client.conn.HandleConn.writeToServer;
 
+/**
+ * 默认的执行逻辑，将把命令发送到命令行
+ * @author Rock Chin
+ */
 public class FuncDefault implements AbstractFunc {
 
     /**

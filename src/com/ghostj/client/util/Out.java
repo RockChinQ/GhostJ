@@ -1,4 +1,4 @@
-package com.ghostj.client.core;
+package com.ghostj.client.util;
 
 public class Out {
     public static void say(String msg){

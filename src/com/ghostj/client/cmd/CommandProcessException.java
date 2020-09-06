@@ -1,5 +1,9 @@
 package com.ghostj.client.cmd;
 
+/**
+ * 自定义类型，描述处理指令时的异常
+ * @author Rock Chin
+ */
 public class CommandProcessException extends Exception{
     public CommandProcessException(){
         super();

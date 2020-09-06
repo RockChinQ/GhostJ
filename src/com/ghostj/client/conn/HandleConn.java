@@ -1,12 +1,17 @@
-package com.ghostj.client.core;
+package com.ghostj.client.conn;
 
-import com.ghostj.util.TimeUtil;
-import com.rft.core.client.FileSender;
+import com.ghostj.client.core.ClientMain;
+import com.ghostj.client.util.FileRW;
+import com.ghostj.client.util.Out;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.Date;
 
+/**
+ *接收服务端发送的数据的线程
+ * @author Rock Chin
+ */
 public class HandleConn extends Thread{
     /**
      * 以下保存了向服务端的io对象以及socket对象
@@ -23,6 +28,9 @@ public class HandleConn extends Thread{
     }
 
     private static Socket socket=null;
+    public static void closeSocket()throws Exception{
+        socket.close();
+    }
     @Override
     public void run(){
         //反复尝试连接
@@ -46,7 +54,7 @@ public class HandleConn extends Thread{
                 //连接正常
                 Out.say("HandleConn","已连接");
                 //发送info
-                writeToServer("!info "+ClientMain.name+" c"+ FileRW.read("nowVer.txt")
+                writeToServer("!info "+ ClientMain.name+" c"+ FileRW.read("nowVer.txt")
                         +" "+ ClientMain.sysStartTime+"!");
                 /**
                  * 轮询信息
