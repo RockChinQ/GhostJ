@@ -63,7 +63,7 @@ public class FuncBatch implements AbstractFunc {
 			case "run":{
 				HandleConn.writeToServer("正在启动batch.bat.\n");
 				try {
-					processor.start("batch.bat");
+					processor.start("!!proc bg batch batch.bat");
 				} catch (CommandProcessException e) {
 					e.printStackTrace();
 					HandleConn.writeToServer("启动出错"+ ClientMain.getErrorInfo(e)+"\n");

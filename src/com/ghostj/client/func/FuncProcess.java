@@ -67,12 +67,13 @@ public class FuncProcess implements AbstractFunc {
                 }).start();
                 break oper;
             }
+            case "bg":
             case "new":{
                 if(params.length<2){
                     HandleConn.writeToServer("proc new命令语法不正确.\n");
                     break oper;
                 }
-                HandleConn.writeToServer("新建进程:"+params[1]+"\n");
+                HandleConn.writeToServer("新建"+(params[0].equalsIgnoreCase("bg")?"后台":"")+"进程:"+params[1]+"\n");
                 ProcessCmd processCmd;
                 if(params.length>=3){//如果有初始执行指令
                     processCmd = new ProcessCmd(params[1]);
@@ -85,8 +86,10 @@ public class FuncProcess implements AbstractFunc {
                     FuncDefault.processList.put(params[1],processCmd);
                     processCmd.start();
                 }
-                FuncDefault.focusedProcess=FuncDefault.processList.get(params[1]);
-                HandleConn.writeToServer("聚焦process:"+params[1]+"\n");
+                if(params[0].equalsIgnoreCase("new")) {
+                    FuncDefault.focusedProcess = FuncDefault.processList.get(params[1]);
+                    HandleConn.writeToServer("聚焦process:" + params[1] + "\n");
+                }
                 break oper;
             }
             case "disc":{
