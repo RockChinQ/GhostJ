@@ -6,6 +6,7 @@ import com.ghostj.client.util.Out;
 
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.util.Date;
 
 /**
@@ -13,6 +14,13 @@ import java.util.Date;
  * @author Rock Chin
  */
 public class HandleConn extends Thread{
+    /**
+     * 保存了连接相关的基本信息
+     */
+    public static String ip;
+    public static int port=1033;
+    public static int rft_port=1035;
+    public static SocketAddress socketAddress=null;
     /**
      * 以下保存了向服务端的io对象以及socket对象
      */
@@ -39,7 +47,7 @@ public class HandleConn extends Thread{
                 long st=new Date().getTime();
                 try {
                     socket=new Socket();
-                    socket.connect(com.ghostj.client_old.ClientMain.socketAddress, 30000);
+                    socket.connect(socketAddress, 30000);
                 } catch (IOException e) {
                     Out.say("HandleConn","无法建立连接，正在尝试重新连接");
                     e.printStackTrace();
@@ -49,7 +57,7 @@ public class HandleConn extends Thread{
                 /**
                  * 为io对象赋值
                  */
-                outToServer=new OutputStreamWriter(com.ghostj.client_old.ClientMain.socket.getOutputStream(),"GBK");
+                outToServer=new OutputStreamWriter(socket.getOutputStream(),"GBK");
                 readFromServer=new BufferedReader(new InputStreamReader(socket.getInputStream(),"GBK"));
                 //连接正常
                 Out.say("HandleConn","已连接");
