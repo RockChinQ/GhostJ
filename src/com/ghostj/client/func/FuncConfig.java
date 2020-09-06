@@ -8,7 +8,7 @@ import com.ghostj.client.core.ClientMain;
 /**
  * cfg指令 ，统一了之前的四个cfg操作指令
  */
-public class FuncCfg implements AbstractFunc {
+public class FuncConfig implements AbstractFunc {
     //!!cfg ls|write|set|rm [params]
     @Override
     public String getFuncName() {

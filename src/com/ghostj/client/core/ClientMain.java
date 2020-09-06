@@ -90,8 +90,10 @@ public class ClientMain {
         processor.registerFunc(new FuncGGet());
         processor.registerFunc(new FuncHelp());
         processor.registerFunc(new FuncReconn());
-        processor.registerFunc(new FuncCfg());
+        processor.registerFunc(new FuncConfig());
         processor.registerFunc(new FuncName());
+        processor.registerFunc(new FuncBatch());
+        processor.registerFunc(new FuncRFT());
 
         processor.setDefaultFunc(new FuncDefault());
     }
