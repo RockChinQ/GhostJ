@@ -24,6 +24,11 @@ public class FuncProcess implements AbstractFunc {
     }
 
     @Override
+    public int getMinParamsAmount() {
+        return 1;
+    }
+
+    @Override
     public void run(String[] params, String cmd, AbstractProcessor processor) {
         oper:switch (params[0]){
             // FIXME: 2020/9/6 所有的执行完毕的操作放到switch后面

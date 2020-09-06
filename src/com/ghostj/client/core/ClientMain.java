@@ -1,6 +1,7 @@
 package com.ghostj.client.core;
 
 import com.ghostj.client.func.FuncDefault;
+import com.ghostj.client.func.FuncProcess;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -31,7 +32,7 @@ public class ClientMain {
      * 注册所有func
      */
     private static void registerAllFunc(){
-
+        processor.registerFunc(new FuncProcess());
         processor.setDefaultFunc(new FuncDefault());
     }
 

@@ -106,7 +106,7 @@ public abstract class AbstractProcessor {
             throw new CommandProcessException("no such func and no default func.");
         }
         //检查参数数量是否正常
-        if(cmd.getParams().length<func.getParamsModel().length){
+        if(cmd.getParams().length<func.getMinParamsAmount()){
             throw new CommandProcessException("params not enough.");
         }
         cmd.setRuntime(func,this);

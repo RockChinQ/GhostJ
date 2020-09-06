@@ -14,6 +14,7 @@ public interface AbstractFunc {
      */
     String[] getParamsModel();
     String getDescription();
+    int getMinParamsAmount();
     /**
      * 由派生类来具象化
      * 这个必须是堵塞的执行方法，否则processor将无法hold它

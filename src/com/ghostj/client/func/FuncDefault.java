@@ -56,6 +56,11 @@ public class FuncDefault implements AbstractFunc {
     }
 
     @Override
+    public int getMinParamsAmount() {
+        return 0;
+    }
+
+    @Override
     public void run(String[] params, String cmd, AbstractProcessor processor) {
         try {
             if (focusedProcess == null) {

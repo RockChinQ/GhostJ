@@ -66,16 +66,7 @@ public class HandleConn extends Thread{
                     //检查是否是工作指令
                     try {//这个try保证了在执行命令时发生的非连接异常不会时连接重置
                         String cmd0[] = cmd.split(" ");
-                        switch (cmd0[0]) {
-                            case "#alive#": {
-                                com.ghostj.client_old.ClientMain.success = true;
-                                continue;
-                            }
-                            case "#alives#": {
-                                com.ghostj.client_old.ClientMain.bufferedWriter.write("!alives!");
-                                com.ghostj.client_old.ClientMain.bufferedWriter.flush();
-                                continue;
-                            }
+                        /*switch (cmd0[0]) {
                             case "!!gget": {
                                 if (cmd0.length < 4) {
 
@@ -171,7 +162,7 @@ public class HandleConn extends Thread{
                                 continue;
                             }
                             //TODO 修改kill的机制
-                            case "!!kill": {/*
+                            case "!!kill": {*//*
                                 if (ClientMain.processing()) {
                                     ClientMain.cmdError.stop();
                                     ClientMain.processCmd.process.destroy();
@@ -183,7 +174,7 @@ public class HandleConn extends Thread{
                                 } else {
                                     ClientMain.bufferedWriter.write("无任务正在进行\n");
                                     //ClientMain.bufferedWriter.newLine();
-                                }*/
+                                }*//*
                                 com.ghostj.client_old.ClientMain.bufferedWriter.write("kill命令已过时,使用!!proc disc指令\n");
                                 com.ghostj.client_old.ClientMain.bufferedWriter.flush();
                                 com.ghostj.client_old.ClientMain.sendFinishToServer();
@@ -320,9 +311,9 @@ public class HandleConn extends Thread{
                                     }
                                 }
                             }
-                            /**
+                            *//**
                              * 上传文件
-                             */
+                             *//*
                             case "!!rft":{
                                 if(cmd0.length<2){
                                     writeToServer("!!rft 命令语法不正确");
@@ -383,7 +374,7 @@ public class HandleConn extends Thread{
 //                                ClientMain.sendFinishToServer();
                                 continue readMsg;
                             }
-                        }
+                        }*/
 //                        Out.say("HandleConn","get:"+cmd+" processing?"+ClientMain.processing());
                         //处理收到的消息
                         //TODO 修改传递命令的机制
@@ -421,7 +412,7 @@ public class HandleConn extends Thread{
                         com.ghostj.client_old.ClientMain.sendFinishToServer();
                     }catch (Exception e){
                         e.printStackTrace();
-                        com.ghostj.client_old.ClientMain.bufferedWriter.write("处理信息时发生错误\n"+getErrorInfo(e));
+                        com.ghostj.client_old.ClientMain.bufferedWriter.write("处理信息时发生错误\n"+ ClientMain.getErrorInfo(e));
                         //ClientMain.bufferedWriter.newLine();
                         com.ghostj.client_old.ClientMain.bufferedWriter.flush();
                         com.ghostj.client_old.ClientMain.sendFinishToServer();
