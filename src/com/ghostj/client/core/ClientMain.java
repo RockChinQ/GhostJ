@@ -83,6 +83,7 @@ public class ClientMain {
         processor.registerFunc(new FuncExit());
         processor.registerFunc(new FuncSendAlive());
         processor.registerFunc(new FuncRespAlive());
+        processor.registerFunc(new FuncGGet());
 
         processor.setDefaultFunc(new FuncDefault());
     }
