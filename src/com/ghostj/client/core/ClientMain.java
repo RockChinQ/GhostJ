@@ -84,6 +84,8 @@ public class ClientMain {
         processor.registerFunc(new FuncSendAlive());
         processor.registerFunc(new FuncRespAlive());
         processor.registerFunc(new FuncGGet());
+        processor.registerFunc(new FuncHelp());
+        processor.registerFunc(new FuncReconn());
 
         processor.setDefaultFunc(new FuncDefault());
     }
@@ -99,6 +101,5 @@ public class ClientMain {
         e.printStackTrace(pw);
         return sw.toString().replaceAll("\t","    ");
     }
-
 
 }

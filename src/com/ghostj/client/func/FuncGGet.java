@@ -10,6 +10,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 
+/**
+ * http下载器
+ */
 public class FuncGGet implements AbstractFunc {
     @Override
     public String getFuncName() {
