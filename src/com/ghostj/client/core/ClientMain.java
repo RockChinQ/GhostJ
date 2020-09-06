@@ -30,10 +30,14 @@ public class ClientMain {
      * 连接处理类
      */
     static HandleConn handleConn;
+
     /**
      * 配置文件
      */
     static Config config;
+    public static Config getConfig() {
+        return config;
+    }
     /**
      * 客户端入口
      * @param args

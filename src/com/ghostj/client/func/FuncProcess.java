@@ -113,6 +113,5 @@ public class FuncProcess implements AbstractFunc {
             }
         }
         HandleConn.sendFinishToServer();
-        return;
     }
 }
