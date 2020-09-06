@@ -544,17 +544,21 @@ public class HandleConn extends Thread{
             }
         }
     }
-    public String getErrorInfo(Exception e){
-        StringWriter sw=new StringWriter();
-        PrintWriter pw=new PrintWriter(sw);
-        e.printStackTrace(pw);
-        return sw.toString().replaceAll("\t","    ");
-    }
     public static void writeToServer(String msg){
 
         try {
             outToServer.write(msg);
             outToServer.flush();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 向服务端发送命令执行完毕的信息
+     */
+    public static void sendFinishToServer(){
+        try{
+            HandleConn.writeToServer("!finish!");
         }catch (Exception e){
             e.printStackTrace();
         }

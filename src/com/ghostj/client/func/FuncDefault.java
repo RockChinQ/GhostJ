@@ -79,6 +79,10 @@ public class FuncDefault implements AbstractFunc {
                 focusedProcess = processCmd;
                 processCmd.start();
             } else {
+                /**
+                 * 已经focus了一个执行对象
+                 * 则把信息发进去
+                 */
                 focusedProcess.processWriter.write(cmd);
                 focusedProcess.processWriter.newLine();
                 focusedProcess.processWriter.flush();

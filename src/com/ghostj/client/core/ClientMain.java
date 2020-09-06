@@ -47,15 +47,5 @@ public class ClientMain {
         return sw.toString().replaceAll("\t","    ");
     }
 
-    /**
-     * 向服务端发送命令执行完毕的信息
-     */
-    public static void sendFinishToServer(){
-        try{
-            HandleConn.writeToServer("!finish!");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 
 }
