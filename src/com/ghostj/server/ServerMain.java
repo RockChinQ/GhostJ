@@ -168,7 +168,7 @@ public class ServerMain {
 		}catch (Exception e){
 			e.printStackTrace();
 		}
-		FileRW.write("rescue"+File.separatorChar+"onlineClients.txt","");
+		FileRW.write("rescue"+File.separatorChar+"onlineClients.txt","<serverStopped>");
 		System.exit(status);
 	}
 

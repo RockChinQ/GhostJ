@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="GhostMaster:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/GhostMaster_jar</output-path>
+    <root id="archive" name="GhostJ.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/master/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="GhostJ" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/fastjson-1.2.53.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/RFT.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
