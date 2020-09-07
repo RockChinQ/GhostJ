@@ -83,7 +83,8 @@ public class ProcessCmd extends Thread{
             try {
                 HandleConn.writeToServer("\n命令已完成,process索引已自动删除\n");
             }catch (Exception e){}
-            cmdError.stop();
+            if(cmdError!=null)
+                cmdError.stop();
 
         }
     }

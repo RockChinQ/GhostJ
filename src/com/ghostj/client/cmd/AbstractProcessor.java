@@ -37,8 +37,8 @@ public abstract class AbstractProcessor {
 
     /**
      * 派生类可以通过这个来获取匹配的执行逻辑
-     * @param name
-     * @return
+     * @param name Func名称
+     * @return Func实例
      */
     protected AbstractFunc indexFunc(String name){
         for(AbstractFunc func:funcs){
