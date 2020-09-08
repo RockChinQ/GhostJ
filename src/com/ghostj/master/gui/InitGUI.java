@@ -53,8 +53,26 @@ public class InitGUI {
 		bgp.setBackground(new Color(80,80,80));
 		mainwd.add(bgp);
 
+
+
+
+
+		//批处理指令列表
+		batPanel=new BatPanel();
+		batPanel.setBackground(bgp.getBackground());
+		batPanel.setBounds(10,clientTable.getY(),200,bgp.getHeight());
+		batPanel.setSize(170,bgp.getHeight());
+		bgp.add(batPanel);
+
+
+		clientTable.setSize(185,300);
+		clientTable.setLocation(batPanel.getWidth()+batPanel.getX()+15,45);
+		clientTable.setBackground(null);
+		bgp.add(clientTable);
+
+
 		testConn.setSize(80,35);
-		testConn.setLocation(10,6);
+		testConn.setLocation(clientTable.getX(),6);
 		testConn.addActionListener(e->{
 			try{
 				MasterMain.bufferedWriter.write("!test 200");
@@ -76,18 +94,13 @@ public class InitGUI {
 			clientTable.updateCom();
 		});
 		down.addActionListener(e -> {
-			if (clientTable.clients.size()<6)
+			if (clientTable.clients.size()<14)
 				return;
-			clientTable.tableStart=clientTable.tableStart+5>=clientTable.clients.size()?clientTable.clients.size()-5:clientTable.tableStart+1;
+			clientTable.tableStart=clientTable.tableStart+5>=clientTable.clients.size()?clientTable.clients.size()-13:clientTable.tableStart+1;
 			clientTable.updateCom();
 		});
 
-
-		clientTable.setSize(185,300);
-		clientTable.setLocation(10,45);
-		clientTable.setBackground(null);
-
-		onlineTimeChart.setBounds(220,45,650,225);
+		onlineTimeChart.setBounds(clientTable.getX()+clientTable.getWidth()+10,45,650,225);
 		onlineTimeChart.setBackground(Color.darkGray);
 		onlineTimeChart.setZoom(1000);
 		bgp.add(onlineTimeChart);
@@ -125,7 +138,7 @@ public class InitGUI {
 			onlineTimeChart.repaint();
 		});
 		//控制台
-		console.setBounds(220,onlineTimeChart.getY()+onlineTimeChart.getHeight()+10,650,bgp.getHeight()-onlineTimeChart.getHeight()-onlineTimeChart.getY()-115);
+		console.setBounds(onlineTimeChart.getX(),onlineTimeChart.getY()+onlineTimeChart.getHeight()+10,650,bgp.getHeight()-onlineTimeChart.getHeight()-onlineTimeChart.getY()-115);
 		console.setBackground(Color.darkGray);
 		console.setForeground(new Color(255, 255, 255, 255));
 		console.setFont(cf);
@@ -203,17 +216,9 @@ public class InitGUI {
 		typeMode.setVisible(true);
 		bgp.add(typeMode);
 
-		//批处理指令列表
-		batPanel=new BatPanel();
-		batPanel.setBackground(bgp.getBackground());
-		batPanel.setBounds(clientTable.getX(),clientTable.getY()+clientTable.getHeight()+10,200,bgp.getHeight());
-		batPanel.setSize(170,bgp.getHeight());
-		bgp.add(batPanel);
-
-		bgp.add(clientTable);
-
 		bgp.setVisible(false);
-
+		mainwd.setSize(console.getX()+console.getWidth()+40,mainwd.getHeight());
+		bgp.setSize(mainwd.getWidth()+15,mainwd.getHeight()+10);
 		//mainwd.setSize(console.getX()+console.getWidth(),mainwd.getHeight());
 		mainwd.setVisible(true);
 /*
