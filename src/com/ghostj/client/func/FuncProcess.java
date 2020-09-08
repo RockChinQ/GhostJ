@@ -45,6 +45,7 @@ public class FuncProcess implements AbstractFunc {
                     if(key.startsWith(params[1])){
                         FuncDefault.focusedProcess=FuncDefault.processList.get(key);
                         HandleConn.writeToServer("聚焦process:"+key+"\n");
+                        FuncDefault.focusedProcess.flush();
                         break oper;
                     }
                 }
@@ -69,26 +70,28 @@ public class FuncProcess implements AbstractFunc {
             }
             case "bg":
             case "new":{
+                String name;
                 if(params.length<2){
-                    HandleConn.writeToServer("proc new命令语法不正确.\n");
-                    break oper;
+                    name=""+ProcessCmd.UID_COUNT++;
+                }else{
+                    name=params[1];
                 }
-                HandleConn.writeToServer("新建"+(params[0].equalsIgnoreCase("bg")?"后台":"")+"进程:"+params[1]+"\n");
+                HandleConn.writeToServer("新建"+(params[0].equalsIgnoreCase("bg")?"后台":"")+"进程:"+name+"\n");
                 ProcessCmd processCmd;
                 if(params.length>=3){//如果有初始执行指令
-                    processCmd = new ProcessCmd(params[1]);
+                    processCmd = new ProcessCmd(name);
                     processCmd.cmd = params[2];
-                    FuncDefault.processList.put(params[1],processCmd);
+                    FuncDefault.processList.put(name,processCmd);
                     processCmd.start();
                 }else {
-                    processCmd = new ProcessCmd(params[1]);
+                    processCmd = new ProcessCmd(name);
                     processCmd.cmd ="cmd";
-                    FuncDefault.processList.put(params[1],processCmd);
+                    FuncDefault.processList.put(name,processCmd);
                     processCmd.start();
                 }
                 if(params[0].equalsIgnoreCase("new")) {
-                    FuncDefault.focusedProcess = FuncDefault.processList.get(params[1]);
-                    HandleConn.writeToServer("聚焦process:" + params[1] + "\n");
+                    FuncDefault.focusedProcess = FuncDefault.processList.get(name);
+                    HandleConn.writeToServer("聚焦process:" + name + "\n");
                 }
                 break oper;
             }

@@ -2,6 +2,7 @@ package com.ghostj.client.core;
 
 
 import com.ghostj.client.conn.HandleConn;
+import com.ghostj.client.func.FuncDefault;
 import com.ghostj.client.util.Out;
 
 import java.io.BufferedReader;
@@ -18,6 +19,10 @@ import static com.ghostj.client.func.FuncDefault.removeProcess;
  * @author Rock Chin
  */
 public class ProcessCmd extends Thread{
+    /**
+     * 公用计数器
+     */
+    public static int UID_COUNT=0;
     /**
      * 创建时执行的命令
      */
@@ -47,6 +52,10 @@ public class ProcessCmd extends Thread{
     }
 
     /**
+     * 储存本任务未被聚焦时命令行返回的消息
+     */
+    StringBuffer buffer=new StringBuffer("");
+    /**
      * 线程中执行
      */
     public void run(){
@@ -59,7 +68,7 @@ public class ProcessCmd extends Thread{
             /**
              * 获取执行对象的错误消息的线程
              */
-            cmdError=new CmdError(new BufferedReader(new InputStreamReader(process.getErrorStream(),"GBK")));
+            cmdError=new CmdError(new BufferedReader(new InputStreamReader(process.getErrorStream(),"GBK")),this);
             cmdError.start();
             Out.say("ProcessCmd","已启动err监听器");
             /**
@@ -70,7 +79,11 @@ public class ProcessCmd extends Thread{
             while((len=inputStreamReader.read())!=-1){
                 // FIXME: 2020/9/6 这里最好是加一个非聚焦执行对象暂时将输出信息保存到某处的逻辑
                 // FIXME: 2020/9/6 加个缓存逻辑
-                HandleConn.writeToServer(String.valueOf((char) len));
+                if (FuncDefault.amIFocused(this))
+                    HandleConn.writeToServer(String.valueOf((char) len));
+                else{
+                    buffer.append((char) len);
+                }
             }
         }catch (Exception e){
             Out.say("ProcessCmd","处理命令时出错.");
@@ -87,5 +100,14 @@ public class ProcessCmd extends Thread{
                 cmdError.stop();
 
         }
+    }
+
+    /**
+     * 输出缓存内容并输出
+     */
+    public void flush(){
+        HandleConn.writeToServer(buffer.toString());
+        buffer=new StringBuffer();
+        cmdError.flush();
     }
 }

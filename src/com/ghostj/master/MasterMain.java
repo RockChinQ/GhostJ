@@ -65,6 +65,11 @@ public class MasterMain {
 //				}
 //			}
 //		},new Date(),1000);
-
+		new Timer().schedule(new TimerTask(){
+			@Override
+			public void run() {
+				initGUI.mainwd.setTitle("total:"+Runtime.getRuntime().totalMemory()+" used:"+(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()));
+			}
+		},new Date(),2000);
 	}
 }

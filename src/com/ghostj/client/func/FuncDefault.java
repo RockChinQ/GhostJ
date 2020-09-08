@@ -67,24 +67,23 @@ public class FuncDefault implements AbstractFunc {
         try {
             if (focusedProcess == null) {
                 //自动创建一个以现在时间为名的process
-                writeToServer("自动新建一个process\n");
-
+                processor.start("!!proc new "+ProcessCmd.UID_COUNT+++" "+cmd);
                 /**
                  * 计算命令行处理器名
-                 */
+                 *//*
                 String name = (new Date().getTime() + "");
                 String realName = name.substring(name.length() - 10, name.length());
                 ProcessCmd processCmd = new ProcessCmd(realName);
-                /**
+                *//**
                  * 设置命令
-                 */
+                 *//*
                 processCmd.cmd = cmd;
-                /**
+                *//**
                  * 添加到命令行处理器列表
-                 */
+                 *//*
                 processList.put(realName, processCmd);
                 focusedProcess = processCmd;
-                processCmd.start();
+                processCmd.start();*/
             } else {
                 /**
                  * 已经focus了一个执行对象
@@ -97,5 +96,14 @@ public class FuncDefault implements AbstractFunc {
         }catch (Exception e){
 
         }
+    }
+
+    /**
+     * 检查一个命令行任务是否被聚焦
+     * @param processCmd
+     * @return
+     */
+    public static boolean amIFocused(ProcessCmd processCmd){
+        return FuncDefault.focusedProcess==processCmd;
     }
 }
