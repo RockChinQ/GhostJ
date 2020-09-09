@@ -65,7 +65,7 @@ public class InitGUI {
 		bgp.add(batPanel);
 
 
-		clientTable.setSize(185,300);
+		clientTable.setSize(185,1000);
 		clientTable.setLocation(batPanel.getWidth()+batPanel.getX()+15,45);
 		clientTable.setBackground(null);
 		bgp.add(clientTable);

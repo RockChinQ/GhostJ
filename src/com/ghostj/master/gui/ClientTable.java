@@ -11,7 +11,7 @@ import java.util.Date;
 public class ClientTable extends JPanel {
 
 	static Font btnf=new Font("Consolas",Font.BOLD,17);
-	static Font dscf=new Font("Consolas",Font.ITALIC,11);
+	static Font dscf=new Font("Consolas",Font.ITALIC,13);
 	static Font totalf=new Font("Consolas",Font.ITALIC,14);
 	public static class clientInfo{
 		public long id=-1;
