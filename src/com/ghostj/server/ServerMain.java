@@ -79,7 +79,7 @@ public class ServerMain {
 			e.printStackTrace();
 		}
 		//启动master的检测计时器
-		new Timer().schedule(checkMasterAlive,6000,15000);
+		new Timer().schedule(checkMasterAlive,6000,10*60*1000);
 		Out.say("ServerMain","master的pw是"+masterPw);
 		//启动taglog计时器
 //		new Timer().schedule(new TimerTask() {

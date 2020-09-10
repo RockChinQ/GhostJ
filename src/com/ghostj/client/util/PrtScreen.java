@@ -1,5 +1,7 @@
 package com.ghostj.client.util;
 
+import com.ghostj.util.image.ImageConvert;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,7 +10,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class PrtScreen {
-	public static void saveScreen(String file)throws Exception{
+	public static void saveScreen(double rate,String file)throws Exception{
 		try {
 
 			// 获取截图的大小
@@ -20,9 +22,9 @@ public class PrtScreen {
 
 			// 截图
 			BufferedImage image = robot.createScreenCapture(screenRect);
-
+			BufferedImage result=new ImageConvert(image).changeResolveRate(rate).getProduct();
 			// 保存为png
-			ImageIO.write(image, "png", out);
+			ImageIO.write(result, "png", out);
 			out.close();
 		}catch (Exception e){
 			throw e;

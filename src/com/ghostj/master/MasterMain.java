@@ -38,7 +38,7 @@ public class MasterMain {
 		config=new Config("gmaster.ini");
 		initGUI=new InitGUI();
 
-		new Timer().schedule(checkServerAlive,4000,15000);
+		new Timer().schedule(checkServerAlive,4000,10*60*1000);
 //		new Timer().schedule(new TimerTask() {
 //			@Override
 //			public void run() {
