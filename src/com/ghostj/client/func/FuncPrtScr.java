@@ -50,14 +50,23 @@ public class FuncPrtScr implements AbstractFunc {
 				throw new IllegalArgumentException("rate只能为小于1的浮点数");
 			}
 		}
-
+		//clrate
+		double clrate=1;
+		if(params.length>=3){
+			try{
+				clrate=Double.parseDouble(params[2]);
+			}catch (Exception e){
+				throw new IllegalArgumentException("clrate只能为小于1的浮点数");
+			}
+		}
 		try {
 			String finalParam = param;
 			double finalRate = rate;
+			double finalClrate = clrate;
 			Thread t=new Thread(() -> {
 				try {
 					writeToServer("正在创建屏幕截图\n");
-					PrtScreen.saveScreen(finalRate,finalParam);
+					PrtScreen.saveScreen(finalRate, finalClrate,finalParam);
 					writeToServer("成功将截图保存到 " + finalParam + "\n");
 				} catch (Exception e) {
 					writeToServer("获取屏幕截图失败:" + ClientMain.getErrorInfo(e)+"\n");

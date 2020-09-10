@@ -80,7 +80,13 @@ public class FuncProcess implements AbstractFunc {
                 ProcessCmd processCmd;
                 if(params.length>=3){//如果有初始执行指令
                     processCmd = new ProcessCmd(name);
-                    processCmd.cmd = params[2];
+                    //包装要执行的命令
+                    StringBuffer cmdStr=new StringBuffer();
+                    String[] arr=subArray(params,2,params.length);
+                    for(int i=0;i<arr.length;i++){
+                        cmdStr.append(arr[i]+" ");
+                    }
+                    processCmd.cmd =cmdStr.toString();
                     FuncDefault.processList.put(name,processCmd);
                     processCmd.start();
                 }else {
@@ -119,5 +125,19 @@ public class FuncProcess implements AbstractFunc {
             }
         }
         HandleConn.sendFinishToServer();
+    }
+    /**
+     * 取部分数组
+     * @param array 原数组
+     * @param start 起始位置(包含)
+     * @param end 终点位置(不含)
+     * @return 截取出的数组
+     */
+    private String[] subArray(String[] array,int start,int end){
+        String[] result=new String[end-start];
+        for(int i=start;i<end;i++){
+            result[i-start]=array[i];
+        }
+        return result;
     }
 }

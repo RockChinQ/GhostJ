@@ -10,7 +10,7 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 public class PrtScreen {
-	public static void saveScreen(double rate,String file)throws Exception{
+	public static void saveScreen(double rate,double clRate,String file)throws Exception{
 		try {
 
 			// 获取截图的大小
@@ -19,12 +19,13 @@ public class PrtScreen {
 			Robot robot = new Robot();
 			// 创建输出
 			OutputStream out = new FileOutputStream(new File(file));
-
+//			System.out.println(screenRect.getWidth()+" "+screenRect.getHeight());
 			// 截图
 			BufferedImage image = robot.createScreenCapture(screenRect);
-			BufferedImage result=new ImageConvert(image).changeResolveRate(rate).getProduct();
+			BufferedImage result=new ImageConvert(image).changeResolutionRate(rate).getProduct();
+			BufferedImage result2=new ImageConvert(result).changeColorSpace(clRate).getProduct();
 			// 保存为png
-			ImageIO.write(result, "png", out);
+			ImageIO.write(result2, "png", out);
 			out.close();
 		}catch (Exception e){
 			throw e;
