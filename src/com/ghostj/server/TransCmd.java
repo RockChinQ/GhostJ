@@ -149,7 +149,7 @@ public class TransCmd extends  Thread{
                                 conn.bufferedWriter.write("!!name " + cmd[2]);
                                 conn.bufferedWriter.newLine();
                                 conn.bufferedWriter.flush();
-                                conn.bufferedWriter.write("!!writecfg");
+                                conn.bufferedWriter.write("!!cfg write");
                                 conn.bufferedWriter.newLine();
                                 conn.bufferedWriter.flush();
                                 ServerMain.tagLog.addTag(cmd[2],"login");
