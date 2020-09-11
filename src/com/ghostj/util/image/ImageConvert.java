@@ -38,31 +38,30 @@ public class ImageConvert {
 	 * @return this
 	 */
 	public ImageConvert changeResolutionRate(double rate){
-		long s=new Date().getTime();
-		if (rate>1){
-			throw new IllegalArgumentException("rate should <=1");
+		if(rate>0.9999&&rate<1.001){
+			product=new BufferedImage(origin.getWidth(),origin.getHeight(),BufferedImage.TYPE_INT_ARGB);
+			product.setRGB(0,0,product.getWidth(),product.getHeight(),
+					origin.getRGB(0,0,origin.getWidth(),origin.getHeight(),null,0,origin.getWidth())
+					,0,product.getWidth());
+			return this;
+		}
+		if (rate<=0){
+			throw new IllegalArgumentException("rate should >0");
 		}
 		product=new BufferedImage((int)(origin.getWidth()*rate),(int)(origin.getHeight()*rate)
 				,BufferedImage.TYPE_INT_ARGB);
-//		System.out.println(product.getWidth()+" "+product.getHeight()+" "+origin.getWidth()+" "+origin.getHeight());
-		//遍历origin，跳过不需要的像素
-		//计算跳过几格跳过一格
-		int step=(int)(1.0/(1.0-rate));
-		//product的指针
-		int x=0,y=0;
-		for(int i=0;i<origin.getHeight();i++){
-			if (i%step==0)
-				continue;
-			for(int j=0;j<origin.getWidth();j++){
-				if (j%step==0)
-					continue;
-				if (x<product.getWidth()&&y<product.getHeight()&&j<origin.getWidth()&&i<origin.getHeight())
-					product.setRGB(x++,y,origin.getRGB(j,i));
+		double step=1.0/rate;
+		int x=0,y=0;//product的指针
+		for(double i=0;i<origin.getHeight();i+=step){
+			for(double j=0;j<origin.getWidth();j+=step){
+				if(x<product.getWidth()&&y<product.getHeight()){
+					product.setRGB(x++,y,origin.getRGB((int)j,(int)i));
+				}
 			}
 			y++;
 			x=0;
 		}
-//		System.out.println("change resolution spent:"+(new Date().getTime()-s));
+		System.out.println(product.getWidth()+" "+product.getHeight()+" "+origin.getWidth()+" "+origin.getHeight());
 		return this;
 	}
 
@@ -72,7 +71,13 @@ public class ImageConvert {
 	 * @return this
 	 */
 	public ImageConvert changeColorSpace(double rate){
-		long s=new Date().getTime();
+		if(rate>0.9999&&rate<1.001){
+			product=new BufferedImage(origin.getWidth(),origin.getHeight(),BufferedImage.TYPE_INT_ARGB);
+			product.setRGB(0,0,product.getWidth(),product.getHeight(),
+					origin.getRGB(0,0,origin.getWidth(),origin.getHeight(),null,0,origin.getWidth())
+					,0,product.getWidth());
+			return this;
+		}
 		if (rate>1){
 			throw new IllegalArgumentException("rate should <=1");
 		}
@@ -83,7 +88,6 @@ public class ImageConvert {
 				product.setRGB(j,i,limitColor(origin.getRGB(j,i),(int)(1.0/rate)));
 			}
 		}
-//		System.out.println("change color space spent:"+(new Date().getTime()-s));
 		return this;
 	}
 	public int limitColor(int rgb,int step){

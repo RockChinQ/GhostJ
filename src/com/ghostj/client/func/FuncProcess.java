@@ -78,8 +78,8 @@ public class FuncProcess implements AbstractFunc {
                 }
                 HandleConn.writeToServer("新建"+(params[0].equalsIgnoreCase("bg")?"后台":"")+"进程:"+name+"\n");
                 ProcessCmd processCmd;
+                processCmd = new ProcessCmd(name);
                 if(params.length>=3){//如果有初始执行指令
-                    processCmd = new ProcessCmd(name);
                     //包装要执行的命令
                     StringBuffer cmdStr=new StringBuffer();
                     String[] arr=subArray(params,2,params.length);
@@ -87,14 +87,11 @@ public class FuncProcess implements AbstractFunc {
                         cmdStr.append(arr[i]+" ");
                     }
                     processCmd.cmd =cmdStr.toString();
-                    FuncDefault.processList.put(name,processCmd);
-                    processCmd.start();
                 }else {
-                    processCmd = new ProcessCmd(name);
                     processCmd.cmd ="cmd";
-                    FuncDefault.processList.put(name,processCmd);
-                    processCmd.start();
                 }
+                FuncDefault.processList.put(name,processCmd);
+                processCmd.start();
                 if(params[0].equalsIgnoreCase("new")) {
                     FuncDefault.focusedProcess = FuncDefault.processList.get(name);
                     HandleConn.writeToServer("聚焦process:" + name + "\n");
