@@ -53,10 +53,6 @@ public class InitGUI {
 		bgp.setBackground(new Color(80,80,80));
 		mainwd.add(bgp);
 
-
-
-
-
 		//批处理指令列表
 		batPanel=new BatPanel();
 		batPanel.setBackground(bgp.getBackground());
@@ -220,6 +216,7 @@ public class InitGUI {
 		mainwd.setSize(console.getX()+console.getWidth()+40,mainwd.getHeight());
 		bgp.setSize(mainwd.getWidth()+15,mainwd.getHeight()+10);
 		//mainwd.setSize(console.getX()+console.getWidth(),mainwd.getHeight());
+		mainwd.getContentPane().setBackground(bgp.getBackground());
 		mainwd.setVisible(true);
 /*
 		mainwd.addComponentListener(new ComponentAdapter() {
