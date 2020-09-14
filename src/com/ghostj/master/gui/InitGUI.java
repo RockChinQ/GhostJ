@@ -169,7 +169,7 @@ public class InitGUI {
 						type.setText("");
 						updownPosition=commandHistory.size();
 					}catch (Exception err){
-						;
+						MasterMain.handleConn.kill("连接已被重置");
 					}
 				}
 			}
