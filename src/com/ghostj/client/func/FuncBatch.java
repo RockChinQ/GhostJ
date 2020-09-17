@@ -38,12 +38,12 @@ public class FuncBatch implements AbstractFunc {
 		switch (params[0]){
 			case "reset":{
 				FileRW.write("batch.bat","");
-				HandleConn.writeToServer("已清空bat文件\n");
+				HandleConn.writeToServerIgnoreException("已清空bat文件\n");
 				break;
 			}
 			case "add":{
 				if(params.length<2){
-					HandleConn.writeToServer("命令语法不正确\n");
+					HandleConn.writeToServerIgnoreException("命令语法不正确\n");
 					break;
 				}
 				StringBuffer newLine=new StringBuffer();
@@ -51,27 +51,27 @@ public class FuncBatch implements AbstractFunc {
 					newLine.append(params[i]+" ");
 				}
 				FileRW.write("batch.bat",newLine.toString()+"\n",true);
-				HandleConn.writeToServer("已添加"+newLine+"\n");
+				HandleConn.writeToServerIgnoreException("已添加"+newLine+"\n");
 				break;
 			}
 			case "view":{
 
 				String fileStr=FileRW.readWithLn("batch.bat");
-				HandleConn.writeToServer("客户端的batch文件内容:\n"+fileStr+"共"+fileStr.length()+"个字符\n");
+				HandleConn.writeToServerIgnoreException("客户端的batch文件内容:\n"+fileStr+"共"+fileStr.length()+"个字符\n");
 				break;
 			}
 			case "run":{
-				HandleConn.writeToServer("正在启动batch.bat.\n");
+				HandleConn.writeToServerIgnoreException("正在启动batch.bat.\n");
 				try {
 					processor.start("!!proc bg batch batch.bat");
 				} catch (CommandProcessException e) {
 					e.printStackTrace();
-					HandleConn.writeToServer("启动出错"+ ClientMain.getErrorInfo(e)+"\n");
+					HandleConn.writeToServerIgnoreException("启动出错"+ ClientMain.getErrorInfo(e)+"\n");
 				}
 				break;
 			}
 			default:{
-				HandleConn.writeToServer("命令语法不正确\n");
+				HandleConn.writeToServerIgnoreException("命令语法不正确\n");
 			}
 		}
 		HandleConn.sendFinishToServer();

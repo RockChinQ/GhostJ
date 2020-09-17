@@ -38,18 +38,18 @@ public class FuncProcess implements AbstractFunc {
             // FIXME: 2020/9/6 所有的执行完毕的操作放到switch后面
             case "focus":{
                 if(params.length<2){
-                    HandleConn.writeToServer("proc focus命令语法不正确.\n");
+                    HandleConn.writeToServerIgnoreException("proc focus命令语法不正确.\n");
                     break;
                 }
                 for(String key:FuncDefault.processList.keySet()){
                     if(key.startsWith(params[1])){
                         FuncDefault.focusedProcess=FuncDefault.processList.get(key);
-                        HandleConn.writeToServer("聚焦process:"+key+"\n");
+                        HandleConn.writeToServerIgnoreException("聚焦process:"+key+"\n");
                         FuncDefault.focusedProcess.flush();
                         break oper;
                     }
                 }
-                HandleConn.writeToServer("找不到"+params[1]+"开头的process\n");
+                HandleConn.writeToServerIgnoreException("找不到"+params[1]+"开头的process\n");
                 break oper;
             }
             case "ls":{
@@ -76,7 +76,7 @@ public class FuncProcess implements AbstractFunc {
                 }else{
                     name=params[1];
                 }
-                HandleConn.writeToServer("新建"+(params[0].equalsIgnoreCase("bg")?"后台":"")+"进程:"+name+"\n");
+                HandleConn.writeToServerIgnoreException("新建"+(params[0].equalsIgnoreCase("bg")?"后台":"")+"进程:"+name+"\n");
                 ProcessCmd processCmd;
                 processCmd = new ProcessCmd(name);
                 if(params.length>=3){//如果有初始执行指令
@@ -94,13 +94,13 @@ public class FuncProcess implements AbstractFunc {
                 processCmd.start();
                 if(params[0].equalsIgnoreCase("new")) {
                     FuncDefault.focusedProcess = FuncDefault.processList.get(name);
-                    HandleConn.writeToServer("聚焦process:" + name + "\n");
+                    HandleConn.writeToServerIgnoreException("聚焦process:" + name + "\n");
                 }
                 break oper;
             }
             case "disc":{
                 if(params.length<2){
-                    HandleConn.writeToServer("proc disc命令语法不正确.\n");
+                    HandleConn.writeToServerIgnoreException("proc disc命令语法不正确.\n");
                     break oper;
                 }
                 //注意！！这里仅仅是断开与进程的连接而不是结束进程
@@ -109,15 +109,15 @@ public class FuncProcess implements AbstractFunc {
                         FuncDefault.processList.get(params[1]).process.destroy();
                         FuncDefault.removeProcess(params[1]);
                     }catch (Exception e){
-                        HandleConn.writeToServer("断连process时出现错误\n"+ ClientMain.getErrorInfo(e));
+                        HandleConn.writeToServerIgnoreException("断连process时出现错误\n"+ ClientMain.getErrorInfo(e));
                     }
                 }else {
-                    HandleConn.writeToServer("仅能使用全名来断连process\n");
+                    HandleConn.writeToServerIgnoreException("仅能使用全名来断连process\n");
                 }
                 break oper;
             }
             default:{
-                HandleConn.writeToServer("!!proc 命令语法不正确\n");
+                HandleConn.writeToServerIgnoreException("!!proc 命令语法不正确\n");
                 break oper;
             }
         }

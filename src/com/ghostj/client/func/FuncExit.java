@@ -36,7 +36,7 @@ public class FuncExit implements AbstractFunc {
             HandleConn.sendFinishToServer();
             System.exit(0);
         }else {
-            HandleConn.writeToServer("名称不正确\n");
+            HandleConn.writeToServerIgnoreException("名称不正确\n");
             HandleConn.sendFinishToServer();
         }
     }

@@ -35,19 +35,19 @@ public class FuncRFT implements AbstractFunc {
 		switch (params[0]){
 			case "upload":{
 				if(params.length<3){
-					HandleConn.writeToServer("命令语法不正确");
+					HandleConn.writeToServerIgnoreException("命令语法不正确");
 					break;
 				}
 				try {
 					FileSender.sendFileMethod(new File(params[1]),params[2],new Date().getTime()+"",HandleConn.ip,HandleConn.rft_port);
 				} catch (Exception e) {
 					e.printStackTrace();
-					HandleConn.writeToServer("上传出错"+ ClientMain.getErrorInfo(e)+"\n");
+					HandleConn.writeToServerIgnoreException("上传出错"+ ClientMain.getErrorInfo(e)+"\n");
 				}
 				break;
 			}
 			default:{
-				HandleConn.writeToServer("命令语法不正确");
+				HandleConn.writeToServerIgnoreException("命令语法不正确");
 				break;
 			}
 		}

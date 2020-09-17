@@ -39,38 +39,38 @@ public class FuncConfig implements AbstractFunc {
                     fields.append(key + "=" + ClientMain.getConfig().field.get(key) + "\n");
                 }
                 fields.append("列表完成");
-                HandleConn.writeToServer(fields.toString() + "\n");
+                HandleConn.writeToServerIgnoreException(fields.toString() + "\n");
                 break;
             }
             case "write":{
                 ClientMain.getConfig().write();
-                HandleConn.writeToServer("配置文件已写入\n");
+                HandleConn.writeToServerIgnoreException("配置文件已写入\n");
                 break;
             }
             case "set":{
                 if(params.length<3){
-                    HandleConn.writeToServer("命令语法不正确\n");
+                    HandleConn.writeToServerIgnoreException("命令语法不正确\n");
                     break;
                 }
                 ClientMain.getConfig().set(params[1],params[2]);
-                HandleConn.writeToServer("设置"+params[1]+"="+params[2]+"\n");
+                HandleConn.writeToServerIgnoreException("设置"+params[1]+"="+params[2]+"\n");
                 break;
             }
             case "rm":{
                 if(params.length<2){
-                    HandleConn.writeToServer("命令语法不正确\n");
+                    HandleConn.writeToServerIgnoreException("命令语法不正确\n");
                     break;
                 }
                 try {
                     ClientMain.getConfig().field.remove(params[1]);
                     HandleConn.writeToServer("删除字段" + params[1]+"\n");
                 }catch (Exception e){
-                    HandleConn.writeToServer("出错"+ClientMain.getErrorInfo(e)+"\n");
+                    HandleConn.writeToServerIgnoreException("出错"+ClientMain.getErrorInfo(e)+"\n");
                 }
                 break;
             }
             default:{
-                HandleConn.writeToServer("无此二级命令");
+                HandleConn.writeToServerIgnoreException("无此二级命令");
                 break;
             }
         }

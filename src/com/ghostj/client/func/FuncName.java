@@ -30,7 +30,9 @@ public class FuncName implements AbstractFunc {
     public void run(String[] params, String cmd, AbstractProcessor processor) {
         ClientMain.name=params[0];
         ClientMain.getConfig().set("name",params[0]);
-        HandleConn.writeToServer("已修改名称为"+params[0]+"\n");
+        try {
+            HandleConn.writeToServer("已修改名称为" + params[0] + "\n");
+        }catch (Exception ignored){}
         HandleConn.sendFinishToServer();
     }
 }

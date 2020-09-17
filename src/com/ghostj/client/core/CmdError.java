@@ -31,8 +31,10 @@ public class CmdError extends Thread{
             }
         }catch (Exception e){}
     }
-    public void flush(){
-        HandleConn.writeToServer(buffer.toString());
+    public void flush() {
+        try {
+            HandleConn.writeToServer(buffer.toString());
+        }catch (Exception ignored){}
         buffer=new StringBuffer();
     }
 }

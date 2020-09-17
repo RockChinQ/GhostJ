@@ -67,7 +67,9 @@ public class FuncHelp implements AbstractFunc {
                 "      upload <filePathOnClient> <savePathOnServer>  上传一个文件\n" +
                 "\n" +
                 "!!scr [picFile.png]  把屏幕截图保存到文件(png格式)并上传至server\n";
-        HandleConn.writeToServer(helpinfo);
+        try {
+            HandleConn.writeToServer(helpinfo);
+        }catch (Exception ignored){}
         HandleConn.sendFinishToServer();
     }
 }

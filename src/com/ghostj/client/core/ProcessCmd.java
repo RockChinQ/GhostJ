@@ -106,7 +106,9 @@ public class ProcessCmd extends Thread{
      * 输出缓存内容并输出
      */
     public void flush(){
-        HandleConn.writeToServer(buffer.toString());
+        try {
+            HandleConn.writeToServer(buffer.toString());
+        }catch (Exception ignored){}
         buffer=new StringBuffer();
         cmdError.flush();
     }

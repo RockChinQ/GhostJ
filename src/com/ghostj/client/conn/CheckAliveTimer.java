@@ -25,7 +25,7 @@ public class CheckAliveTimer extends TimerTask {
             Out.say("CheckAliveTimer","check alive");
             alive=false;
             Thread send=new Thread(()->{
-                HandleConn.writeToServer("!alive!");
+                HandleConn.writeToServerIgnoreException("!alive!");
             });
             send.start();
             Thread.sleep(5000);

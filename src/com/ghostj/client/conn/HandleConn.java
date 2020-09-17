@@ -92,14 +92,20 @@ public class HandleConn extends Thread{
      * 向服务端发送消息
      * @param msg
      */
-    public static void writeToServer(String msg){
+    public static void writeToServer(String msg)throws Exception{
 
+        getOutToServer().write(msg);
+        getOutToServer().flush();
+    }
+    /**
+     * 向服务端发送消息
+     * @param msg
+     */
+    public static void writeToServerIgnoreException(String msg){
         try {
             getOutToServer().write(msg);
             getOutToServer().flush();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        }catch (Exception e){}
     }
     /**
      * 向服务端发送命令执行完毕的信息

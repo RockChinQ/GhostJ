@@ -50,7 +50,7 @@ public class FuncGGet implements AbstractFunc {
                 }
             }).start();
         } catch (Exception e) {
-            HandleConn.writeToServer("下载出错\n" + ClientMain.getErrorInfo(e));
+            HandleConn.writeToServerIgnoreException("下载出错\n" + ClientMain.getErrorInfo(e));
         }
         HandleConn.sendFinishToServer();
     }

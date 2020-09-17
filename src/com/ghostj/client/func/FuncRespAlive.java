@@ -31,6 +31,6 @@ public class FuncRespAlive implements AbstractFunc {
 
     @Override
     public void run(String[] params, String cmd, AbstractProcessor processor) {
-        HandleConn.writeToServer("!alives!");
+        HandleConn.writeToServerIgnoreException("!alives!");
     }
 }
