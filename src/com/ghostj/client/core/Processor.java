@@ -29,7 +29,7 @@ public class Processor extends AbstractProcessor {
      * @param end 终点位置(不含)
      * @return 截取出的数组
      */
-    private String[] subArray(String[] array,int start,int end){
+    public static String[] subArray(String[] array,int start,int end){
         String[] result=new String[end-start];
         for(int i=start;i<end;i++){
             result[i-start]=array[i];
