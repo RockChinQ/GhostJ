@@ -91,6 +91,11 @@ public class HandleConn extends Thread{
 
 								continue;
 							}
+							case "!reDir":{
+								String ctn[]=cmds.substring(7,cmds.length()).split("\\|");
+
+								break;
+							}
 							default:{
 								Out.sayThisLine(cmds.toString());
 								continue;

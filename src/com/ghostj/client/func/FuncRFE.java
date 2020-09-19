@@ -7,6 +7,7 @@ import com.ghostj.client.conn.HandleConn;
 import com.ghostj.client.core.ClientMain;
 import com.ghostj.client.core.Processor;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.Arrays;
 
@@ -46,30 +47,30 @@ public class FuncRFE implements AbstractFunc {
 			case "dir":{
 				File crtDir=new File(currentDir);
 				if(!crtDir.exists()){
-					sendError("notExist");
+					sendError("noSuchDir");
 				}else if (!crtDir.isDirectory()){
 					sendError("notADir");
 				}else {
 					File[] crtLs = crtDir.listFiles();
-					HandleConn.writeToServerIgnoreException("!reDir " + Arrays.toString(crtLs) + "!");
+					StringBuffer lsStr=new StringBuffer("!reDir "+currentDir);
+					if (crtLs==null){
+						lsStr.append("!");
+					}else {
+						for (File file : crtLs) {
+							lsStr.append("|"+file.getName()+":"+file.isDirectory()+":"+file.length());
+						}
+						lsStr.append("!");
+					}
+					HandleConn.writeToServerIgnoreException(lsStr.toString());
 				}
 				break;
 			}
 			case "cd":{
-				File target=new File(currentDir+File.separatorChar+params[1]);
-				if(!target.exists()){
-					sendError("notExist");
-				} else if (!target.isDirectory()){
-					sendError("notADir");
-				}else {
-					if (params[1].equals("..")){//upper dir
-						String[] dirSpt=currentDir.split("\\\\");
-						currentDir= arrayToString(dirSpt,0,dirSpt.length-1,File.separator);
-					} else {
-						currentDir+=File.separator+params[1];
-					}
-					HandleConn.writeToServerIgnoreException("!cd "+currentDir+"!");
+				if (params.length<2){
+					return;
 				}
+				changeDirLoop(params[1]);
+				HandleConn.writeToServerIgnoreException("!cd "+currentDir+"!");
 				break;
 			}
 			case "upload": {
@@ -103,5 +104,43 @@ public class FuncRFE implements AbstractFunc {
 			result.append(arr[i]+(i==end-1?"":sep));
 		}
 		return result.toString();
+	}
+
+	/**
+	 * 解析一个路径并添加到crtDir里
+	 * @param to 要添加的路径
+	 */
+	public void changeDirLoop(String to){
+		//是绝对路径吗
+		if (isAbsPath(to)){
+			currentDir=to;
+			return;
+		}else{
+			String spt[]=to.split("\\\\");
+			//是..吗
+			if (spt[0].equals("..")){
+				String[] dirSpt=currentDir.split("\\\\");
+				//还能向上一级吗
+				if (dirSpt.length<=1){
+					return;
+				}else {
+					currentDir = arrayToString(dirSpt, 0, dirSpt.length - 1, File.separator);
+				}
+			}else {
+				if (new File(currentDir+"\\"+spt[0]).exists())
+					currentDir += "\\" + spt[0];
+				else {
+					sendError("noSuchDir:"+currentDir+"\\"+spt[0]);
+					return;
+				}
+			}
+			//之后还有吗
+			if(spt.length>1){
+				changeDirLoop(arrayToString(spt,1,spt.length,"\\"));
+			}
+		}
+	}
+	public boolean isAbsPath(String path){
+		return path.toCharArray()[1]==':';
 	}
 }

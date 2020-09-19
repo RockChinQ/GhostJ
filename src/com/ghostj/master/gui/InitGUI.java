@@ -39,6 +39,8 @@ public class InitGUI {
 	public ArrayList<String> commandHistory=new ArrayList<>();
 	public int updownPosition=0;
 
+	public FileExplorer fe=new FileExplorer();
+
 	public InitGUI(){
 		mainwd.setSize(900,920);
 		mainwd.setLocation(200,100);
@@ -212,8 +214,12 @@ public class InitGUI {
 		typeMode.setVisible(true);
 		bgp.add(typeMode);
 
+		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeChart.getY(),350,300);
+		fe.setBackground(Color.darkGray);
+		bgp.add(fe);
+
 		bgp.setVisible(false);
-		mainwd.setSize(console.getX()+console.getWidth()+40,mainwd.getHeight());
+		mainwd.setSize(fe.getX()+fe.getWidth()+40,mainwd.getHeight());
 		bgp.setSize(mainwd.getWidth()+15,mainwd.getHeight()+10);
 		//mainwd.setSize(console.getX()+console.getWidth(),mainwd.getHeight());
 		mainwd.getContentPane().setBackground(bgp.getBackground());

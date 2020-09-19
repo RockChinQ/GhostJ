@@ -10,6 +10,7 @@ import com.ghostj.server.ServerMain;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Date;
@@ -71,5 +72,14 @@ public class MasterMain {
 				initGUI.mainwd.setTitle("total:"+Runtime.getRuntime().totalMemory()+" used:"+(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()));
 			}
 		},new Date(),2000);
+	}
+	public static void writeToServer(String cmd){
+		try {
+			MasterMain.bufferedWriter.write(cmd);
+			MasterMain.bufferedWriter.newLine();
+			MasterMain.bufferedWriter.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
