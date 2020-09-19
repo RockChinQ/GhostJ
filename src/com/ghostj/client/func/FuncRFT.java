@@ -39,7 +39,7 @@ public class FuncRFT implements AbstractFunc {
 					break;
 				}
 				try {
-					FileSender.sendFileMethod(new File(params[1]),params[2],new Date().getTime()+"",HandleConn.ip,HandleConn.rft_port);
+					FileSender.sendFileMethod(new File(params[1].replaceAll("\\?"," ")),params[2],new Date().getTime()+"",HandleConn.ip,HandleConn.rft_port);
 				} catch (Exception e) {
 					e.printStackTrace();
 					HandleConn.writeToServerIgnoreException("上传出错"+ ClientMain.getErrorInfo(e)+"\n");

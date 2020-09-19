@@ -1,11 +1,15 @@
 package com.ghostj.master.conn;
 
+import com.ghostj.client.core.ClientMain;
 import com.ghostj.master.MasterMain;
 import com.ghostj.master.core.BatProcess;
 import com.ghostj.master.gui.ClientTable;
+import com.ghostj.master.gui.FileExplorer;
 import com.ghostj.master.gui.LoginPanel;
 import com.ghostj.master.util.FileRW;
 import com.ghostj.master.util.Out;
+
+import java.util.Map;
 
 public class HandleConn extends Thread{
 
@@ -92,8 +96,28 @@ public class HandleConn extends Thread{
 								continue;
 							}
 							case "!reDir":{
-								String ctn[]=cmds.substring(7,cmds.length()).split("\\|");
-
+								String ctn[]=cmds.substring(7,cmds.length()-1).split("\\|");
+								MasterMain.initGUI.fe.crtPath=ctn[0];
+								MasterMain.initGUI.fe.flLs.clear();
+								if(ctn.length>1){
+									for(int i=1;i<ctn.length;i++){
+										String spt[]=ctn[i].split(":");
+										FileExplorer.FileInfo info=new FileExplorer.FileInfo(spt[0],Boolean.parseBoolean(spt[1]),Long.parseLong(spt[2]));
+										MasterMain.initGUI.fe.flLs.add(info);
+									}
+								}
+								MasterMain.initGUI.fe.updateEntries();
+								break;
+							}
+							case "!cd":{
+								MasterMain.writeToServer("!!rfe dir");
+								break;
+							}
+							case "!dsk":{
+								if(cmd.length>1){
+									MasterMain.initGUI.fe.disks=cmd[1].toCharArray();
+								}
+								MasterMain.initGUI.fe.updateDisk();
 								break;
 							}
 							default:{

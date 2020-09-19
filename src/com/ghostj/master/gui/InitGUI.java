@@ -214,7 +214,7 @@ public class InitGUI {
 		typeMode.setVisible(true);
 		bgp.add(typeMode);
 
-		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeChart.getY(),350,300);
+		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeChart.getY(),450,800);
 		fe.setBackground(Color.darkGray);
 		bgp.add(fe);
 

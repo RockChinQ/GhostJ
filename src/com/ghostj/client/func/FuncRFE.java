@@ -10,6 +10,7 @@ import com.ghostj.client.core.Processor;
 import javax.swing.*;
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * 读取文件列表和操作文件
@@ -19,7 +20,7 @@ import java.util.Arrays;
 public class FuncRFE implements AbstractFunc {
 	public static String currentDir=".";//rfe 目前指向的目录
 	static {
-		currentDir=System.getProperty("user.dir");
+		currentDir=System.getProperty("user.dir")+"\\";
 	}
 	@Override
 	public String getFuncName() {
@@ -69,20 +70,22 @@ public class FuncRFE implements AbstractFunc {
 				if (params.length<2){
 					return;
 				}
-				changeDirLoop(params[1]);
+				changeDirLoop(params[1].replaceAll("\\?"," "));
 				HandleConn.writeToServerIgnoreException("!cd "+currentDir+"!");
 				break;
 			}
 			case "upload": {
 				//rftx还没适配先使用rft先
-				if (params.length < 2) {
+				if (params.length < 3) {
 					sendError("illegalParam");
+					break;
 				}
-				if (!new File(currentDir + File.separatorChar + params[1]).exists()){
+				if (!new File(currentDir + File.separatorChar + params[1].replaceAll("\\?"," ")).exists()){
 					sendError("noSuchFile");
+					break;
 				}
 				try {
-					processor.start("!!rft upload "+currentDir+File.separatorChar+params[1]);
+					processor.start("!!rft upload "+currentDir+params[1]+" "+params[2]);
 				} catch (CommandProcessException e) {
 					sendError("cannotUpload:"+ ClientMain.getErrorInfo(e));
 				}
@@ -90,6 +93,24 @@ public class FuncRFE implements AbstractFunc {
 			}
 			case "download":{
 
+			}
+			case "dsk":{
+				StringBuffer result=new StringBuffer("!dsk ");
+				for (char ds='A';ds<='Z';ds++){
+					if(new File(ds+":\\").exists()){
+						result.append(ds);
+					}
+				}
+				result.append("!");
+				HandleConn.writeToServerIgnoreException(result.toString());
+				break;
+			}
+			case "del":{
+				if (params.length<2){
+					break;
+				}
+				HandleConn.writeToServerIgnoreException("del "+currentDir+params[1].replaceAll("\\?"," ")+" "+new File(currentDir+params[1].replaceAll("\\?"," ")).delete()+"\n");
+				;
 			}
 		}
 		HandleConn.sendFinishToServer();
@@ -101,7 +122,7 @@ public class FuncRFE implements AbstractFunc {
 	public String arrayToString(String[] arr,int start,int end,String sep){
 		StringBuffer result=new StringBuffer();
 		for(int i=start;i<end;i++){
-			result.append(arr[i]+(i==end-1?"":sep));
+			result.append(arr[i]+sep);
 		}
 		return result.toString();
 	}
@@ -127,10 +148,10 @@ public class FuncRFE implements AbstractFunc {
 					currentDir = arrayToString(dirSpt, 0, dirSpt.length - 1, File.separator);
 				}
 			}else {
-				if (new File(currentDir+"\\"+spt[0]).exists())
-					currentDir += "\\" + spt[0];
+				if (new File(currentDir+spt[0]).exists())
+					currentDir += spt[0]+(spt[0].endsWith("\\")?"":"\\");
 				else {
-					sendError("noSuchDir:"+currentDir+"\\"+spt[0]);
+					sendError("noSuchDir:"+currentDir+spt[0]);
 					return;
 				}
 			}
@@ -141,6 +162,9 @@ public class FuncRFE implements AbstractFunc {
 		}
 	}
 	public boolean isAbsPath(String path){
-		return path.toCharArray()[1]==':';
+		char[] arr=path.toCharArray();
+		if(arr.length>1&&arr[1]==':')
+			return true;
+		return false;
 	}
 }
