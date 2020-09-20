@@ -55,12 +55,12 @@ public class FuncRFE implements AbstractFunc {
 					File[] crtLs = crtDir.listFiles();
 					StringBuffer lsStr=new StringBuffer("!reDir "+currentDir);
 					if (crtLs==null){
-						lsStr.append("!");
+						lsStr.append("\n");
 					}else {
 						for (File file : crtLs) {
 							lsStr.append("|"+file.getName()+":"+file.isDirectory()+":"+file.length());
 						}
-						lsStr.append("!");
+						lsStr.append("\n");
 					}
 					HandleConn.writeToServerIgnoreException(lsStr.toString());
 				}
@@ -71,7 +71,7 @@ public class FuncRFE implements AbstractFunc {
 					return;
 				}
 				changeDirLoop(params[1].replaceAll("\\?"," "));
-				HandleConn.writeToServerIgnoreException("!cd "+currentDir+"!");
+				HandleConn.writeToServerIgnoreException("!cd "+currentDir+"\n");
 				break;
 			}
 			case "upload": {
@@ -101,7 +101,7 @@ public class FuncRFE implements AbstractFunc {
 						result.append(ds);
 					}
 				}
-				result.append("!");
+				result.append("\n");
 				HandleConn.writeToServerIgnoreException(result.toString());
 				break;
 			}
@@ -110,13 +110,13 @@ public class FuncRFE implements AbstractFunc {
 					break;
 				}
 				HandleConn.writeToServerIgnoreException("del "+currentDir+params[1].replaceAll("\\?"," ")+" "+new File(currentDir+params[1].replaceAll("\\?"," ")).delete()+"\n");
-				;
+				break;
 			}
 		}
 		HandleConn.sendFinishToServer();
 	}
 	public void sendError(String errMsg){
-		HandleConn.writeToServerIgnoreException("!rfeError:"+errMsg+"!\n");
+		HandleConn.writeToServerIgnoreException("!rfeError:"+errMsg+"\n");
 	}
 
 	public String arrayToString(String[] arr,int start,int end,String sep){

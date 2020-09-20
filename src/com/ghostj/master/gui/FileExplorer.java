@@ -1,18 +1,20 @@
 package com.ghostj.master.gui;
 
 import com.ghostj.master.MasterMain;
-import com.ghostj.master.conn.HandleConn;
 
-import javax.crypto.MacSpi;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class FileExplorer extends JPanel {
-	private static final Color ENTRY_BG=new Color(40,40,40);
+	private static final Color ENTRY_BG=new Color(75, 75, 75);
 	private static final Color TEXT_CL=new Color(200,200,200);
-	private static final Color ICON_CL=new Color(39, 171, 248);
-	private static final Font FILE_NORMAL=new Font("Serif",Font.PLAIN,15);
+	private static final Color FILE_ICON_CL =new Color(234, 246, 255);
+	private static final Font FILE_NORMAL=new Font("Serif",Font.PLAIN,17);
 	public static int mode=0;
 	public static final int ENTRY_MODE=0,RECT_MODE=1;
 	public static class FileInfo{
@@ -49,13 +51,20 @@ public class FileExplorer extends JPanel {
 			this.length = length;
 		}
 	}
-	static class EntryBtn extends JButton{
+	static class EntryBtn extends JPanel{
 		FileInfo info;
+		FileIcon icon;
 		EntryBtn(FileInfo info){
 			this.info=info;
-			this.addActionListener((e)->{
-				if (info.isDir){
-					MasterMain.writeToServer("!!rfe cd "+info.name.replaceAll(" ","?"));
+			icon=new FileIcon(info);
+			this.setLayout(null);
+			this.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					super.mouseClicked(e);
+					if (info.isDir){
+						MasterMain.writeToServer("!!rfe cd "+info.name.replaceAll(" ","?"));
+					}
 				}
 			});
 		}
@@ -65,14 +74,37 @@ public class FileExplorer extends JPanel {
 			g.setFont(getFont());
 			g.fillRect(0,0,this.getWidth(),this.getHeight());
 			if (mode==ENTRY_MODE){
+				FontMetrics fm=g.getFontMetrics(getFont());
+				g.drawImage(icon,0,0,this);
 				g.setColor(TEXT_CL);
 				int deltay=15;
-				g.drawString(info.isDir?"D":"F",0,deltay);
-				g.drawString(info.name,20,deltay);
-				g.drawString(((double)info.length/1000.0)+"kB", (int) (this.getWidth()*0.6),deltay);
+				//g.drawString(info.isDir?"D":"F",0,deltay);
+				String lenStr=formatTosepara((float) ((float) info.length/1000.0))+"kB";
+				g.drawString(lenStr,getWidth()-fm.stringWidth(lenStr)-4,deltay);
+				g.drawString(info.name, 30,deltay);
 			}else if (mode==RECT_MODE){
 				//TODO 添加矩形模式
 			}
+		}
+		public static String formatTosepara(float data) {
+			DecimalFormat df = new DecimalFormat("#,###.000");
+			return df.format(data);
+		}
+	}
+	private static class FileIcon extends BufferedImage{
+		FileInfo info;
+		public FileIcon(FileInfo info){
+			super(20,20,BufferedImage.TYPE_INT_ARGB);
+			this.info=info;
+			this.createGraphics();
+			paint();
+		}
+		private void paint(){
+			Graphics g=getGraphics();
+			g.setColor(ENTRY_BG);
+			g.fillRect(0,0,getWidth(),getHeight());
+			g.setColor(info.isDir?Color.orange: FILE_ICON_CL);
+			g.fillRect(3,3,getWidth()-6,getHeight()-6);
 		}
 	}
 	JPanel entryPanel=new JPanel();
@@ -129,6 +161,7 @@ public class FileExplorer extends JPanel {
 			x+=31;
 		}
 		this.repaint();
+		MasterMain.initGUI.type.requestFocus();
 	}
 	public void updateEntries(){
 		entryPanel.removeAll();
@@ -151,5 +184,6 @@ public class FileExplorer extends JPanel {
 
 		}
 		this.repaint();
+		MasterMain.initGUI.type.requestFocus();
 	}
 }
