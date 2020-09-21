@@ -97,12 +97,13 @@ public class HandleConn extends Thread{
 							}
 							case "!reDir":{
 								String ctn[]=cmds.substring(7,cmds.length()-1).split("\\|");
-								MasterMain.initGUI.fe.crtPath=ctn[0];
+								MasterMain.initGUI.fe.crtPath=(ctn.length-1)+":"+ctn[0];
 								MasterMain.initGUI.fe.flLs.clear();
+								System.out.println(cmds);
 								if(ctn.length>1){
 									for(int i=1;i<ctn.length;i++){
 										String spt[]=ctn[i].split(":");
-										FileExplorer.FileInfo info=new FileExplorer.FileInfo(spt[0],Boolean.parseBoolean(spt[1]),Long.parseLong(spt[2]));
+										FileExplorer.FileInfo info=new FileExplorer.FileInfo(spt[0], spt.length > 1 && Boolean.parseBoolean(spt[1]),spt.length>2?Long.parseLong(spt[2]):-1);
 										MasterMain.initGUI.fe.flLs.add(info);
 									}
 								}
@@ -126,7 +127,8 @@ public class HandleConn extends Thread{
 							}
 						}
 					}
-					Out.sayThisLine((char)c);
+					if (!((char)c=='!'))
+						Out.sayThisLine((char)c);
 				}catch (Exception e){
 					Out.say("HandleConn","接受数据出错，连接正在重置");
 					e.printStackTrace();

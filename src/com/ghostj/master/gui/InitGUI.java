@@ -9,6 +9,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class InitGUI {
 	static final Font cf=new Font("微软雅黑",Font.PLAIN,15);
@@ -42,6 +43,7 @@ public class InitGUI {
 	public FileExplorer fe=new FileExplorer();
 
 	public InitGUI(){
+		long s=new Date().getTime();
 		mainwd.setSize(900,920);
 		mainwd.setLocation(200,100);
 		mainwd.setLayout(null);
@@ -136,7 +138,8 @@ public class InitGUI {
 			onlineTimeChart.repaint();
 		});
 		//控制台
-		console.setBounds(onlineTimeChart.getX(),onlineTimeChart.getY()+onlineTimeChart.getHeight()+10,650,bgp.getHeight()-onlineTimeChart.getHeight()-onlineTimeChart.getY()-115);
+		console.setBounds(onlineTimeChart.getX(),onlineTimeChart.getY()+onlineTimeChart.getHeight()+10,650
+				,bgp.getHeight()-onlineTimeChart.getHeight()-onlineTimeChart.getY()-115);
 		console.setBackground(Color.darkGray);
 		console.setForeground(new Color(255, 255, 255, 255));
 		console.setFont(cf);
@@ -203,7 +206,6 @@ public class InitGUI {
 		type.requestFocus();
 		bgp.add(type);
 
-
 		typeMode.setBounds(type.getX()+type.getWidth()+10,console.getY()+console.getHeight()+10,70,40);
 		typeMode.addActionListener((e)->{
 			typeMode.setSelected(!typeMode.isSelected());
@@ -218,12 +220,17 @@ public class InitGUI {
 		fe.setBackground(Color.darkGray);
 		bgp.add(fe);
 
+
+
 		bgp.setVisible(false);
+
 		mainwd.setSize(fe.getX()+fe.getWidth()+40,mainwd.getHeight());
 		bgp.setSize(mainwd.getWidth()+15,mainwd.getHeight()+10);
 		//mainwd.setSize(console.getX()+console.getWidth(),mainwd.getHeight());
 		mainwd.getContentPane().setBackground(bgp.getBackground());
+
 		mainwd.setVisible(true);
+
 /*
 		mainwd.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -232,6 +239,7 @@ public class InitGUI {
 				console.setSize(mainwd.getWidth()-clientTable.getWidth()-10);
 			}
 		});*/
+
 
 		loginPanel=new LoginPanel(mainwd);
 	}

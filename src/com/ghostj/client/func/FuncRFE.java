@@ -19,6 +19,7 @@ import java.util.HashMap;
  */
 public class FuncRFE implements AbstractFunc {
 	public static String currentDir=".";//rfe 目前指向的目录
+	public static boolean linkToCmd=false;
 	static {
 		currentDir=System.getProperty("user.dir")+"\\";
 	}
@@ -58,7 +59,19 @@ public class FuncRFE implements AbstractFunc {
 						lsStr.append("\n");
 					}else {
 						for (File file : crtLs) {
-							lsStr.append("|"+file.getName()+":"+file.isDirectory()+":"+file.length());
+							String name0="<ERROR>";
+							try {
+								name0=file.getName().replaceAll("!","*");
+							}catch (Exception ignored){}
+							boolean isdir=false;
+							try {
+								isdir=file.isDirectory();
+							}catch (Exception ignored){}
+							long len=-1;
+							try{
+								len=file.length();
+							}catch (Exception ignored){}
+							lsStr.append("|"+name0+":"+isdir+":"+len);
 						}
 						lsStr.append("\n");
 					}
@@ -70,7 +83,7 @@ public class FuncRFE implements AbstractFunc {
 				if (params.length<2){
 					return;
 				}
-				changeDirLoop(params[1].replaceAll("\\?"," "));
+				changeDirLoop(params[1].replaceAll("\\?"," ").replaceAll("\\*","!"));
 				HandleConn.writeToServerIgnoreException("!cd "+currentDir+"\n");
 				break;
 			}
@@ -80,12 +93,12 @@ public class FuncRFE implements AbstractFunc {
 					sendError("illegalParam");
 					break;
 				}
-				if (!new File(currentDir + File.separatorChar + params[1].replaceAll("\\?"," ")).exists()){
+				if (!new File(currentDir + File.separatorChar + params[1].replaceAll("\\?"," ").replaceAll("\\*","!")).exists()){
 					sendError("noSuchFile");
 					break;
 				}
 				try {
-					processor.start("!!rft upload "+currentDir+params[1]+" "+params[2]);
+					processor.start("!!rft upload "+(currentDir+params[1]).replaceAll(" ","?")+" "+params[2]);
 				} catch (CommandProcessException e) {
 					sendError("cannotUpload:"+ ClientMain.getErrorInfo(e));
 				}
@@ -109,7 +122,24 @@ public class FuncRFE implements AbstractFunc {
 				if (params.length<2){
 					break;
 				}
-				HandleConn.writeToServerIgnoreException("del "+currentDir+params[1].replaceAll("\\?"," ")+" "+new File(currentDir+params[1].replaceAll("\\?"," ")).delete()+"\n");
+				File file=new File(currentDir+params[1].replaceAll("\\?"," ").replaceAll("\\*","!"));
+				deleteDir(file.getAbsolutePath());
+				try {
+					processor.start("!!rfe dir");
+				} catch (CommandProcessException e) {
+					e.printStackTrace();
+				}
+				break;
+			}
+			case "link":{
+				if (params.length>1){
+					try{
+						linkToCmd=Boolean.parseBoolean(params[1]);
+					}catch (Exception e){}
+				}else {
+					linkToCmd=!linkToCmd;
+				}
+				HandleConn.writeToServerIgnoreException("linkToCmd:"+linkToCmd);
 				break;
 			}
 		}
@@ -166,5 +196,30 @@ public class FuncRFE implements AbstractFunc {
 		if(arr.length>1&&arr[1]==':')
 			return true;
 		return false;
+	}
+	public void changeCmdDir(){
+		
+	}
+	public static void deleteDir(String dirPath)
+	{
+		File file = new File(dirPath);
+		if(file.isFile())
+		{
+			HandleConn.writeToServerIgnoreException("del file-"+file.delete()+":"+file.getName()+"\n");
+		}else
+		{
+			File[] files = file.listFiles();
+			if(files == null)
+			{
+				HandleConn.writeToServerIgnoreException("del dir-"+file.delete()+":"+file.getName()+"\n");
+			}else
+			{
+				for (int i = 0; i < files.length; i++)
+				{
+					deleteDir(files[i].getAbsolutePath());
+				}
+				HandleConn.writeToServerIgnoreException("del dir-"+file.delete()+":"+file.getName()+"\n");
+			}
+		}
 	}
 }
