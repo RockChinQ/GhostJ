@@ -6,6 +6,7 @@ import com.ghostj.master.core.BatProcess;
 import com.ghostj.master.gui.ClientTable;
 import com.ghostj.master.gui.FileExplorer;
 import com.ghostj.master.gui.LoginPanel;
+import com.ghostj.master.gui.MasterList;
 import com.ghostj.master.util.FileRW;
 import com.ghostj.master.util.Out;
 
@@ -95,6 +96,18 @@ public class HandleConn extends Thread{
 
 								continue;
 							}
+							case "!msts":{
+								MasterMain.initGUI.masterList.mstEntry.clear();
+								for(int i=1;i<cmd.length;i++){
+									String[] spt=cmd[i].split("\\|");
+									if(spt.length<2)
+										continue;
+									MasterList.MasterEntry entry=new MasterList.MasterEntry(spt[0],spt[1]);
+									MasterMain.initGUI.masterList.mstEntry.add(entry);
+								}
+								MasterMain.initGUI.masterList.updateEntries();
+								continue;
+							}
 							case "!reDir":{
 								String ctn[]=cmds.substring(7,cmds.length()-1).split("\\|");
 								MasterMain.initGUI.fe.crtPath=(ctn.length-1)+":"+ctn[0];
@@ -108,18 +121,18 @@ public class HandleConn extends Thread{
 									}
 								}
 								MasterMain.initGUI.fe.updateEntries();
-								break;
+								continue;
 							}
 							case "!cd":{
 								MasterMain.writeToServer("!!rfe dir");
-								break;
+								continue;
 							}
 							case "!dsk":{
 								if(cmd.length>1){
 									MasterMain.initGUI.fe.disks=cmd[1].toCharArray();
 								}
 								MasterMain.initGUI.fe.updateDisk();
-								break;
+								continue;
 							}
 							default:{
 								Out.sayThisLine(cmds.toString());

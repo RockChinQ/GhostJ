@@ -2,6 +2,7 @@ package com.ghostj.server;
 
 import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
+import com.ghostj.util.TimeUtil;
 
 import java.io.BufferedReader;
 import java.io.OutputStreamWriter;
@@ -123,6 +124,21 @@ public class HandleMaster extends Thread{
 								outputStreamWriter.flush();
 							}catch (Exception e){
 								Out.say("HandleMaster","发送tagLog到master失败");
+								e.printStackTrace();
+							}
+							continue readMsg;
+						}
+						case "#lsmst#":{
+							ServerMain.checkMasterAlive.run();
+							StringBuffer msts=new StringBuffer("!msts");
+							for(HandleMaster master:AcceptMaster.masters){
+								msts.append(" "+master.socket.getInetAddress()+":"+master.socket.getPort()+"|"+TimeUtil.millsToMMDDHHmmSS(master.connTime));
+							}
+							msts.append("!");
+							try{
+								outputStreamWriter.write(msts.toString());
+								outputStreamWriter.flush();
+							}catch (Exception e){
 								e.printStackTrace();
 							}
 							continue readMsg;

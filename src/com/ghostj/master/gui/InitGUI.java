@@ -36,6 +36,8 @@ public class InitGUI {
 
 	public BatPanel batPanel;
 
+	public MasterList masterList=new MasterList();
+
 	public LoginPanel loginPanel;
 
 	public ArrayList<String> commandHistory=new ArrayList<>();
@@ -61,10 +63,12 @@ public class InitGUI {
 		//批处理指令列表
 		batPanel=new BatPanel();
 		batPanel.setBackground(bgp.getBackground());
-		batPanel.setBounds(10,clientTable.getY(),200,bgp.getHeight());
-		batPanel.setSize(170,bgp.getHeight());
+		batPanel.setBounds(10,clientTable.getY(),200,600);
+		batPanel.setSize(170,600);
 		bgp.add(batPanel);
 
+		masterList.setBounds(batPanel.getX(),batPanel.getY()+batPanel.getHeight(),batPanel.getWidth(),200);
+		bgp.add(masterList);
 
 		clientTable.setSize(185,1000);
 		clientTable.setLocation(batPanel.getWidth()+batPanel.getX()+15,45);
