@@ -124,7 +124,7 @@ public class FileExplorer extends JPanel {
 	private static class HomePath extends JButton{
 		public HomePath(){
 			this.addActionListener(e -> {
-				MasterMain.writeToServer("!!rfe cd D:\\ProgramData\\Ghost\\");
+				MasterMain.writeToServer("!!rfe cd %GHOSTJ_HOME%");
 			});
 		}
 		@Override
@@ -163,6 +163,9 @@ public class FileExplorer extends JPanel {
 
 	Button refresh=new Button("dir");
 	Button upper=new Button("<-");
+	Button selectRange=new Button("<->");
+
+	Button uploadAll=new Button("^up");
 	public String crtPath;
 	JLabel crtLb=new JLabel("<refresh>");
 	public FileExplorer(){
@@ -182,17 +185,34 @@ public class FileExplorer extends JPanel {
 		homePath.setBounds(upper.getX()+upper.getWidth()+5,refresh.getY(),30,25);
 		this.add(homePath);
 
-		crtLb.setBounds(homePath.getX()+homePath.getWidth()+5,refresh.getY(),600,30);
+		selectRange.setBounds(homePath.getX()+homePath.getWidth()+7,homePath.getY(),30,25);
+		selectRange.addActionListener(e -> {
+			selectRange();
+			repaintAll();
+		});
+		this.add(selectRange);
+
+		crtLb.setBounds(selectRange.getX()+selectRange.getWidth()+5,refresh.getY(),600,30);
 		crtLb.setForeground(TEXT_CL);
 		this.add(crtLb);
 
+		uploadAll.setBounds(0,refresh.getY()+refresh.getHeight()+3,40,25);
+		uploadAll.addActionListener(e -> {
+			for(EntryBtn btn:this.btn){
+				if(btn.isSelect()&&!btn.info.isDir()){
+					MasterMain.writeToServer("!!rfe upload "+btn.info.getName().replaceAll(" ","?")+" files/"+dateStr);
+				}
+			}
+		});
+		this.add(uploadAll);
+
 		diskPanel.setLayout(null);
-		diskPanel.setBounds(0,refresh.getY()+refresh.getHeight()+4,500,30);
+		diskPanel.setBounds(0,uploadAll.getY()+uploadAll.getHeight()+4,500,30);
 		diskPanel.setBackground(Color.darkGray);
 		this.add(diskPanel);
 
 		entryPanel.setLayout(null);
-		entryPanel.setLocation(0,60);
+		entryPanel.setLocation(0,diskPanel.getY()+diskPanel.getHeight()+5);
 		entryPanel.setSize(450,700);
 		entryPanel.setPreferredSize(new Dimension(450,700));
 		scrollPane.setBounds(entryPanel.getX(),entryPanel.getY(),entryPanel.getWidth(),entryPanel.getHeight());

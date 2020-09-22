@@ -114,6 +114,7 @@ public class OnlineTimeChart extends JPanel {
 		}
 		g.setColor(Color.GREEN);
 		g.drawLine(75,0,75,this.getHeight());
+		MasterMain.initGUI.onlineTimeScroll.validate();
 	}
 	public long getXByTime(long time){
 		return (time-startTime)/zoom;

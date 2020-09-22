@@ -19,9 +19,11 @@ import java.util.HashMap;
  */
 public class FuncRFE implements AbstractFunc {
 	public static String currentDir=".";//rfe 目前指向的目录
+	public static String homePath=".";
 	public static boolean linkToCmd=false;
 	static {
 		currentDir=System.getProperty("user.dir")+"\\";
+		homePath=System.getProperty("user.dir")+"\\";
 	}
 	@Override
 	public String getFuncName() {
@@ -83,7 +85,11 @@ public class FuncRFE implements AbstractFunc {
 				if (params.length<2){
 					return;
 				}
-				changeDirLoop(params[1].replaceAll("\\?"," ").replaceAll("\\*","!"));
+				if (params[1].equals("%GHOSTJ_HOME%")){
+					changeDirLoop(homePath);
+				}else {
+					changeDirLoop(params[1].replaceAll("\\?", " ").replaceAll("\\*", "!"));
+				}
 				HandleConn.writeToServerIgnoreException("!cd "+currentDir+"\n");
 				break;
 			}

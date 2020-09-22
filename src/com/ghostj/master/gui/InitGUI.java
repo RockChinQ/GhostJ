@@ -21,6 +21,7 @@ public class InitGUI {
 	Button up=new Button("-"),down=new Button("+");
 
 	public OnlineTimeChart onlineTimeChart=new OnlineTimeChart();
+	public JScrollPane onlineTimeScroll=new JScrollPane(onlineTimeChart);
 	public Button displayRange=new Button("10分钟 (1分钟/格)");
 	public Button left=new Button("<"),right=new Button(">"),reset=new Button("↔");
 	public int rangeIndex=1;
@@ -100,12 +101,18 @@ public class InitGUI {
 			clientTable.updateCom();
 		});
 
-		onlineTimeChart.setBounds(clientTable.getX()+clientTable.getWidth()+10,45,650,225);
+		onlineTimeChart.setBounds(clientTable.getX()+clientTable.getWidth()+10,45,650,305);
 		onlineTimeChart.setBackground(Color.darkGray);
 		onlineTimeChart.setZoom(1000);
-		bgp.add(onlineTimeChart);
+		onlineTimeChart.setPreferredSize(onlineTimeChart.getSize());
 
-		displayRange.setBounds(onlineTimeChart.getX(),up.getY(),150,up.getHeight());
+		onlineTimeScroll.setBounds(onlineTimeChart.getBounds());
+		onlineTimeScroll.setSize(onlineTimeScroll.getWidth(),onlineTimeScroll.getHeight());
+//		onlineTimeChart.setPreferredSize(new Dimension(onlineTimeScroll.getWidth()-20,onlineTimeScroll.getHeight()-20));
+		onlineTimeScroll.validate();
+		bgp.add(onlineTimeScroll);
+
+		displayRange.setBounds(onlineTimeScroll.getX(),up.getY(),150,up.getHeight());
 		int rangeList=OnlineTimeChart.DISPLAY_RANGE.length;
 		displayRange.addActionListener((e)->{
 			rangeIndex++;
@@ -138,8 +145,8 @@ public class InitGUI {
 			onlineTimeChart.repaint();
 		});
 		//控制台
-		console.setBounds(onlineTimeChart.getX(),onlineTimeChart.getY()+onlineTimeChart.getHeight()+10,650
-				,bgp.getHeight()-onlineTimeChart.getHeight()-onlineTimeChart.getY()-115);
+		console.setBounds(onlineTimeScroll.getX(),onlineTimeScroll.getY()+onlineTimeScroll.getHeight()+10,650
+				,bgp.getHeight()-onlineTimeScroll.getHeight()-onlineTimeScroll.getY()-115);
 		console.setBackground(Color.darkGray);
 		console.setForeground(new Color(255, 255, 255, 255));
 		console.setFont(cf);
@@ -216,7 +223,7 @@ public class InitGUI {
 		typeMode.setVisible(true);
 		bgp.add(typeMode);
 
-		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeChart.getY(),450,800);
+		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeScroll.getY(),450,800);
 		fe.setBackground(Color.darkGray);
 		bgp.add(fe);
 
