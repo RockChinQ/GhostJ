@@ -129,7 +129,6 @@ public class HandleMaster extends Thread{
 							continue readMsg;
 						}
 						case "#lsmst#":{
-							ServerMain.checkMasterAlive.run();
 							StringBuffer msts=new StringBuffer("!msts");
 							for(HandleMaster master:AcceptMaster.masters){
 								msts.append(" "+master.socket.getInetAddress()+":"+master.socket.getPort()+"|"+TimeUtil.millsToMMDDHHmmSS(master.connTime));

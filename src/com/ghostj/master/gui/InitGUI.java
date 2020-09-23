@@ -67,7 +67,7 @@ public class InitGUI {
 		batPanel.setSize(170,600);
 		bgp.add(batPanel);
 
-		masterList.setBounds(batPanel.getX(),batPanel.getY()+batPanel.getHeight(),batPanel.getWidth(),200);
+		masterList.setBounds(batPanel.getX(),batPanel.getY()+batPanel.getHeight(),batPanel.getWidth(),265);
 		bgp.add(masterList);
 
 		clientTable.setSize(185,1000);
@@ -217,7 +217,7 @@ public class InitGUI {
 		type.requestFocus();
 		bgp.add(type);
 
-		typeMode.setBounds(type.getX()+type.getWidth()+10,console.getY()+console.getHeight()+10,70,40);
+		typeMode.setBounds(type.getX()+type.getWidth()+10,console.getY()+console.getHeight()+10,60,40);
 		typeMode.addActionListener((e)->{
 			typeMode.setSelected(!typeMode.isSelected());
 //			System.out.println(typeMode.isSelected());
@@ -227,7 +227,7 @@ public class InitGUI {
 		typeMode.setVisible(true);
 		bgp.add(typeMode);
 
-		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeScroll.getY(),450,800);
+		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeScroll.getY(),450,600);
 		fe.setBackground(Color.darkGray);
 		bgp.add(fe);
 

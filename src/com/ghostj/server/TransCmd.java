@@ -210,6 +210,17 @@ public class TransCmd extends  Thread{
                     ServerMain.cmdProcessFinish();
                     return;
                 }
+                case "!svfile":{
+                    switch (cmd[1]){
+                        case "dir":{
+                            break;
+                        }
+                        case "cd":{
+                            break;
+                        }
+                    }
+                    return;
+                }
                 case "!rft":{
                     if(cmd.length<2){
                         Out.say("TransCmd-rft","命令语法不正确");

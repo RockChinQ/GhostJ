@@ -111,7 +111,9 @@ public class FileExplorer extends JPanel {
 				//g.drawString(info.isDir?"D":"F",0,deltay);
 				String lenStr=formatTosepara((float) ((float) info.length/1000.0))+"kB";
 				g.drawString(lenStr,getWidth()-fm.stringWidth(lenStr)-4,deltay);
-				g.drawString(info.name, 30,deltay);
+				g.drawString(info.name.length()>30?
+						info.name.substring(0,24)+"..."+info.getName().substring(info.name.length()-5,info.name.length())
+						:info.name, 30,deltay);
 			}else if (mode==RECT_MODE){
 				//TODO 添加矩形模式
 			}
@@ -213,8 +215,9 @@ public class FileExplorer extends JPanel {
 
 		entryPanel.setLayout(null);
 		entryPanel.setLocation(0,diskPanel.getY()+diskPanel.getHeight()+5);
-		entryPanel.setSize(450,700);
-		entryPanel.setPreferredSize(new Dimension(450,700));
+		entryPanel.setSize(450,500);
+		entryPanel.setPreferredSize(new Dimension(450,500));
+		entryPanel.setBackground(Color.darkGray);
 		scrollPane.setBounds(entryPanel.getX(),entryPanel.getY(),entryPanel.getWidth(),entryPanel.getHeight());
 		scrollPane.validate();
 		this.add(scrollPane);
@@ -259,7 +262,7 @@ public class FileExplorer extends JPanel {
 		entryPanel.removeAll();
 		entryPanel.setBackground(getBackground());
 		crtLb.setText(crtPath);
-		entryPanel.setSize(this.getWidth(),this.getHeight()-20);
+		entryPanel.setSize(this.getWidth(),550);
 		if (mode==ENTRY_MODE) {
 			int y=0;
 			for (FileInfo info : flLs) {

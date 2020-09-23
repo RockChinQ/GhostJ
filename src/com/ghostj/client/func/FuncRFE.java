@@ -199,9 +199,7 @@ public class FuncRFE implements AbstractFunc {
 	}
 	public boolean isAbsPath(String path){
 		char[] arr=path.toCharArray();
-		if(arr.length>1&&arr[1]==':')
-			return true;
-		return false;
+		return arr.length > 1 && arr[1] == ':';
 	}
 	public void changeCmdDir(){
 		
