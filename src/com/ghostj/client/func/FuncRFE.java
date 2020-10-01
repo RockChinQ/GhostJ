@@ -170,7 +170,7 @@ public class FuncRFE implements AbstractFunc {
 	public void changeDirLoop(String to){
 		//是绝对路径吗
 		if (isAbsPath(to)){
-			currentDir=to;
+			currentDir=to+(to.endsWith("\\")?"":"\\");
 			return;
 		}else{
 			String spt[]=to.split("\\\\");

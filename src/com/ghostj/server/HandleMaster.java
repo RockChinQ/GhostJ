@@ -7,6 +7,7 @@ import com.ghostj.util.TimeUtil;
 import java.io.BufferedReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class HandleMaster extends Thread{
@@ -18,6 +19,8 @@ public class HandleMaster extends Thread{
 	public HandleMaster(Socket socket){
 		this.socket=socket;
 	}
+
+	ArrayList<String> attri=new ArrayList<>();
 
 	public boolean alive=true;
 	@Override
