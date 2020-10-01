@@ -420,18 +420,37 @@ public class TransCmd extends  Thread{
                         return;
                     }
                     ArrayList<HandleConn> kill=new ArrayList<>();
-                    for(HandleConn conn:ServerMain.socketArrayList){
-                        if(conn.hostName.equals(cmd[1])){
-                            kill.add(conn);
+                    if(cmd[1].equalsIgnoreCase("-m")){
+                        ArrayList<String> alreadyScanHostNames=new ArrayList<>();
+                        Out.say("TransCmd-exit-m","扫描并清除重复的连接:");
+                        for(HandleConn conn:ServerMain.socketArrayList){
+                            Out.sayThisLine(conn.hostName+":");
+                            if (alreadyScanHostNames.contains(conn.hostName)){
+                                kill.add(conn);
+                                Out.say("kill");
+                            }else {
+                                alreadyScanHostNames.add(conn.hostName);
+                                Out.say("keep");
+                            }
                         }
+                        Out.say("TransCmd-exit-m","扫描完成，清除"+kill.size()+"个重复连接");
+                    }else {
+                        for (HandleConn conn : ServerMain.socketArrayList) {
+                            if (conn.hostName.equals(cmd[1])) {
+                                kill.add(conn);
+                            }
+                        }
+                    }
+                    if (kill.size()==0){
+                        Out.say("无符合条件的连接");
                     }
                     for(HandleConn conn: kill){
                         try{
                             conn.bufferedWriter.write("!!exit "+conn.hostName);
                             conn.bufferedWriter.newLine();
                             conn.bufferedWriter.flush();
-                            ServerMain.killConn(conn);
                         }catch (Exception e){}
+                        ServerMain.killConn(conn);
                     }
                     return;
                 }

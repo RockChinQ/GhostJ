@@ -111,8 +111,9 @@ public class FileExplorer extends JPanel {
 				//g.drawString(info.isDir?"D":"F",0,deltay);
 				String lenStr=formatTosepara((float) ((float) info.length/1000.0))+"kB";
 				g.drawString(lenStr,getWidth()-fm.stringWidth(lenStr)-4,deltay);
-				g.drawString(info.name.length()>30?
-						info.name.substring(0,24)+"..."+info.getName().substring(info.name.length()-5,info.name.length())
+				System.out.println(info.name+" "+info.name.length());
+				g.drawString(info.name.length()>20?
+						info.name.substring(0,14)+"..."+info.getName().substring(info.name.length()-5,info.name.length())
 						:info.name, 30,deltay);
 			}else if (mode==RECT_MODE){
 				//TODO 添加矩形模式

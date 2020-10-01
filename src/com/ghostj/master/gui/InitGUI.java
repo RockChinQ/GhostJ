@@ -1,11 +1,10 @@
 package com.ghostj.master.gui;
 
 import com.ghostj.master.MasterMain;
+import com.ghostj.master.core.AddStringToConsole;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;

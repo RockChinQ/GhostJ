@@ -83,10 +83,12 @@ public class ClientMain {
      * 注册所有func
      */
     private static void registerAllFunc(){
-        processor.registerFunc(new FuncProcess());
-        processor.registerFunc(new FuncExit());
         processor.registerFunc(new FuncSendAlive());
         processor.registerFunc(new FuncRespAlive());
+
+        
+        processor.registerFunc(new FuncProcess());
+        processor.registerFunc(new FuncExit());
         processor.registerFunc(new FuncGGet());
         processor.registerFunc(new FuncHelp());
         processor.registerFunc(new FuncReconn());
@@ -96,6 +98,7 @@ public class ClientMain {
         processor.registerFunc(new FuncRFT());
         processor.registerFunc(new FuncPrtScr());
         processor.registerFunc(new FuncRFE());
+        processor.registerFunc(new FuncTidy());
 
         processor.setDefaultFunc(new FuncDefault());
     }

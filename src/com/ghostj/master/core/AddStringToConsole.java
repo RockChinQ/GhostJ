@@ -1,4 +1,4 @@
-package com.ghostj.master.gui;
+package com.ghostj.master.core;
 
 import com.ghostj.master.MasterMain;
 
