@@ -111,7 +111,18 @@ public class FuncRFE implements AbstractFunc {
 				break;
 			}
 			case "download":{
-
+				//直接调用gget
+				if(params.length<2){
+					sendError("illegalParam");
+					break;
+				}
+				try{
+					String[] urlSpt=params[1].split("/");
+					processor.run("!!gget "+params[1]+" "+currentDir+" "+urlSpt[urlSpt.length-1]);
+				}catch (Exception e){
+					sendError(ClientMain.getErrorInfo(e));
+				}
+				break;
 			}
 			case "dsk":{
 				StringBuffer result=new StringBuffer("!dsk ");
