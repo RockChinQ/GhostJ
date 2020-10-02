@@ -66,7 +66,7 @@ public class ServerMain {
 
 		//启动检查计时器
 		Timer t=new Timer();
-		t.schedule(new CheckAliveTimer(),1000,15000);
+		t.schedule(new CheckAliveTimer(),1000,30000);
 
 		try{
 			masterPw=new String(config.getStringValue("master.pw"));
@@ -79,7 +79,7 @@ public class ServerMain {
 			e.printStackTrace();
 		}
 		//启动master的检测计时器
-		new Timer().schedule(checkMasterAlive,6000,10*60*1000);
+		new Timer().schedule(checkMasterAlive,6000,60*1000);
 		Out.say("ServerMain","master的pw是"+masterPw);
 		//启动taglog计时器
 //		new Timer().schedule(new TimerTask() {

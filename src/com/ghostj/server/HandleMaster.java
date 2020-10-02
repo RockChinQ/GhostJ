@@ -20,7 +20,8 @@ public class HandleMaster extends Thread{
 		this.socket=socket;
 	}
 
-	ArrayList<String> attri=new ArrayList<>();
+	//标签集
+	ArrayList<String> attributes=new ArrayList<>();
 
 	public boolean alive=true;
 	@Override
@@ -145,6 +146,10 @@ public class HandleMaster extends Thread{
 							}
 							continue readMsg;
 						}
+						case "#attri":{
+							attributes.add(cmd[1]);
+							continue readMsg;
+						}
 					}
 					//已处理完master级别指令
 					//不是指令的发送至下一级
@@ -157,7 +162,7 @@ public class HandleMaster extends Thread{
 				}
 			}
 		}catch (Exception e){
-			Out.say("HandleMaster","处理master的数据失败  非致命错误");
+			Out.say("HandleMaster","处理master的数据失败");
 			e.printStackTrace();
 		}
 	}

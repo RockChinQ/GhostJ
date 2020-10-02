@@ -69,7 +69,30 @@ public class FuncGGet implements AbstractFunc {
         //防止屏蔽程序抓取而返回403错误
         conn.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
         conn.setRequestProperty("lfwywxqyh_token",toekn);
-        //得到输入流
+        //输入流
+        DataInputStream dataInputStream=new DataInputStream(conn.getInputStream());
+        //创建文件输出流
+        // 文件保存位置
+        File saveDir = new File(savePath);
+        if(!saveDir.exists()){
+            saveDir.mkdir();
+        }
+        File file = new File(saveDir+File.separator+fileName);
+        FileOutputStream fos = new FileOutputStream(file);
+
+        byte[] data=new byte[1024];
+        int len=0;
+        while ((len=dataInputStream.read(data,0,data.length))!=-1){
+            fos.write(data,0,len);
+            fos.flush();
+        }
+        if(fos!=null){
+            fos.close();
+        }
+        if(dataInputStream!=null){
+            dataInputStream.close();
+        }
+        /*//得到输入流
         InputStream inputStream = conn.getInputStream();
         //获取自己数组
         byte[] getData = readInputStream(inputStream);
@@ -82,12 +105,7 @@ public class FuncGGet implements AbstractFunc {
         File file = new File(saveDir+File.separator+fileName);
         FileOutputStream fos = new FileOutputStream(file);
         fos.write(getData);
-        if(fos!=null){
-            fos.close();
-        }
-        if(inputStream!=null){
-            inputStream.close();
-        }
+        */
     }
     /**
      * 从输入流中获取字节数组

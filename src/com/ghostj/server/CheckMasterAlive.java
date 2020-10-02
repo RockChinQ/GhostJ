@@ -42,7 +42,7 @@ public class CheckMasterAlive extends TimerTask {
 							masterTokill.add(handleMaster);
 						}
 					}}.start();
-					new Thread().sleep(5000);
+					Thread.sleep(10000);
 					if (!alive)
 //						kill();
 						masterTokill.add(handleMaster);
