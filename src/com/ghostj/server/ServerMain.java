@@ -3,6 +3,7 @@ package com.ghostj.server;
 import com.ghostj.util.Config;
 import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
+import com.ghostj.util.TimeUtil;
 import com.rft.core.client.FileSender;
 import com.rft.core.server.BufferedFileReceiver;
 import com.rft.core.server.FileReceiver;
@@ -149,6 +150,14 @@ public class ServerMain {
 //        socketArrayList.remove(conn);
 //        conn.stop();
 //    }
+	public static void sendMasterList(){
+		StringBuffer msts=new StringBuffer("!msts");
+		for(HandleMaster master0:AcceptMaster.masters){
+			msts.append(" "+master0.socket.getInetAddress()+":"+master0.socket.getPort()+"|"+ TimeUtil.millsToMMDDHHmmSS(master0.connTime)+"|"+(master0.attributes.contains("desktop")?1:0));
+		}
+		msts.append("!");
+		ServerMain.sendToSpecificMaster(msts.toString(),"listenerMaster");
+	}
 	public static void stopServer(int status){
 		Out.say("ServerMain.stopServer","");
 		logAliveDevice();
@@ -182,7 +191,6 @@ public class ServerMain {
 			tagLog.addTag(".Master","alive");
 		tagLog.pack();
 	}
-	//TODO 向所有master发送finish信息会出现问题，非 脚本执行者 的master也会收到信息
 	public static void cmdProcessFinish(){
 		try{
 			//向所有master发送finish，这个是非常非常非常非常不安全的
@@ -195,6 +203,20 @@ public class ServerMain {
 			//e.printStackTrace();
 		}
 		Out.putPrompt();
+	}
+
+	/**
+	 * 发送消息到具有特定标签的master
+	 * @param msg
+	 * @param attri
+	 */
+	public static void sendToSpecificMaster(String msg,String attri){
+		for (HandleMaster master:AcceptMaster.masters){
+			if(master.attributes.contains(attri)){
+				System.out.println(master.socket.getInetAddress());
+				master.sentMsg(msg);
+			}
+		}
 	}
 	public static void saveOnlineClients(){
 

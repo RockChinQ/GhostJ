@@ -47,6 +47,7 @@ public class FileManager {
 				currentPath+=oneDir+(oneDir.endsWith("/")?"":"/");
 				return currentPath;
 			}else {
+
 				return currentPath;
 			}
 		}

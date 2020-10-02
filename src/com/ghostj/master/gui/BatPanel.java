@@ -100,22 +100,19 @@ public class BatPanel extends JPanel {
         });
         run.addActionListener((e)->{
 //            int option=javax.swing.JOptionPane.showConfirmDialog(MasterMain.initGUI.mainwd,whichSelected().cmds,"确认命令"+whichSelected().name+"的内容",JOptionPane.INFORMATION_MESSAGE);
-            int option=0;
             //System.out.println(option);
-            if(option==0){
-                try {/*
-                    String cmdsp[]=whichSelected().cmds.split("\n\r");
-                    for(String cmd:cmdsp){
-                        MasterMain.bufferedWriter.write(cmd);
-                        MasterMain.bufferedWriter.newLine();
-                        MasterMain.bufferedWriter.flush();
-                    }*/
+            try {/*
+                String cmdsp[]=whichSelected().cmds.split("\n\r");
+                for(String cmd:cmdsp){
+                    MasterMain.bufferedWriter.write(cmd);
+                    MasterMain.bufferedWriter.newLine();
+                    MasterMain.bufferedWriter.flush();
+                }*/
 
-                    BatProcess.processBatch(whichSelected().cmds,new String[]{});
-                }catch (Exception er){
-                    er.printStackTrace();
-                    Out.say("BatPanel","无法将批处理指令发送至服务端");
-                }
+                BatProcess.processBatch(whichSelected().cmds,new String[]{});
+            }catch (Exception er){
+                er.printStackTrace();
+                Out.say("BatPanel","无法将批处理指令发送至服务端");
             }
 
             MasterMain.initGUI.type.requestFocus();

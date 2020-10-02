@@ -14,6 +14,7 @@ public class MasterList extends JPanel {
 
 	public static class MasterEntry extends JPanel{
 		String addr,time;
+		public int type=0;//0:android,1:desktop
 		public MasterEntry(String addr,String time){
 			this.addr=addr;
 			this.time=time;
@@ -28,6 +29,8 @@ public class MasterList extends JPanel {
 			g.drawString(addr,2,15);
 			g.setFont(timeFont);
 			g.drawString(time,2,30);
+			g.setColor((type==0?Color.blue:Color.green));
+			g.drawString((type==0?"Android":"Desktop"),95,30);
 		}
 	}
 	public ArrayList<MasterEntry> mstEntry=new ArrayList<>();

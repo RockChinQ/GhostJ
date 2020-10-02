@@ -36,6 +36,8 @@ public class CreateConn extends Thread{
 					Out.say("CreateConn","已发送密码");
 					MasterMain.initGUI.bgp.setVisible(true);
 					MasterMain.initGUI.mainwd.setTitle("已连接到:"+ MasterMain.initGUI.loginPanel.ipInput.getValue());
+					MasterMain.writeToServer("#attri desktop");
+					MasterMain.writeToServer("#attri listenerMaster");
 					MasterMain.writeToServer("#lsmst#");
 				}catch (Exception e){
 					Out.say("CreateConn","无法建立连接");
@@ -44,7 +46,7 @@ public class CreateConn extends Thread{
 					MasterMain.initGUI.bgp.setVisible(false);
 				}
 			}).start();
-			new Thread().sleep(3000);
+			sleep(3000);
 			if(MasterMain.socket==null){
 				MasterMain.initGUI.loginPanel.setTitle(MasterMain.initGUI.loginPanel.getTitle()+"连接失败");
 			}else {

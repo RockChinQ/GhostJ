@@ -1,6 +1,7 @@
 package com.ghostj.server;
 
 import com.ghostj.util.Out;
+import com.ghostj.util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.TimerTask;
@@ -10,24 +11,6 @@ public class CheckMasterAlive extends TimerTask {
 	@Override
 	public void run() {
 		try{
-			/*if(!ServerMain.acceptMaster.acceptable) {
-				alive = false;
-				new Thread() {{
-					try {
-						ServerMain.handleMaster.outputStreamWriter.write("!alivem!");
-						ServerMain.handleMaster.outputStreamWriter.flush();
-					} catch (Exception e) {
-						kill();
-					}
-				}}.start();
-				new Thread().sleep(5000);
-				if (!alive)
-					kill();
-				else {
-					if(ServerMain.handleMaster.available)
-						ServerMain.tagLog.addTag(".Master","alive");
-				}
-			}*/
 			if(AcceptMaster.masterOnline()){//如果有master在线
 				//挨个测试所有master
 				ArrayList<HandleMaster> masterTokill=new ArrayList<>();
@@ -67,6 +50,7 @@ public class CheckMasterAlive extends TimerTask {
 
 			}
 			AcceptMaster.masters.remove(master);
+			ServerMain.sendMasterList();
 			master.outputStreamWriter.close();
 			master.socket.close();
 			master.stop();

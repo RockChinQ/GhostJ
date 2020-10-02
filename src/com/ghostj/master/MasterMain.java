@@ -79,6 +79,7 @@ public class MasterMain {
 			MasterMain.bufferedWriter.newLine();
 			MasterMain.bufferedWriter.flush();
 		} catch (IOException e) {
+			MasterMain.handleConn.kill("连接已断开");
 			e.printStackTrace();
 		}
 	}

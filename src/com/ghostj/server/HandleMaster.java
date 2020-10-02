@@ -1,5 +1,6 @@
 package com.ghostj.server;
 
+import com.ghostj.master.MasterMain;
 import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 import com.ghostj.util.TimeUtil;
@@ -33,6 +34,7 @@ public class HandleMaster extends Thread{
 		}catch (Exception e){
 			e.printStackTrace();
 		}
+		ServerMain.sendMasterList();
 		try{
 			readMsg:while (true){
 				String msg=null;
@@ -54,12 +56,8 @@ public class HandleMaster extends Thread{
 						cmd = msg.split(" ");
 					}catch (Exception er){
 
-						Out.say("HandleMaster","master发送了非法数据,正在关闭master连接");
-						er.printStackTrace();
+						Out.say("HandleMaster","正在关闭master连接");
 						ServerMain.tagLog.addTag(".Master","alive");
-						/*ServerMain.handleMaster.available=false;
-						ServerMain.acceptMaster.acceptable=true;
-						this.stop();*/
 						CheckMasterAlive.kill(this);
 					}
 					//System.out.println(msg);
@@ -79,9 +77,6 @@ public class HandleMaster extends Thread{
 							}else {
 								outputStreamWriter.write("!passErr!");
 								outputStreamWriter.flush();
-								/*socket.close();
-								outputStreamWriter.close();
-								bufferedReader.close();*/
 								CheckMasterAlive.kill(this);
 								Out.say("HandleMaster","密码错误");
 								this.stop();
@@ -135,7 +130,7 @@ public class HandleMaster extends Thread{
 						case "#lsmst#":{
 							StringBuffer msts=new StringBuffer("!msts");
 							for(HandleMaster master:AcceptMaster.masters){
-								msts.append(" "+master.socket.getInetAddress()+":"+master.socket.getPort()+"|"+TimeUtil.millsToMMDDHHmmSS(master.connTime));
+								msts.append(" "+master.socket.getInetAddress()+":"+master.socket.getPort()+"|"+TimeUtil.millsToMMDDHHmmSS(master.connTime)+"|"+(master.attributes.contains("desktop")?1:0));
 							}
 							msts.append("!");
 							try{

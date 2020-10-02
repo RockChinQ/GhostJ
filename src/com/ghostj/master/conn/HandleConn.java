@@ -97,12 +97,14 @@ public class HandleConn extends Thread{
 								continue;
 							}
 							case "!msts":{
+								System.out.println("收到master列表:"+cmds);
 								MasterMain.initGUI.masterList.mstEntry.clear();
 								for(int i=1;i<cmd.length;i++){
 									String[] spt=cmd[i].split("\\|");
 									if(spt.length<2)
 										continue;
 									MasterList.MasterEntry entry=new MasterList.MasterEntry(spt[0],spt[1]);
+									entry.type=Integer.parseInt(spt[2]);
 									MasterMain.initGUI.masterList.mstEntry.add(entry);
 								}
 								MasterMain.initGUI.masterList.updateEntries();
