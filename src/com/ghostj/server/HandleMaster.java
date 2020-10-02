@@ -56,7 +56,7 @@ public class HandleMaster extends Thread{
 						cmd = msg.split(" ");
 					}catch (Exception er){
 
-						Out.say("HandleMaster","正在关闭master连接");
+						Out.say("HandleMaster","master断连");
 						ServerMain.tagLog.addTag(".Master","alive");
 						CheckMasterAlive.kill(this);
 					}
@@ -143,6 +143,7 @@ public class HandleMaster extends Thread{
 						}
 						case "#attri":{
 							attributes.add(cmd[1]);
+							ServerMain.sendMasterList();
 							continue readMsg;
 						}
 					}

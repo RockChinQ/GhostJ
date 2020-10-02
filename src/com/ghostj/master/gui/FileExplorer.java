@@ -111,7 +111,6 @@ public class FileExplorer extends JPanel {
 				//g.drawString(info.isDir?"D":"F",0,deltay);
 				String lenStr=formatTosepara((float) ((float) info.length/1000.0))+"kB";
 				g.drawString(lenStr,getWidth()-fm.stringWidth(lenStr)-4,deltay);
-				System.out.println(info.name+" "+info.name.length());
 				g.drawString(info.name.length()>20?
 						info.name.substring(0,14)+"..."+info.getName().substring(info.name.length()-5,info.name.length())
 						:info.name, 30,deltay);
@@ -168,7 +167,9 @@ public class FileExplorer extends JPanel {
 	Button upper=new Button("<-");
 	Button selectRange=new Button("<->");
 
-	Button uploadAll=new Button("^up");
+	Button uploadAll=new Button("▲up");
+	Button download=new Button("▼dl");
+	static String lsUrl="";
 	public String crtPath;
 	JLabel crtLb=new JLabel("<refresh>");
 	public FileExplorer(){
@@ -208,6 +209,16 @@ public class FileExplorer extends JPanel {
 			}
 		});
 		this.add(uploadAll);
+		download.setBounds(uploadAll.getX()+uploadAll.getWidth()+2,refresh.getY()+refresh.getHeight()+3,40,25);
+		download.addActionListener(e -> {
+			String url=javax.swing.JOptionPane.showInputDialog(MasterMain.initGUI.mainwd,"url(http/https supported):",lsUrl);
+			if(url!=null&&!"".equals(url)){
+				lsUrl=url;
+				MasterMain.writeToServer("!!rfe download "+url);
+			}
+//
+		});
+		this.add(download);
 
 		diskPanel.setLayout(null);
 		diskPanel.setBounds(0,uploadAll.getY()+uploadAll.getHeight()+4,500,30);

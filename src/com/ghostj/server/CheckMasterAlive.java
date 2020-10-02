@@ -36,9 +36,7 @@ public class CheckMasterAlive extends TimerTask {
 				}
 				masterTokill.forEach(CheckMasterAlive::kill);
 			}
-		}catch (Exception e){
-			e.printStackTrace();
-			Out.say("CheckMasterAlive","检测master连接时出现错误");
+		}catch (Exception ignored){
 		}
 	}
 	public static void kill(HandleMaster master){
