@@ -55,6 +55,9 @@ public class OnlineTimeChart extends JPanel {
 	}
 	@Override
 	public void paint(Graphics g){
+		MasterMain.initGUI.onlineTimeChart.setPreferredSize(new Dimension(630,(DEVICE_TRACK_HEIGHT)*MasterMain.tagLog.allOwner.size()+100));
+		MasterMain.initGUI.onlineTimeScroll.validate();
+		this.setSize(630, getHeight());
 		setZoom(zoom);
 		g.setColor(this.getBackground());
 		g.fillRect(0,0,this.getWidth(),this.getHeight());
@@ -86,35 +89,36 @@ public class OnlineTimeChart extends JPanel {
 
 		g.setColor(Color.white);
 		g.setFont(device);
-		for(String deviceKey: MasterMain.tagLog.allOwner.keySet()){
-			TagLog.tagOwner owner=MasterMain.tagLog.allOwner.get(deviceKey);
-			long loginTime=0;
-			//横向提示线
-			g.setColor(TIPS_LINE_COLOR);
-			g.drawLine(0,y+4,this.getWidth(),y+4);
-			//每个device的taglog
-			for(TagLog.tagOwner.tag tag:owner.tags){
-				if(tag.name.equals("login"))
-					loginTime=tag.time+t_addition;
-				else if(tag.name.equals("alive")&&loginTime!=0){
-					g.setColor(deviceKey.equals(".Server")||deviceKey.equals(".Master")?Color.gray:Color.white);
-					//System.out.println(deviceKey+" l"+loginTime+" a"+tag.time);
-					g.fillRect((int)getXByTime(loginTime),y+2,(int)getXByTime(tag.time+t_addition)-(int)getXByTime(loginTime),LINE_HEIGHT);
-					loginTime=0;
+		try {
+			for (String deviceKey : MasterMain.tagLog.allOwner.keySet()) {
+				TagLog.tagOwner owner = MasterMain.tagLog.allOwner.get(deviceKey);
+				long loginTime = 0;
+				//横向提示线
+				g.setColor(TIPS_LINE_COLOR);
+				g.drawLine(0, y + 4, this.getWidth(), y + 4);
+				//每个device的taglog
+				for (TagLog.tagOwner.tag tag : owner.tags) {
+					if (tag.name.equals("login"))
+						loginTime = tag.time + t_addition;
+					else if (tag.name.equals("alive") && loginTime != 0) {
+						g.setColor(deviceKey.equals(".Server") || deviceKey.equals(".Master") ? Color.gray : Color.white);
+						//System.out.println(deviceKey+" l"+loginTime+" a"+tag.time);
+						g.fillRect((int) getXByTime(loginTime), y + 2, (int) getXByTime(tag.time + t_addition) - (int) getXByTime(loginTime), LINE_HEIGHT);
+						loginTime = 0;
+					}
 				}
+				g.setColor(this.getBackground());
+				g.fillRect(0, y, 75, DEVICE_TRACK_HEIGHT);
+				if (deviceKey.equals(".Master") || deviceKey.equals(".Server")) {
+					g.setColor(Color.white);
+				} else
+					g.setColor(Color.green);
+				g.drawString(deviceKey, 0, y + 8);
+				y += DEVICE_TRACK_HEIGHT;
 			}
-			g.setColor(this.getBackground());
-			g.fillRect(0,y,75,DEVICE_TRACK_HEIGHT);
-			if(deviceKey.equals(".Master")||deviceKey.equals(".Server")){
-				g.setColor(Color.white);
-			}else
-				g.setColor(Color.green);
-			g.drawString(deviceKey,0,y+8);
-			y+=DEVICE_TRACK_HEIGHT;
-		}
+		}catch (Exception ignored){}
 		g.setColor(Color.GREEN);
 		g.drawLine(75,0,75,this.getHeight());
-		MasterMain.initGUI.onlineTimeScroll.validate();
 	}
 	public long getXByTime(long time){
 		return (time-startTime)/zoom;

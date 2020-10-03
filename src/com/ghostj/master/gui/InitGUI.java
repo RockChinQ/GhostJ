@@ -104,7 +104,7 @@ public class InitGUI {
 			clientTable.updateCom();
 		});
 
-		onlineTimeChart.setBounds(clientTable.getX()+clientTable.getWidth()+10,45,650,305);
+		onlineTimeChart.setBounds(clientTable.getX()+clientTable.getWidth()+10,45,650,205);
 		onlineTimeChart.setBackground(Color.darkGray);
 		onlineTimeChart.setZoom(1000);
 		onlineTimeChart.setPreferredSize(onlineTimeChart.getSize());
