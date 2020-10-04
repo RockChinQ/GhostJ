@@ -81,7 +81,7 @@ public class HandleConn extends Thread{
 									FileRW.write("tagLog.txt",cmds.substring(8,cmds.length()-1));
 //									System.out.println(cmd[1]);
 									MasterMain.tagLog.load();
-									MasterMain.initGUI.onlineTimeChart.repaint();
+									MasterMain.initGUI.onlineTimeChart.resize();
 								}catch (Exception e){
 									Out.say("HandleConn","获取tagLog失败");
 									e.printStackTrace();

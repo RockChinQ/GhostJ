@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TransCmd extends  Thread{
-
+    Map<String,String> renPlan=new HashMap<>();
     public void run(){
         BufferedReader typeReader = new BufferedReader(new InputStreamReader(System.in));//键盘的reader
         readMsg:while (true) {
@@ -159,7 +159,8 @@ public class TransCmd extends  Thread{
                                 return;
                             }
                         }
-                        Out.say("TransCmd-chname", "无此名称连接");
+                        Out.say("TransCmd-chname", "无此名称连接,设置重命名计划:"+cmd[1]+"->"+cmd[2]);
+                        renPlan.put(cmd[1],cmd[2]);
                     } else {
                         Out.say("TransCmd-chname", "正确语法\n!chname <connName(wordStartWith)> <newName>");
                     }

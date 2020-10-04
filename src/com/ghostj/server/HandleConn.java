@@ -121,8 +121,25 @@ public class HandleConn extends Thread{
                             this.version=cmd[2];
                             this.sysStartTime=Long.parseLong(cmd[3]);
                             ServerMain.sendListToMaster();
-
                             ServerMain.saveOnlineClients();
+
+                            //检查是否要重命名
+                            //fixme 这里会导致rescueServer反复启动client
+                            if (ServerMain.transCmd.renPlan.containsKey(hostName)) {
+                                hostName = ServerMain.transCmd.renPlan.get(hostName);
+                                bufferedWriter.write("!!name " + hostName);
+                                bufferedWriter.newLine();
+                                bufferedWriter.flush();
+                                bufferedWriter.write("!!cfg write");
+                                bufferedWriter.newLine();
+                                bufferedWriter.flush();
+                                ServerMain.tagLog.addTag(hostName,"login");
+                                Out.say("TransCmd-chnamePlan", "已修改名称");
+                                ServerMain.sendListToMaster();
+                                ServerMain.cmdProcessFinish();
+                                return;
+                            }
+
                             ServerMain.tagLog.addTag(this.hostName,"login");
                             ServerMain.tagLog.addTag(this.hostName,"alive");
                             ServerMain.tagLog.pack();

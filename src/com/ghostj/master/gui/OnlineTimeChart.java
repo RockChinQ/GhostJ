@@ -55,9 +55,6 @@ public class OnlineTimeChart extends JPanel {
 	}
 	@Override
 	public void paint(Graphics g){
-		MasterMain.initGUI.onlineTimeChart.setPreferredSize(new Dimension(630,(DEVICE_TRACK_HEIGHT)*MasterMain.tagLog.allOwner.size()+100));
-		MasterMain.initGUI.onlineTimeScroll.validate();
-		this.setSize(630, getHeight());
 		setZoom(zoom);
 		g.setColor(this.getBackground());
 		g.fillRect(0,0,this.getWidth(),this.getHeight());
@@ -119,6 +116,12 @@ public class OnlineTimeChart extends JPanel {
 		}catch (Exception ignored){}
 		g.setColor(Color.GREEN);
 		g.drawLine(75,0,75,this.getHeight());
+	}
+	public void resize(){
+
+		MasterMain.initGUI.onlineTimeChart.setPreferredSize(new Dimension(630,(DEVICE_TRACK_HEIGHT)*MasterMain.tagLog.allOwner.size()+100));
+		MasterMain.initGUI.onlineTimeScroll.validate();
+		this.setSize(630, getHeight());
 	}
 	public long getXByTime(long time){
 		return (time-startTime)/zoom;
