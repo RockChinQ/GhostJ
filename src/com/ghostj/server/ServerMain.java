@@ -224,7 +224,7 @@ public class ServerMain {
 		for(HandleConn client:ServerMain.socketArrayList){
 			//写列表到文件以便rescueServer检测未启动客户端的机器
 			if(client.avai) {
-				allOnlineClientList.append("r"+client.hostName+" ");
+				allOnlineClientList.append(client.rescueName+" ");
 			}
 		}
 		FileRW.write("rescue"+ File.separatorChar+"onlineClients.txt",allOnlineClientList.toString());

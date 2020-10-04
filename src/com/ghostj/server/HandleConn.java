@@ -14,6 +14,7 @@ public class HandleConn extends Thread{
     Socket socket=null;
     BufferedWriter bufferedWriter=null;
     public String hostName=new Date().getTime()+"";
+    public String rescueName=hostName;
     boolean avai=false;
     long connTime=0;
     long sysStartTime=0;
@@ -118,6 +119,7 @@ public class HandleConn extends Thread{
                             Out.say("conn"+cmd[1],"name:"+cmd[1]+" version:"+cmd[2]+" sysStartTime:"+cmd[3]);
                             avai=true;
                             this.hostName=cmd[1];
+                            this.rescueName="r"+cmd[1];
                             this.version=cmd[2];
                             this.sysStartTime=Long.parseLong(cmd[3]);
                             ServerMain.sendListToMaster();
