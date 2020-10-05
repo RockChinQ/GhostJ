@@ -1,5 +1,7 @@
 package com.ghostj.server;
 
+import com.ghostj.util.Out;
+
 import java.io.File;
 
 public class FileManager {
@@ -45,11 +47,10 @@ public class FileManager {
 		}else {
 			if (new File(currentPath+oneDir).exists()){
 				currentPath+=oneDir+(oneDir.endsWith("/")?"":"/");
-				return currentPath;
 			}else {
-
-				return currentPath;
+				Out.say("ServerFile","NoSuchDir:"+currentPath+oneDir);
 			}
+			return currentPath;
 		}
 	}
 

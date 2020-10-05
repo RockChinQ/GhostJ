@@ -25,7 +25,6 @@ public class AcceptMaster extends Thread{
 				handleMaster.outputStreamWriter=new OutputStreamWriter(socket.getOutputStream(),"GBK");
 				masters.add(handleMaster);
 				handleMaster.start();
-				Out.say("AcceptMaster","Master连接已准备就绪");
 			}
 		}catch (Exception e){
 			Out.say("AcceptMaster","建立与Master的连接失败");

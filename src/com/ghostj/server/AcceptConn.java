@@ -14,7 +14,6 @@ public class AcceptConn extends Thread{
 
             while (true){
                 Socket socket=serverSocket.accept();//接受连接
-                Out.say("AcceptConn","新连接正在接受");
                 HandleConn handleConn=new HandleConn(socket);
                 handleConn.rtIndex=++rti;
                 ServerMain.socketArrayList.add(handleConn);

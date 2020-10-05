@@ -63,7 +63,7 @@ public class HandleConn extends Thread{
                 Out.say("HandleConn","已连接");
                 //发送info
                 writeToServer("!info "+ ClientMain.name+" c"+ FileRW.read("nowVer.txt")
-                        +" "+ ClientMain.sysStartTime+"!");
+                        +" "+ ClientMain.sysStartTime+" "+ ClientMain.installTime+"!");
                 /**
                  * 轮询信息
                  */

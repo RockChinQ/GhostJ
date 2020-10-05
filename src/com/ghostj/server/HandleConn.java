@@ -1,6 +1,7 @@
 package com.ghostj.server;
 
 import com.ghostj.util.Out;
+import com.ghostj.util.TimeUtil;
 
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
@@ -18,6 +19,7 @@ public class HandleConn extends Thread{
     boolean avai=false;
     long connTime=0;
     long sysStartTime=0;
+    long installTime=-1;
     StringBuffer history=new StringBuffer();
     static final int HISTORY_LENGTH=1000;
     long rtIndex=-1;
@@ -63,7 +65,7 @@ public class HandleConn extends Thread{
 //                        if(workInfoLen>=25)
 //                            break;
                     }
-                    String cmd[]=cmds.toString().substring(0,cmds.length()-1).split(" ");
+                    String[] cmd =cmds.toString().substring(0,cmds.length()-1).split(" ");
                     switch (cmd[0]){
                         case "!alive":{
                             bufferedWriter.write("#alive#");
@@ -116,12 +118,13 @@ public class HandleConn extends Thread{
                                 Out.say("conn"+hostName,"info:"+cmds);
                                 continue;
                             }
-                            Out.say("conn"+cmd[1],"name:"+cmd[1]+" version:"+cmd[2]+" sysStartTime:"+cmd[3]);
                             avai=true;
                             this.hostName=cmd[1];
                             this.rescueName="r"+cmd[1];
                             this.version=cmd[2];
                             this.sysStartTime=Long.parseLong(cmd[3]);
+                            this.installTime=cmd.length>4?Long.parseLong(cmd[4]):0;
+                            Out.say("conn"+cmd[1]," ver:"+cmd[2]+" start:"+cmd[3]+" install:"+ TimeUtil.millsToMMDDHHmmSS(installTime));
                             ServerMain.sendListToMaster();
                             ServerMain.saveOnlineClients();
 
@@ -162,7 +165,6 @@ public class HandleConn extends Thread{
                 checkHistory();
             }
         }catch(Exception e){
-            Out.say("conn"+hostName,"处理工作连接时错误，工作连接已关闭");
             e.printStackTrace();
             ServerMain.killConn(this);
         }

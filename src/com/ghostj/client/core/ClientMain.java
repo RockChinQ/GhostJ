@@ -25,7 +25,7 @@ public class ClientMain {
      */
     public static String name="";
     public static long sysStartTime=-1;
-
+    public static long installTime=0;
     /**
      * 连接处理类
      */
@@ -57,9 +57,6 @@ public class ClientMain {
         HandleConn.socketAddress=new InetSocketAddress(HandleConn.ip,HandleConn.port);
         name=new String(config.getStringValue("name"));
         Out.say("ClientMain","config load done.port:"+HandleConn.port);
-        //启动连接线程
-        handleConn=new HandleConn();
-        handleConn.start();
         /**
          * 心跳数据计时器
          */
@@ -77,6 +74,18 @@ public class ClientMain {
             }
         },new Date(),(int)(1.5*60*1000));
         registerAllFunc();
+
+        //获取或设置安装时间
+        if (config.field.containsKey("installTime")){
+            installTime=Long.parseLong(config.getStringValue("installTime"));
+        }else {
+            config.set("installTime",new Date().getTime());
+            config.write();
+        }
+
+        //启动连接线程
+        handleConn=new HandleConn();
+        handleConn.start();
     }
 
     /**
