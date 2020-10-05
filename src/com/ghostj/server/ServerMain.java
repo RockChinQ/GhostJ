@@ -67,7 +67,7 @@ public class ServerMain {
 
 		//启动检查计时器
 		Timer t=new Timer();
-		t.schedule(new CheckAliveTimer(),1000,30000);
+		t.schedule(new CheckAliveTimer(),1000,240000);
 
 		try{
 			masterPw=new String(config.getStringValue("master.pw"));

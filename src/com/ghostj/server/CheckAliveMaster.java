@@ -20,7 +20,7 @@ public class CheckAliveMaster extends Thread{
 				handleConn.success = false;
 				CheckConnAlive cca = new CheckConnAlive(handleConn.bufferedWriter);
 				cca.start();
-				new Thread().sleep(time);
+				sleep(time);
 				if (!handleConn.success) {
 					Out.sayThisLine("Failed\n");
 					dead.add(handleConn);
