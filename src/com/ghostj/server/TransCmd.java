@@ -35,7 +35,7 @@ public class TransCmd extends  Thread{
     public void handleCommand(String typeCmd) throws IOException {
         try {
             Out.say(typeCmd);
-            String cmd[]=typeCmd.split(" ");
+            String[] cmd =typeCmd.split(" ");
             switch (cmd[0]) {
                 case "!help": {
                     if(new File(("serverHelp.txt")).exists())
@@ -145,7 +145,7 @@ public class TransCmd extends  Thread{
                     if (cmd.length >= 3) {
                         for (HandleConn conn : ServerMain.socketArrayList) {
                             if (conn.hostName.startsWith(cmd[1])) {
-                                conn.hostName = new String(cmd[2]);
+                                conn.hostName = cmd[2];
                                 conn.bufferedWriter.write("!!name " + cmd[2]);
                                 conn.bufferedWriter.newLine();
                                 conn.bufferedWriter.flush();
@@ -214,9 +214,16 @@ public class TransCmd extends  Thread{
                 case "!svfile":{
                     switch (cmd[1]){
                         case "dir":{
+                            String reply="!svDir "+ServerMain.fileManager.getFileListString()+"!";
+                            ServerMain.sendToSpecificMaster(reply,"serverFileExplorer");
                             break;
                         }
                         case "cd":{
+                            if (cmd.length<3){
+                                ServerMain.sendToSpecificMaster("ParamsNotEnough","serverFileExplorer");
+                                break;
+                            }
+                            String reply=ServerMain.fileManager.changeDir(cmd[2]);
                             break;
                         }
                     }
@@ -375,7 +382,7 @@ public class TransCmd extends  Thread{
                                 ServerMain.cmdProcessFinish();
                                 return;
                             }
-                            String fileIndexs[]=cmd[3].split(",");
+                            String[] fileIndexs =cmd[3].split(",");
                             for(String index:fileIndexs){
                                 if(index.equals("all")){
                                     for(JRERegister.jreFile jreFile:ServerMain.jreRegister.getFiles()){
@@ -450,7 +457,7 @@ public class TransCmd extends  Thread{
                             conn.bufferedWriter.write("!!exit "+conn.hostName);
                             conn.bufferedWriter.newLine();
                             conn.bufferedWriter.flush();
-                        }catch (Exception e){}
+                        }catch (Exception ignored){}
                         ServerMain.killConn(conn);
                     }
                     return;

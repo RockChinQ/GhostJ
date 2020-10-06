@@ -5,17 +5,17 @@ import com.ghostj.util.Out;
 import java.io.File;
 
 public class FileManager {
-	public static String currentPath="files/";
+	public static String currentPath="/files/";
 	private static String httpUrlRoot;
 	static {
 		httpUrlRoot=ServerMain.config.getStringValue("rft.httpRoot");
 	}
 	public String getFileListString(){
 		StringBuffer result=new StringBuffer("");
-		File crtFile=new File(currentPath);
+		File crtFile=new File("."+currentPath);
 		if (!crtFile.exists()){
-			currentPath=".";
-			crtFile=new File(currentPath);
+			currentPath="";
+			crtFile=new File("."+currentPath);
 		}
 		result.append(currentPath);
 		File[] fls=crtFile.listFiles();

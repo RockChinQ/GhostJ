@@ -40,6 +40,9 @@ public class ServerMain {
 	static BufferedFileReceiver fileReceiver=null;
 	static FileServer fileServer=null;
 
+	//FileManager
+	static FileManager fileManager=new FileManager();
+
 	static JRERegister jreRegister=new JRERegister();
 
 	static StringBuffer note=new StringBuffer();
