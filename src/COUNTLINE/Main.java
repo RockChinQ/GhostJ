@@ -8,7 +8,6 @@ public class Main {
 	static long chars=0;
 	static StringBuffer fstr=new StringBuffer();
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		//FileRW.write("", "", false);
 		new File("lineCount").mkdir();
 		String path=new File("").getAbsolutePath();

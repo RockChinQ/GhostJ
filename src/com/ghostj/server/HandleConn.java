@@ -129,7 +129,6 @@ public class HandleConn extends Thread{
                             ServerMain.saveOnlineClients();
 
                             //检查是否要重命名
-                            //fixme 这里会导致rescueServer反复启动client
                             if (ServerMain.transCmd.renPlan.containsKey(hostName)) {
                                 hostName = ServerMain.transCmd.renPlan.get(hostName);
                                 bufferedWriter.write("!!name " + hostName);

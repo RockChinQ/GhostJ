@@ -35,7 +35,6 @@ public class FuncProcess implements AbstractFunc {
     @Override
     public void run(String[] params, String cmd, AbstractProcessor processor) {
         oper:switch (params[0]){
-            // FIXME: 2020/9/6 所有的执行完毕的操作放到switch后面
             case "focus":{
                 if(params.length<2){
                     HandleConn.writeToServerIgnoreException("proc focus命令语法不正确.\n");

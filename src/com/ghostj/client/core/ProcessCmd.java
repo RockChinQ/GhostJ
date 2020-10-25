@@ -77,8 +77,6 @@ public class ProcessCmd extends Thread{
             InputStreamReader inputStreamReader=new InputStreamReader(process.getInputStream(),Charset.forName("GBK"));
             int len=0;
             while((len=inputStreamReader.read())!=-1){
-                // FIXME: 2020/9/6 这里最好是加一个非聚焦执行对象暂时将输出信息保存到某处的逻辑
-                // FIXME: 2020/9/6 加个缓存逻辑
                 if (FuncDefault.amIFocused(this))
                     HandleConn.writeToServer(String.valueOf((char) len));
                 else{
