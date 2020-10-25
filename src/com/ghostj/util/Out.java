@@ -36,6 +36,23 @@ public class Out {
             sayThisLine("@server>");
         isPromptEnd=true;
     }
+
+    /**
+     * 用于输出控制消息
+     * 将不会被记入历史记录
+     * @param msg
+     */
+    public static void noRecordSay(String msg){
+        try {
+           /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
+                return;*/
+            for(HandleMaster master: AcceptMaster.masters) {
+                master.sentMsg( msg );
+            }
+        }catch (Exception e){
+            ;
+        }
+    }
     //在此行输出
     public static void sayThisLine(char msg){
 
