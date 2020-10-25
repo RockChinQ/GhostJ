@@ -27,13 +27,15 @@ public class HandleMaster extends Thread{
 	public boolean alive=true;
 	@Override
 	public void run() {
-		//新建master连接，向其发送最近的一些消息
+		//新建master连接
+		/*，向其发送最近的一些消息
 		try{
 			outputStreamWriter.write(Out.history.toString());
 			outputStreamWriter.flush();
 		}catch (Exception e){
 			e.printStackTrace();
 		}
+		*/
 		ServerMain.sendMasterList();
 		try{
 			readMsg:while (true){
@@ -71,7 +73,7 @@ public class HandleMaster extends Thread{
 								Out.say("HandleMaster","密码验证成功");
 								ServerMain.sendListToMaster();
 								ServerMain.tagLog.addTag(".Master","login");
-								new Thread().sleep(20);
+								sleep(20);
 								ServerMain.tagLog.addTag(".Master","alive");
 								Out.say("NOTE",ServerMain.note.toString());
 							}else {

@@ -462,6 +462,14 @@ public class TransCmd extends  Thread{
                     }
                     return;
                 }
+                case "!hst":{
+                    try{
+                        Out.sayThisLine(Out.history.toString());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    return;
+                }
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");

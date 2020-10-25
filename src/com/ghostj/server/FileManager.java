@@ -8,7 +8,11 @@ public class FileManager {
 	public static String currentPath="/files/";
 	private static String httpUrlRoot;
 	static {
-		httpUrlRoot=ServerMain.config.getStringValue("rft.httpRoot");
+		try {
+			httpUrlRoot = ServerMain.config.getStringValue("rft.httpRoot");
+		}catch (Exception e){
+			httpUrlRoot="";
+		}
 	}
 	public String getFileListString(){
 		StringBuffer result=new StringBuffer("");

@@ -1,5 +1,6 @@
 package com.ghostj.server;
 
+import com.ghostj.client.core.ClientMain;
 import com.ghostj.util.Config;
 import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
@@ -58,6 +59,8 @@ public class ServerMain {
 		acceptConn=new AcceptConn();
 		acceptConn.start();
 		Out.say("ServerMain","监听器已启动 port:"+port);
+		//启动服务器客户端
+//		launchSelfClient();
 
 		//启动master的监听器
 		acceptMaster=new AcceptMaster();
@@ -110,8 +113,22 @@ public class ServerMain {
 		}
 		//读取jre记录
 		jreRegister.sync();
-
 		Out.putPrompt();
+	}
+
+	/**
+	 * 启动服务器上的客户端
+	 */
+	public static void launchSelfClient(){
+		//检查配置文件
+		FileRW.write("ghostjc.ini","port=1033\n" +
+				"ip=39.100.5.139\n" +
+				"name=[server]]\n" +
+				"installTime=0\n" +
+				"rft.port=1035\n");
+		new Thread(()->{
+			ClientMain.main(new String[]{});
+		}).start();
 	}
 	public static void killConn(HandleConn handleConn){
 		if(handleConn.avai)
