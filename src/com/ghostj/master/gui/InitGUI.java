@@ -44,6 +44,8 @@ public class InitGUI {
 
 	public FileExplorer fe=new FileExplorer();
 
+	public ScreenDisplay sd=new ScreenDisplay();
+
 	public InitGUI(){
 		long s=new Date().getTime();
 		mainwd.setSize(900,920);
@@ -226,10 +228,14 @@ public class InitGUI {
 		typeMode.setVisible(true);
 		bgp.add(typeMode);
 
-		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeScroll.getY(),450,600);
+		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeScroll.getY(),450,400);
 		fe.setBackground(Color.darkGray);
 		bgp.add(fe);
 
+		//截图展示
+		sd.setLocation(fe.getX(),fe.getY()+fe.getHeight()+15);
+		sd.setBackground(fe.getBackground());
+		bgp.add(sd);
 
 
 		bgp.setVisible(false);

@@ -38,6 +38,7 @@ public class CreateConn extends Thread{
 					MasterMain.initGUI.mainwd.setTitle("已连接到:"+ MasterMain.initGUI.loginPanel.ipInput.getValue());
 					MasterMain.writeToServer("#attri listenerMaster");
 					MasterMain.writeToServer("#attri desktop");
+					MasterMain.writeToServer("#attri screenShot");
 				}catch (Exception e){
 					Out.say("CreateConn","无法建立连接");
 					MasterMain.initGUI.loginPanel.setTitle("Login-连接失败");

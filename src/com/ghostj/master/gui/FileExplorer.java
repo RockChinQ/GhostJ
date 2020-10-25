@@ -227,7 +227,7 @@ public class FileExplorer extends JPanel {
 
 		entryPanel.setLayout(null);
 		entryPanel.setLocation(0,diskPanel.getY()+diskPanel.getHeight()+5);
-		entryPanel.setSize(450,500);
+		entryPanel.setSize(450,300);
 		entryPanel.setPreferredSize(new Dimension(450,500));
 		entryPanel.setBackground(Color.darkGray);
 		scrollPane.setBounds(entryPanel.getX(),entryPanel.getY(),entryPanel.getWidth(),entryPanel.getHeight());
@@ -274,7 +274,7 @@ public class FileExplorer extends JPanel {
 		entryPanel.removeAll();
 		entryPanel.setBackground(getBackground());
 		crtLb.setText(crtPath);
-		entryPanel.setSize(this.getWidth(),550);
+//		entryPanel.setSize(this.getWidth(),400);
 		if (mode==ENTRY_MODE) {
 			int y=0;
 			for (FileInfo info : flLs) {

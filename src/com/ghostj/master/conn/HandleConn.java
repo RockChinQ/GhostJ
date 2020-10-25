@@ -125,6 +125,10 @@ public class HandleConn extends Thread{
 								MasterMain.initGUI.fe.updateEntries();
 								continue;
 							}
+							case "!scrd":{
+								MasterMain.initGUI.sd.dlPic(cmd[1]);
+								continue;
+							}
 							case "!cd":{
 								MasterMain.writeToServer("!!rfe dir");
 								continue;

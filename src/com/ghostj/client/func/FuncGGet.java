@@ -92,35 +92,5 @@ public class FuncGGet implements AbstractFunc {
         if(dataInputStream!=null){
             dataInputStream.close();
         }
-        /*//得到输入流
-        InputStream inputStream = conn.getInputStream();
-        //获取自己数组
-        byte[] getData = readInputStream(inputStream);
-
-        //文件保存位置
-        File saveDir = new File(savePath);
-        if(!saveDir.exists()){
-            saveDir.mkdir();
-        }
-        File file = new File(saveDir+File.separator+fileName);
-        FileOutputStream fos = new FileOutputStream(file);
-        fos.write(getData);
-        */
-    }
-    /**
-     * 从输入流中获取字节数组
-     * @param inputStream
-     * @return
-     * @throws IOException
-     */
-    public static  byte[] readInputStream(InputStream inputStream) throws IOException {
-        byte[] buffer = new byte[1024];
-        int len = 0;
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        while((len = inputStream.read(buffer)) != -1) {
-            bos.write(buffer, 0, len);
-        }
-        bos.close();
-        return bos.toByteArray();
     }
 }
