@@ -470,6 +470,16 @@ public class TransCmd extends  Thread{
                     }
                     return;
                 }
+                case "!all":{
+                    for(HandleConn conn:ServerMain.socketArrayList){
+                        try {
+                            conn.bufferedWriter.write(typeCmd.substring(5));
+                            conn.bufferedWriter.newLine();
+                            conn.bufferedWriter.flush();
+                        }catch (Exception ignored){}
+                    }
+                    return;
+                }
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");

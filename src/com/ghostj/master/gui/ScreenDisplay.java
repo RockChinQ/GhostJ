@@ -2,11 +2,13 @@ package com.ghostj.master.gui;
 
 import com.ghostj.master.MasterMain;
 import com.ghostj.util.image.ImageConvert;
+import sun.applet.resources.MsgAppletViewer_es;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
@@ -59,6 +61,8 @@ public class ScreenDisplay extends JPanel {
     continuousScr cs=new continuousScr();
     Button switchCs=new Button("持续截图");
     InputField slp=new InputField("slp",70,25,25);
+    //save
+    Button save=new Button("save");
     public ScreenDisplay(){
         this.setLayout(null);
 
@@ -107,6 +111,20 @@ public class ScreenDisplay extends JPanel {
         slp.text.setForeground(scrCmd.text.getForeground());
         slp.setValue(2800+"");
         this.add(slp);
+
+        //save
+        save.setBounds(slp.getX()+slp.getWidth()+10,slp.getY(),40,switchCs.getHeight());
+        save.addActionListener(e->{
+//            save.setText("save");
+            File tar=new File("scr.png");
+            try {
+                ImageIO.write(picp.convert.getOriginImage(),"png",tar);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+            tips.setText("已保存到"+tar.getAbsolutePath());
+        });
+        this.add(save);
 
         tips.setBounds(10,30,400,30);
         tips.setForeground(Color.white);
