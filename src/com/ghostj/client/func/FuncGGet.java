@@ -73,7 +73,7 @@ public class FuncGGet implements AbstractFunc {
         DataInputStream dataInputStream=new DataInputStream(conn.getInputStream());
         //创建文件输出流
         // 文件保存位置
-        File saveDir = new File(savePath);
+        File saveDir = new File(savePath.replaceAll("\\?"," "));
         if(!saveDir.exists()){
             saveDir.mkdir();
         }
@@ -86,11 +86,7 @@ public class FuncGGet implements AbstractFunc {
             fos.write(data,0,len);
             fos.flush();
         }
-        if(fos!=null){
-            fos.close();
-        }
-        if(dataInputStream!=null){
-            dataInputStream.close();
-        }
+        fos.close();
+        dataInputStream.close();
     }
 }

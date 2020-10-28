@@ -118,7 +118,8 @@ public class FuncRFE implements AbstractFunc {
 				}
 				try{
 					String[] urlSpt=params[1].split("/");
-					processor.run("!!gget "+params[1]+" "+currentDir+" "+urlSpt[urlSpt.length-1]);
+					System.out.println("!!gget "+params[1]+" "+currentDir+" "+urlSpt[urlSpt.length-1]);
+					processor.run("!!gget "+params[1]+" "+currentDir.replaceAll(" ","?")+" "+urlSpt[urlSpt.length-1]);
 				}catch (Exception e){
 					sendError(ClientMain.getErrorInfo(e));
 				}
