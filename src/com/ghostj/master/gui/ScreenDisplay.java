@@ -2,7 +2,6 @@ package com.ghostj.master.gui;
 
 import com.ghostj.master.MasterMain;
 import com.ghostj.util.image.ImageConvert;
-import sun.applet.resources.MsgAppletViewer_es;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

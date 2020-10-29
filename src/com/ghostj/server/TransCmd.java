@@ -4,7 +4,6 @@ import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 import com.ghostj.util.TimeUtil;
 import com.rft.core.server.BufferedFileReceiver;
-import com.sun.security.ntlm.Server;
 
 import java.io.BufferedReader;
 import java.io.File;

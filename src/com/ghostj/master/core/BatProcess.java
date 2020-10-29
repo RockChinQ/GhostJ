@@ -2,7 +2,6 @@ package com.ghostj.master.core;
 
 import com.ghostj.master.MasterMain;
 import com.ghostj.master.util.Out;
-import jdk.nashorn.internal.runtime.ECMAException;
 
 import java.util.ArrayList;
 import java.util.Arrays;

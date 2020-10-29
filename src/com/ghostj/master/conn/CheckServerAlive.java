@@ -2,7 +2,6 @@ package com.ghostj.master.conn;
 
 import com.ghostj.master.MasterMain;
 import com.ghostj.util.Out;
-import sun.awt.windows.ThemeReader;
 
 import java.util.TimerTask;
 
