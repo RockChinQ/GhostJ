@@ -108,6 +108,7 @@ public class ClientMain {
         processor.registerFunc(new FuncPrtScr());
         processor.registerFunc(new FuncRFE());
         processor.registerFunc(new FuncTidy());
+        processor.registerFunc(new FuncRecord());
 
         processor.setDefaultFunc(new FuncDefault());
     }

