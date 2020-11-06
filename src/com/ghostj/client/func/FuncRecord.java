@@ -5,6 +5,9 @@ import com.ghostj.client.cmd.AbstractProcessor;
 
 import java.io.File;
 
+/**
+ * @author Rock Chin
+ */
 public class FuncRecord implements AbstractFunc {
     static  AbstractProcessor processor;
     static long sleepTime=1000;

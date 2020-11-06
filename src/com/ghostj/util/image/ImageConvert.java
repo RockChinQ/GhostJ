@@ -90,10 +90,13 @@ public class ImageConvert {
 		}
 		return this;
 	}
-	public int limitColor(int rgb,int step){
+	private int limitColor(int rgb,int step){
 		Color before=new Color(rgb);
 		Color result=new Color(before.getRed()-before.getRed()%step,before.getGreen()-before.getGreen()%step,before.getBlue()-before.getBlue()%step);
 		return result.getRGB();
+	}
+	public void cutImage(int x0,int y0,int x1,int y1){
+
 	}
 
 }

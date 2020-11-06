@@ -14,7 +14,7 @@ public class Main {
 		System.out.println(path);
 		fstr.append(path+"\n");
 		long st=new Date().getTime();
-		int count=(count(new File(path+"\\src"))-67);
+		int count=(count(new File(path+"."))-67);
 		System.out.println("----------Summary "+(new Date().getTime()-st)+"ms-----------\nLine Count:"+count);
 		fstr.append("----------Summary "+(new Date().getTime()-st)+"ms-----------\nLine Count:"+count+"\n");
 		System.out.println("Symbol Count:"+(chars-2305));
