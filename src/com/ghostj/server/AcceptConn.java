@@ -1,18 +1,25 @@
 package com.ghostj.server;
 
+import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 
+import java.io.File;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class AcceptConn extends Thread{
     static long rti=0;
+    //banned ip addresses
+    static ArrayList<String> banList=new ArrayList<>();
     public void run(){
         try{
             ServerSocket serverSocket=new ServerSocket(ServerMain.port);
-
             while (true){
                 Socket socket=serverSocket.accept();//接受连接
+                if(isBanned(String.valueOf(socket.getInetAddress()))){
+                    continue;
+                }
                 HandleConn handleConn=new HandleConn(socket);
                 handleConn.rtIndex=++rti;
                 ServerMain.socketArrayList.add(handleConn);
@@ -26,5 +33,29 @@ public class AcceptConn extends Thread{
             Out.say("AcceptConn","接受连接出错");
             e.printStackTrace();
         }
+    }
+    public static void loadBanList(){
+        banList.clear();
+        if(new File("banIps.txt").exists()){
+            String listStr[]= FileRW.read("banIps.txt").split(";");
+            for(String ip:listStr){
+                banList.add(ip);
+            }
+        }
+    }
+    public static String getBannedIpsStr(){
+        StringBuffer str=new StringBuffer();
+        for(String ip:banList){
+            str.append(ip+";");
+        }
+        return str.toString();
+    }
+    public static boolean isBanned(String ip){
+        for(String ips:banList){
+            if(ips.equalsIgnoreCase(ip)){
+                return true;
+            }
+        }
+        return false;
     }
 }

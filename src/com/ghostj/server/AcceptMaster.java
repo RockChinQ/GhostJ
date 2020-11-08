@@ -19,6 +19,9 @@ public class AcceptMaster extends Thread{
 			ServerSocket serverSocket=new ServerSocket(ServerMain.masterPort);
 			while (true) {
 				Socket socket=serverSocket.accept();
+				if(AcceptConn.isBanned(String.valueOf(socket.getInetAddress()))){
+					continue;
+				}
 				Out.say("AcceptMaster","正在接受Master的连接");
 				HandleMaster handleMaster=new HandleMaster(socket);
 				handleMaster.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream(),"GBK"));

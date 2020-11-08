@@ -479,6 +479,39 @@ public class TransCmd extends  Thread{
                     }
                     return;
                 }
+                case "!ban":{
+                    if(cmd.length<2){
+                        Out.say("TransCmd-ban","命令语法不正确");
+                        ServerMain.cmdProcessFinish();
+                        return;
+                    }
+                    switch (cmd[1]){
+                        case "add":{
+                            if (cmd.length<3){
+                                Out.say("TransCmd-banAdd","命令语法不正确");
+                                ServerMain.cmdProcessFinish();
+                                return;
+                            }
+                            FileRW.write("banIps.txt",AcceptConn.getBannedIpsStr()+cmd[2]+";");
+                            AcceptConn.loadBanList();
+                            Out.say("TransCmd-ban-add","已添加新的banIp:"+cmd[2]);
+                            return;
+                        }
+                        case "ls": {
+                            Out.say("TranCmd-ban-ls", "总共bannedIP:" + AcceptConn.banList.size());
+                            for (String ip : AcceptConn.banList) {
+                                Out.say(ip);
+                            }
+                            Out.say("TransCmd-ban-ls", "列表完成");
+                            return;
+                        }
+                        default:{
+                            Out.say("TransCmd-banAdd","命令语法不正确");
+                            ServerMain.cmdProcessFinish();
+                            return;
+                        }
+                    }
+                }
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");

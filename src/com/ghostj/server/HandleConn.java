@@ -14,8 +14,8 @@ import java.util.Date;
 public class HandleConn extends Thread{
     Socket socket=null;
     BufferedWriter bufferedWriter=null;
-    public String hostName=new Date().getTime()+"";
-    public String rescueName=hostName;
+    public String hostName;
+    public String rescueName;
     boolean avai=false;
     long connTime=0;
     long sysStartTime=0;
@@ -31,6 +31,8 @@ public class HandleConn extends Thread{
             this.socket = socket;
             this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),"GBK"));
             connTime=new Date().getTime();
+            hostName=socket.getInetAddress()+":"+socket.getPort();
+            rescueName=hostName;
             Out.say("conn"+hostName,"连接已建立");
         }catch(Exception e){
             Out.say("conn"+hostName,"新连接建立时出现错误，已拒绝连接");
@@ -50,7 +52,6 @@ public class HandleConn extends Thread{
                 //检查是否是工作信息
                 if((char)c=='!'){
                     StringBuffer cmds=new StringBuffer("!");
-                    int workInfoLen=0;
                     while((c=inputStreamReader.read())!=-1){
                         if((char)c=='!') {
                             cmds.append("!");
@@ -61,9 +62,6 @@ public class HandleConn extends Thread{
                             break;
                         }
                         cmds.append((char)c);
-                        workInfoLen++;
-//                        if(workInfoLen>=25)
-//                            break;
                     }
                     String[] cmd =cmds.toString().substring(0,cmds.length()-1).split(" ");
                     switch (cmd[0]){
