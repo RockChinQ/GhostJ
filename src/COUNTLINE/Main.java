@@ -10,7 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 		//FileRW.write("", "", false);
 		new File("lineCount").mkdir();
-		String path=new File("").getAbsolutePath();
+		String path=new File("src").getAbsolutePath();
 		System.out.println(path);
 		fstr.append(path+"\n");
 		long st=new Date().getTime();

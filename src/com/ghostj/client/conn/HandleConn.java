@@ -41,6 +41,7 @@ public class HandleConn extends Thread{
     }
     @Override
     public void run(){
+        String verOfThisClient=FileRW.read("nowVer.txt");
         //反复尝试连接
         while (true){
             try {
@@ -62,7 +63,7 @@ public class HandleConn extends Thread{
                 //连接正常
                 Out.say("HandleConn","已连接");
                 //发送info
-                writeToServer("!info "+ ClientMain.name+" c"+ FileRW.read("nowVer.txt")
+                writeToServer("!info "+ ClientMain.name+" c"+ verOfThisClient
                         +" "+ ClientMain.sysStartTime+" "+ ClientMain.installTime+"!");
                 /**
                  * 轮询信息

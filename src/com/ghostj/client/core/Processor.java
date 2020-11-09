@@ -14,12 +14,12 @@ public class Processor extends AbstractProcessor {
         if(cmdStr.endsWith("!")&&cmdStr.startsWith("!")){
             cmdStr=cmdStr.substring(0,cmdStr.length()-1);
         }
-        String spt[]=cmdStr.split(" ");
+        String spt[]=cmdStr.replaceAll("%HOST_NAME%",ClientMain.name).split(" ");
         //如果是空字符则返回null，这将被发送到default func
         if(spt.length<1){
             return null;
         }
-        return new Command(spt[0],subArray(spt,1,spt.length),cmdStr);
+        return new Command(spt[0],subArray(spt,1,spt.length),cmdStr.replaceAll("%HOST_NAME%",ClientMain.name));
     }
 
     /**
