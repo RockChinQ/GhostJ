@@ -3,6 +3,7 @@ package com.ghostj.server;
 import com.ghostj.util.Out;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CheckAliveMaster extends Thread{
 	int time;
@@ -18,6 +19,7 @@ public class CheckAliveMaster extends Thread{
 			Out.sayThisLine(handleConn.hostName+":");
 			try {
 				handleConn.success = false;
+				long stTime=new Date().getTime();
 				CheckConnAlive cca = new CheckConnAlive(handleConn.bufferedWriter);
 				cca.start();
 				sleep(time);
@@ -25,7 +27,7 @@ public class CheckAliveMaster extends Thread{
 					Out.sayThisLine("Failed\n");
 					dead.add(handleConn);
 				}else{
-					Out.sayThisLine("Succeeded\n");
+					Out.sayThisLine("Succeeded "+(handleConn.reveiveAliveMsgTime-stTime)+"ms\n");
 				}
 			} catch (Exception e) {
 				Out.sayThisLine("Failed\n");
