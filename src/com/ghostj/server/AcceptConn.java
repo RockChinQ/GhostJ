@@ -1,5 +1,6 @@
 package com.ghostj.server;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 
@@ -7,12 +8,16 @@ import java.io.File;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class AcceptConn extends Thread{
     static long rti=0;
     //banned ip addresses
     static ArrayList<String> banList=new ArrayList<>();
+    static HashMap<String,String> description=new HashMap<>();
     public void run(){
+        loadBanList();
+        loadDescription();
         try{
             ServerSocket serverSocket=new ServerSocket(ServerMain.port);
             while (true){
@@ -57,5 +62,21 @@ public class AcceptConn extends Thread{
             }
         }
         return false;
+    }
+    public static void loadDescription(){
+        description.clear();
+        if(new File("description.json").exists()){
+            JSONObject descri=JSONObject.parseObject(FileRW.read("description.json"));
+            for(String key: descri.keySet()){
+                description.put(key,descri.getString(key));
+            }
+        }
+    }
+    public static void saveDescription(){
+        JSONObject fileJson=new JSONObject();
+        for(String key:description.keySet()){
+            fileJson.put(key,description.get(key));
+        }
+        FileRW.write("description.json",fileJson.toString());
     }
 }

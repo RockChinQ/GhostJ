@@ -512,6 +512,66 @@ public class TransCmd extends  Thread{
                         }
                     }
                 }
+	            case "!desc":{
+					if(cmd.length<2){
+						Out.say("TransCmd-desc","命令语法不正确");
+						ServerMain.cmdProcessFinish();
+						return;
+					}
+					switch (cmd[1]){
+						case "add":{
+							if(cmd.length<4){
+								Out.say("TransCmd-desc","命令语法不正确");
+								ServerMain.cmdProcessFinish();
+								return;
+							}
+							//遍历查找完整主机名
+							for(HandleConn conn:ServerMain.socketArrayList){
+								if(conn.hostName.startsWith(cmd[2])){
+									AcceptConn.description.put(conn.hostName,cmd[3]);
+									AcceptConn.saveDescription();
+									Out.say("TransCmd-desc","设置在线"+conn.hostName+"的描述为"+cmd[3]);
+									return;
+								}
+							}
+							if(cmd.length>=5&&cmd[4].equalsIgnoreCase("-offline")){
+								AcceptConn.description.put(cmd[2],cmd[3]);
+								AcceptConn.saveDescription();
+								Out.say("TransCmd-desc-offline","设置离线主机"+cmd[2]+"的描述为"+cmd[3]);
+							}else {
+								Out.say("TransCmd-desc","无此在线主机且未指定-offline选项");
+							}
+							return;
+						}
+						case "ls":{
+							Out.say("TransCmd-desc-ls","列出所有已设置的描述("+AcceptConn.description.size()+")\nname\tdescription");
+							int index=0;
+							for(String key:AcceptConn.description.keySet()){
+								Out.say(++index+" "+key+"\t"+AcceptConn.description.get(key));
+							}
+							Out.say("TransCmd-desc-ls","列表完成");
+							return;
+						}
+						case "rm":{
+							if(cmd.length<3){
+								Out.say("TransCmd-desc","命令语法不正确");
+								ServerMain.cmdProcessFinish();
+								return;
+							}
+							for(String key:AcceptConn.description.keySet()){
+								if(key.startsWith(cmd[2])){
+									AcceptConn.description.remove(key);
+									AcceptConn.saveDescription();
+									Out.say("TransCmd-desc-rm","删除描述"+key);
+									return;
+								}
+							}
+							Out.say("TransCmd-desc-rm","没有符合条件的描述键");
+							return;
+						}
+					}
+	            	return;
+	            }
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");
