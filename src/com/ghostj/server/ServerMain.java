@@ -19,6 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ServerMain {
+	//test double remote repo
 	public static ArrayList<HandleConn> socketArrayList=new ArrayList<>();
 	public static Config config=new Config("ghostjs.ini");
 	public static int port=1033,masterPort=1034;
@@ -28,7 +29,6 @@ public class ServerMain {
 	public static AcceptMaster acceptMaster=null;
 
 	public static boolean manuallyTestConn=false;
-
 //	public static HandleMaster handleMaster=null;
 
 	public static String masterPw="master123456";
