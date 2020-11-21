@@ -19,7 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ServerMain {
-	//test double remote repo
+	//test double remote repo 2
 	public static ArrayList<HandleConn> socketArrayList=new ArrayList<>();
 	public static Config config=new Config("ghostjs.ini");
 	public static int port=1033,masterPort=1034;
