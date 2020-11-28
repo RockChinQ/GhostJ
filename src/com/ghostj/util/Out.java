@@ -1,9 +1,8 @@
 package com.ghostj.util;
 
-import com.ghostj.master.MasterMain;
-import com.ghostj.server.AcceptMaster;
-import com.ghostj.server.HandleMaster;
-import com.ghostj.server.ServerMain;
+import com.ghostj.server_old.AcceptMaster;
+import com.ghostj.server_old.HandleMaster;
+import com.ghostj.server_old.ServerMain;
 
 import java.util.Date;
 
@@ -38,8 +37,8 @@ public class Out {
     }
 
     /**
-     * ÓÃÓÚÊä³ö¿ØÖÆÏûÏ¢
-     * ½«²»»á±»¼ÇÈëÀúÊ·¼ÇÂ¼
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
+     * ï¿½ï¿½ï¿½ï¿½ï¿½á±»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê·ï¿½ï¿½Â¼
      * @param msg
      */
     public static void noRecordSay(String msg){
@@ -53,7 +52,7 @@ public class Out {
             ;
         }
     }
-    //ÔÚ´ËÐÐÊä³ö
+    //ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public static void sayThisLine(char msg){
 
         System.out.print((isPromptEnd?"\n":"")+msg);

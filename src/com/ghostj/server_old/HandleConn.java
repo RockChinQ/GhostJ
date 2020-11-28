@@ -1,4 +1,4 @@
-package com.ghostj.server;
+package com.ghostj.server_old;
 
 import com.ghostj.util.Out;
 import com.ghostj.util.TimeUtil;
@@ -6,9 +6,7 @@ import com.ghostj.util.TimeUtil;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class HandleConn extends Thread{

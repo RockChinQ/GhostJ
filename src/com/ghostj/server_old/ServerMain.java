@@ -1,22 +1,18 @@
-package com.ghostj.server;
+package com.ghostj.server_old;
 
 import com.ghostj.client.core.ClientMain;
 import com.ghostj.util.Config;
 import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 import com.ghostj.util.TimeUtil;
-import com.rft.core.client.FileSender;
 import com.rft.core.server.BufferedFileReceiver;
-import com.rft.core.server.FileReceiver;
 import com.rft.core.server.FileServer;
 import com.rft.core.server.ParallelFileServer;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class ServerMain {
 	//test double remote repo 2

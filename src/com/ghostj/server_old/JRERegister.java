@@ -1,11 +1,9 @@
-package com.ghostj.server;
+package com.ghostj.server_old;
 
 import com.ghostj.util.FileRW;
-import com.ghostj.util.Out;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 
 public class JRERegister {
 	/**

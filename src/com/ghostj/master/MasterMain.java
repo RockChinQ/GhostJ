@@ -6,7 +6,7 @@ import com.ghostj.master.gui.InitGUI;
 import com.ghostj.master.util.Config;
 import com.ghostj.master.util.FileRW;
 import com.ghostj.master.util.TagLog;
-import com.ghostj.server.ServerMain;
+import com.ghostj.server_old.ServerMain;
 
 import java.io.BufferedWriter;
 import java.io.File;

@@ -1,6 +1,5 @@
-package com.ghostj.server;
+package com.ghostj.server_old;
 
-import com.ghostj.master.MasterMain;
 import com.ghostj.util.FileRW;
 import com.ghostj.util.Out;
 import com.ghostj.util.TimeUtil;
