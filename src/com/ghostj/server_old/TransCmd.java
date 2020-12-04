@@ -18,15 +18,15 @@ public class TransCmd extends  Thread{
     Map<String,String> renPlan=new HashMap<>();
     public void run(){
         BufferedReader typeReader = new BufferedReader(new InputStreamReader(System.in));//键盘的reader
-        readMsg:while (true) {
+        while (true) {
             try {
                 String typeCmd = typeReader.readLine();
                 //检查是否是工作信息
-                String cmd[]=typeCmd.split(" ");
+                String cmd[] = typeCmd.split(" ");
                 handleCommand(typeCmd);
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
-                Out.say("TansCmd","处理指令失败");
+                Out.say("TansCmd", "处理指令失败");
                 ServerMain.cmdProcessFinish();
             }
         }
@@ -130,12 +130,11 @@ public class TransCmd extends  Thread{
                     return;
                 }
                 case "!test": {
-                    int time = 1500;
+                    int time = 500;
                     try {
                         time = Integer.parseInt(cmd[1]);
                     } catch (Exception e) {
                         Out.say("可设置间隔时间");
-                        time = 1500;
                     }
                     new CheckAliveMaster(time).start();
                     return;
