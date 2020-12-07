@@ -1,18 +1,35 @@
 package com.ghostj.server.core;
 
-/*重构笔记
-*主函数
-*   加载所有配置，统一储存，之后统一格式读取
-*   启动监听类
-*   启动计时任务
-*
-* */
-/**
- * Server的主函数
- * 重构开始于2020.11.28
- */
-public class ServerMain {
-    public static void main(String[] args) {
+import com.ghostj.server.conn.HandlerStorage;
+import com.ghostj.server.conn.client.controlMsg.ControlMsgManager;
+import com.ghostj.server.log.Log;
 
-    }
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+public class ServerMain {
+	public static Log log=new Log();
+	public static HandlerStorage handlerStorage=new HandlerStorage();
+	public static ControlMsgManager controlMsgManager=new ControlMsgManager();
+	public static void main(String[] args) {
+		//注册接收client控制消息的处理方法
+
+		try{
+			log.puts(Log.INFORMATION|Log.NOTIFICATION,"%CLASS%","正在启动服务端.");
+		}catch (Exception launching){
+			log.puts(Log.ERROR,"%CLASS%","启动服务端失败.");
+		}
+	}
+	/**
+	 * 从一个exception对象获取完整的报错信息
+	 * @param e exception
+	 * @return 完整异常信息
+	 */
+	public static String getErrorInfo(Exception e){
+		StringWriter sw=new StringWriter();
+		PrintWriter pw=new PrintWriter(sw);
+		e.printStackTrace(pw);
+		return sw.toString().replaceAll("\t","    ");
+	}
+
 }
