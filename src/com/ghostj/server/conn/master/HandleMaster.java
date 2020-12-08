@@ -5,12 +5,33 @@ import com.ghostj.server.core.ServerMain;
 import com.ghostj.server.log.Log;
 
 import java.net.Socket;
+import java.util.HashMap;
 
 /**
  * 处理Master的连接
  * @author Rock Chin
  */
 public class HandleMaster extends AbstractConnHandler {
+	//标签集
+	private HashMap<String,String> tagMap=new HashMap<>();
+	public String putTag(String key,String value){
+		return tagMap.put(key,value);
+	}
+	public String getTagValue(String key){
+		return tagMap.get(key);
+	}
+	public String removeTag(String key){
+		return tagMap.remove(key);
+	}
+	public boolean equals(String key,String v1){
+		if(tagMap.containsKey(key)){
+			if(tagMap.get(key).equals(v1)){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public boolean authed=false;
 	public HandleMaster(Socket socket){
 		try {

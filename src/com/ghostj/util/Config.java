@@ -64,8 +64,24 @@ public class Config {
     public String getStringValue(String key){
         return field.get(key).toString();
     }
+    public String getStringAnyhow(String key,String def){
+        if (field.containsKey(key)){
+            return getStringValue(key);
+        }else {
+            field.put(key,def);
+            return def;
+        }
+    }
     public int getIntValue(String key){
         return Integer.parseInt(field.get(key).toString());
+    }
+    public int getIntAnyhow(String key,int def){
+        if(field.containsKey(key)){
+            return getIntValue(key);
+        }else {
+            field.put(key,def);
+            return def;
+        }
     }
     public double getDoubleValue(String key){
         return Double.parseDouble(field.get(key).toString());
