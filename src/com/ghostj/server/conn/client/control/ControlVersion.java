@@ -11,7 +11,7 @@ import com.ghostj.server.log.Log;
 public class ControlVersion implements IControlMsg{
 	@Override
 	public String getName() {
-		return null;
+		return "!version";
 	}
 
 	@Override

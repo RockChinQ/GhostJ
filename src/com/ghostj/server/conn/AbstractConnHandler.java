@@ -1,8 +1,12 @@
 package com.ghostj.server.conn;
 
+import sun.security.action.GetPropertyAction;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
+import java.security.AccessController;
 
 /**
  * 描述了一个conn处理对象的基本信息
@@ -32,6 +36,7 @@ public abstract class AbstractConnHandler implements Runnable{
 	}
 	public void writeUTF(String str)throws Exception{
 		getOutputStream().writeUTF(str);
+		getOutputStream().flush();
 	}
 	public void writeUTFIgnoreException(String str){
 		try{
@@ -58,11 +63,14 @@ public abstract class AbstractConnHandler implements Runnable{
 	 * @throws Exception
 	 */
 	protected void dispose()throws Exception{
-		this.socket.close();
+		disposeMethod();
 	}
 	protected void disposeIgnoreException(){
 		try {
-			dispose();
+			disposeMethod();
 		}catch (Exception ignored){}
+	}
+	private void disposeMethod()throws Exception{
+		this.socket.close();
 	}
 }

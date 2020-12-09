@@ -119,7 +119,7 @@ public class ServerMain {
 		//检查配置文件
 		FileRW.write("ghostjc.ini","port=1033\n" +
 				"ip=39.100.5.139\n" +
-				"name=[server]]\n" +
+				"name=[server]\n" +
 				"installTime=0\n" +
 				"rft.port=1035\n");
 		new Thread(()->{

@@ -6,6 +6,9 @@ import com.ghostj.server.conn.master.HandleMaster;
 import com.ghostj.server.core.ServerMain;
 import com.ghostj.server.log.Log;
 
+import java.io.BufferedWriter;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
@@ -22,6 +25,14 @@ public class HandleClient extends AbstractConnHandler {
 	public long receiveAliveMsgTime=0;
 	//映射给此client的master
 	public ArrayList<HandleMaster> mappedMaster=new ArrayList<>();
+
+	//bufferedWriter用于与客户端对称通信
+	BufferedWriter bufferedWriter;
+	@Override
+	public void initIOStream(Socket socket)throws Exception{
+		super.initIOStream(socket);
+		this.bufferedWriter=new BufferedWriter(new OutputStreamWriter(this.getOutputStream()));
+	}
 	@Override
 	public void run() {
 		try{
@@ -32,6 +43,10 @@ public class HandleClient extends AbstractConnHandler {
 				//检查是否是控制消息
 				String strmsg=new String(msgByte, StandardCharsets.UTF_8)
 						.replaceAll(String.valueOf('\u0000'),"");
+				//删除结尾的!
+				if(strmsg.endsWith("!")){
+					strmsg=strmsg.substring(0,strmsg.length()-1);
+				}
 				String[] cmd=strmsg.split(" ");
 				IControlMsg controlMsg;
 				if(strmsg.startsWith("!")
@@ -39,7 +54,9 @@ public class HandleClient extends AbstractConnHandler {
 					controlMsg.call(cmd,strmsg,this);
 				}else {
 					//TODO 输出消息
+					ServerMain.log.puts(Log.INFORMATION,"%CLASS%-"+hostName,strmsg,this);
 				}
+				msgByte=new byte[8192];
 			}
 		}catch (Exception readingMsg){
 			ServerMain.log.puts(Log.ERROR,"%CLASS%","接收来自Client的信息时出现异常:"+ServerMain.getErrorInfo(readingMsg),this);
@@ -55,8 +72,15 @@ public class HandleClient extends AbstractConnHandler {
 	public void dispose(){
 		try {
 			super.disposeIgnoreException();
+			ServerMain.log.puts(Log.NOTIFICATION,"%CLASS%-"+hostName,"连接已断开.",this);
 			ServerMain.handlerStorage.clients.remove(this);
 			this.stop();
 		}catch (Exception ignored){}
+	}
+	@Override
+	public void writeUTF(String str)throws Exception{
+		this.bufferedWriter.write(str);
+		this.bufferedWriter.newLine();
+		this.bufferedWriter.flush();
 	}
 }
