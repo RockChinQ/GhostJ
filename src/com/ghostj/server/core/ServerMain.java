@@ -5,6 +5,9 @@ import com.ghostj.server.conn.client.AcceptClient;
 import com.ghostj.server.conn.client.control.ControlMsgManager;
 import com.ghostj.server.log.Log;
 import com.ghostj.util.Config;
+import com.rft.core.server.BufferedFileReceiver;
+import com.rft.core.server.FileServer;
+import com.rft.core.server.ParallelFileServer;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -15,6 +18,10 @@ public class ServerMain {
 	public static HandlerStorage handlerStorage=new HandlerStorage();
 	public static ControlMsgManager controlMsgManager=new ControlMsgManager();
 	public static AcceptClient acceptClient=new AcceptClient(config.getIntAnyhow("port",1033));
+
+	//fileserver
+	public static BufferedFileReceiver fileReceiver;
+	public static FileServer fileServer;
 	public static void main(String[] args) {
 		try{
 			log.puts(Log.INFORMATION|Log.NOTIFICATION,"%CLASS%","正在启动服务端.");
@@ -24,8 +31,20 @@ public class ServerMain {
 			//启动客户端连接监听器
 			log.puts(Log.NOTIFICATION|Log.INFORMATION,"%CLASS%","启动客户端连接监听器 Port:"+acceptClient.port);
 			acceptClient.start();
+			//启动文件服务器
+			fileReceiver=new BufferedFileReceiver();
+			fileReceiver.setRootPath("");
+			fileServer=new ParallelFileServer(config.getIntAnyhow("rft.port",1035),fileReceiver);
+			fileServer.setTaskEvent(new FileReceiveEvent());
+			try {
+				fileServer.start();
+				log.puts(Log.NOTIFICATION|Log.INFORMATION,"%CLASS%","文件服务器已启动 port:"+config.getIntAnyhow("rft.port",1035));
+			} catch (Exception e) {
+				log.puts(Log.ERROR,"%CLASS%","文件服务器启动失败");
+				throw e;
+			}
 		}catch (Exception launching){
-			log.puts(Log.ERROR,"%CLASS%","启动服务端失败.");
+			log.puts(Log.ERROR,"%CLASS%","启动服务端失败.\n"+getErrorInfo(launching));
 		}
 	}
 	/**

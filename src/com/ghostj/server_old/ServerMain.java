@@ -84,17 +84,6 @@ public class ServerMain {
 		//启动master的检测计时器
 		new Timer().schedule(checkMasterAlive,6000,60*1000);
 		Out.say("ServerMain","master的pw是"+masterPw);
-		//启动taglog计时器
-//		new Timer().schedule(new TimerTask() {
-//			@Override
-//			public void run() {
-//				try{
-//					logAliveDevice();
-//				}catch (Exception e){
-//					e.printStackTrace();
-//				}
-//			}
-//		},new Date(),5000);
 		//启动文件服务器
 		fileReceiver=new BufferedFileReceiver();
 		fileReceiver.setRootPath("");
