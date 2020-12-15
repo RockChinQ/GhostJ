@@ -15,7 +15,7 @@ public class HandlerStorage {
 	public ArrayList<HandleClient> clients=new ArrayList<>();
 
 	/**
-	 * 向拥有特定标签和特定值的master发送数据
+	 * 向注册了特定标签和特定值的master发送数据
 	 * @param key 标签键
 	 * @param value 值
 	 * @param msg 消息

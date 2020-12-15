@@ -71,7 +71,6 @@ public class Log{
 	public String puts(int type, String sub, String content, HandleClient mappedClient){
 		String msg=puts(type, sub, content);
 		//发送到所有以映射给此client的master
-		//TODO 完成此逻辑，使用foreach的方式调用每个master的发送方法，使用标签集的设计思路
 		ServerMain.handlerStorage.writeMasterIndexedByTag("mappedClient",mappedClient.uid+"",msg);
 		return msg;
 	}

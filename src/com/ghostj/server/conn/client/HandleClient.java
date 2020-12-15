@@ -53,7 +53,6 @@ public class HandleClient extends AbstractConnHandler {
 						&&(controlMsg=ServerMain.controlMsgManager.indexByName(cmd[0]))!=null){
 					controlMsg.call(cmd,strmsg,this);
 				}else {
-					//TODO 输出消息
 					ServerMain.log.puts(Log.INFORMATION,"%CLASS%-"+hostName,strmsg,this);
 				}
 				msgByte=new byte[8192];

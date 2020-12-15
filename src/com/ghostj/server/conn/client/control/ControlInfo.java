@@ -31,5 +31,7 @@ public class ControlInfo implements IControlMsg{
 						+" install:"+ TimeUtil.millsToMMDDHHmmSS(client.installTime));
 		client.identified=true;
 		//TODO 发送列表给master
+		//TODO 检查重命名计划
+		//TODO 添加TagLog记录
 	}
 }

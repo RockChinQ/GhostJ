@@ -13,7 +13,6 @@ public class CmdError extends Thread{
     BufferedReader errReader;
     ProcessCmd processCmd;
     StringBuffer buffer=new StringBuffer("");
-    // FIXME: 2020/9/6 不要使用readline
     public CmdError(BufferedReader errReader,ProcessCmd processCmd){
         this.errReader=errReader;
         this.processCmd=processCmd;
