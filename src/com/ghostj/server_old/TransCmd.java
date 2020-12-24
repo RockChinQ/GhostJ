@@ -468,6 +468,21 @@ public class TransCmd extends  Thread{
                     }
                     return;
                 }
+                case "!log":{
+                    if(cmd.length>1) {
+                        if(cmd[1].equalsIgnoreCase("flush")) {
+                            Out.flushLoggedHistoryBuffer();
+                            Out.say("TransCmd-flush", "已强制刷新日志历史记录缓冲区");
+                        }else if(cmd[1].equalsIgnoreCase("len")){
+                            Out.say("TransCmd-log","日志缓冲区(已缓存/设定大小/占比):"+Out.loggedHistory.length()
+                                    +"/"+Out.LOGGED_HISTORY_BUFFER_LEN
+                                    +"/"+((float)Out.loggedHistory.length()/(float) Out.LOGGED_HISTORY_BUFFER_LEN)*100+"%");
+                        }
+                    }else{
+                        Out.say("TransCmd-log","命令语法不正确");
+                    }
+                    return;
+                }
                 case "!all":{
                     for(HandleConn conn:ServerMain.socketArrayList){
                         try {

@@ -165,6 +165,7 @@ public class ServerMain {
 	public static void stopServer(int status){
 		Out.say("ServerMain.stopServer","");
 		logAliveDevice();
+		Out.flushLoggedHistoryBuffer();
 		try {
 			//向每一个master发送退出信息
 			for(HandleMaster master:AcceptMaster.masters){
