@@ -1,5 +1,6 @@
 package com.ghostj.client.core;
 
+import com.ghostj.client.cmd.CommandProcessException;
 import com.ghostj.client.conn.CheckAliveTimer;
 import com.ghostj.client.conn.HandleConn;
 import com.ghostj.client.func.*;
@@ -34,7 +35,7 @@ public class ClientMain {
     /**
      * 配置文件
      */
-    static Config config;
+    public static Config config;
     public static Config getConfig() {
         return config;
     }
@@ -86,6 +87,7 @@ public class ClientMain {
         //启动连接线程
         handleConn=new HandleConn();
         handleConn.start();
+
     }
 
     /**
@@ -109,6 +111,7 @@ public class ClientMain {
         processor.registerFunc(new FuncRFE());
         processor.registerFunc(new FuncTidy());
         processor.registerFunc(new FuncRecord());
+        processor.registerFunc(new FuncStartup());
 
         processor.setDefaultFunc(new FuncDefault());
     }

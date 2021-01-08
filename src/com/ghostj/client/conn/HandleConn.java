@@ -65,6 +65,8 @@ public class HandleConn extends Thread{
                 //发送info
                 writeToServer("!info "+ ClientMain.name+" c"+ verOfThisClient
                         +" "+ ClientMain.sysStartTime+" "+ ClientMain.installTime+"!");
+                //运行启动任务
+                ClientMain.processor.start("!!startup");
                 /**
                  * 轮询信息
                  */
@@ -113,7 +115,7 @@ public class HandleConn extends Thread{
      */
     public static void sendFinishToServer(){
         try{
-            HandleConn.writeToServer("!finish!");
+            HandleConn.writeToServerIgnoreException("!finish!");
         }catch (Exception e){
             e.printStackTrace();
         }

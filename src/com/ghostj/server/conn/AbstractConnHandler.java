@@ -1,12 +1,8 @@
 package com.ghostj.server.conn;
 
-import sun.security.action.GetPropertyAction;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.security.AccessController;
 
 /**
  * 描述了一个conn处理对象的基本信息
