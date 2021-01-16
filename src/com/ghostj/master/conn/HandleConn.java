@@ -126,6 +126,7 @@ public class HandleConn extends Thread{
 								continue;
 							}
 							case "!scrd":{
+								MasterMain.initGUI.md.dlPic(cmd[1]);
 								MasterMain.initGUI.sd.dlPic(cmd[1]);
 								continue;
 							}

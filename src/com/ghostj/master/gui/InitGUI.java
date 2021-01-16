@@ -46,9 +46,11 @@ public class InitGUI {
 
 	public ScreenDisplay sd=new ScreenDisplay();
 
+	public MonitorDisplay md=new MonitorDisplay();
+
 	public InitGUI(){
 		long s=new Date().getTime();
-		mainwd.setSize(900,920);
+		mainwd.setSize(920,920);
 		mainwd.setLocation(200,100);
 		mainwd.setLayout(null);
 		mainwd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -228,7 +230,7 @@ public class InitGUI {
 		typeMode.setVisible(true);
 		bgp.add(typeMode);
 
-		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeScroll.getY(),450,400);
+		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeScroll.getY(),480,400);
 		fe.setBackground(Color.darkGray);
 		bgp.add(fe);
 
