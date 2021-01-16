@@ -74,6 +74,7 @@ public class HandleConn extends Thread{
 								}
 								MasterMain.initGUI.clientTable.tableStart=MasterMain.initGUI.clientTable.tableStart+5>MasterMain.initGUI.clientTable.clients.size()?0:MasterMain.initGUI.clientTable.tableStart;
 								MasterMain.initGUI.clientTable.updateCom();
+								MasterMain.initGUI.md.updateClient();
 								continue;
 							}
 							case "!taglog":{
@@ -173,7 +174,8 @@ public class HandleConn extends Thread{
 		}
 		MasterMain.socket=null;
 		MasterMain.inputStreamReader=null;
-		MasterMain.initGUI.loginPanel=new LoginPanel(MasterMain.initGUI.mainwd);
+//		MasterMain.initGUI.loginPanel=new LoginPanel(MasterMain.initGUI.mainwd);
+		MasterMain.initGUI.loginPanel.setVisible(true);
 		MasterMain.initGUI.loginPanel.setTitle("Login-"+msg);
 		this.stop();
 	}
