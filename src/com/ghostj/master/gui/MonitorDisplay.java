@@ -24,6 +24,8 @@ public class MonitorDisplay extends JFrame {
         InputField scrCmd=new InputField("指令",170,30,30);
         public JLabel tips=new JLabel("无截图");
         boolean loadingClient=false;
+
+        Button zoom=new Button("+/-");
         public ToolBar(){
             this.setLayout(null);
 
@@ -68,8 +70,19 @@ public class MonitorDisplay extends JFrame {
             }
             this.add(scrCmd);
 
-            tips.setBounds(scrCmd.getX()+scrCmd.getWidth()+10,getNew.getY(),450,30);
+            tips.setBounds(scrCmd.getX()+scrCmd.getWidth()+10,getNew.getY(),420,30);
             this.add(tips);
+
+
+            //tools
+            zoom.setBounds(10,clientList.getY()+clientList.getHeight()+5,50,30);
+            zoom.addActionListener(e->{
+                zoom.setSelected(!zoom.isSelected());
+            });
+            this.add(zoom);
+        }
+        public void setAllToolUnselected(){
+            zoom.setSelected(false);
         }
         //从ClientTable对象拉取客户端列表
         public void updateClientList(){
@@ -99,14 +112,14 @@ public class MonitorDisplay extends JFrame {
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                displayPanel.setBounds(10,70,getWidth()-50,getHeight()-120);
+                displayPanel.setBounds(10,90,getWidth()-70,getHeight()-140);
             }
         });
         displayPanel.setBackground(Color.black);
-        displayPanel.setBounds(10,70,getWidth()-50,getHeight()-120);
+        displayPanel.setBounds(10,90,getWidth()-70,getHeight()-140);
         this.add(displayPanel);
 
-        toolBar.setBounds(0,0,1000,50);
+        toolBar.setBounds(0,0,1000,70);
         this.add(toolBar);
     }
     public void dlPic(String url){
@@ -122,7 +135,7 @@ public class MonitorDisplay extends JFrame {
                         +"*"+displayPanel.convert.getOriginImage().getHeight()
                         +">"+displayPanel.image.getWidth()+"*"
                         +displayPanel.image.getHeight()+" "
-                        +displayPanel.rate);
+                        +String.format("%.2f", displayPanel.rate));
                 displayPanel.repaint();
             } catch (IOException e) {
                 e.printStackTrace();

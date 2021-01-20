@@ -55,9 +55,7 @@ public class LoginPanel extends JDialog {
 		startServer.addActionListener((e)->{
 			if(MasterMain.internalServer==null){
 				MasterMain.internalServer=new ServerMain();
-				new Thread(()->{
-					ServerMain.main(null);
-				}).start();
+				new Thread(()-> ServerMain.main(null)).start();
 				ipInput.setValue("localhost");
 				startServer.setText("内建服务器正在运行");
 			}

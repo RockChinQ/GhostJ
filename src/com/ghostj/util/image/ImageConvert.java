@@ -61,7 +61,7 @@ public class ImageConvert {
 			y++;
 			x=0;
 		}
-		System.out.println(product.getWidth()+" "+product.getHeight()+" "+origin.getWidth()+" "+origin.getHeight());
+//		System.out.println(product.getWidth()+" "+product.getHeight()+" "+origin.getWidth()+" "+origin.getHeight());
 		return this;
 	}
 

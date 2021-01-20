@@ -6,6 +6,7 @@ import com.ghostj.util.image.ImageConvert;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,21 +15,112 @@ import java.util.Date;
 
 public class ScreenDisplay extends JPanel {
     public static class displayPanel extends JPanel{
-        BufferedImage image;
+        BufferedImage image,orgImg;
         ImageConvert convert;
         double rate=0;
         String url="";
+
+        private boolean supportZoom=true;
+        int dx=0,dy=0;
+        Point lsPoint=new Point();
+        private boolean processing=false;
+        public boolean isSupportZoom() {
+            return supportZoom;
+        }
+
+        public void setSupportZoom(boolean supportZoom) {
+            this.supportZoom = supportZoom;
+        }
+
+        public displayPanel(){
+            this.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+            this.addMouseMotionListener(new MouseMotionListener() {
+                @Override
+                public void mouseDragged(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseMoved(MouseEvent e) {
+
+                }
+            });
+            this.addMouseWheelListener(new MouseWheelListener() {
+                @Override
+                public void mouseWheelMoved(MouseWheelEvent e) {
+                    if (!processing) {
+//                        System.out.print(e.getWheelRotation() + " ");
+//                        float oldRate= (float) rate;
+//                        rate = Math.max(0f, rate - rate / 10 * (float) e.getWheelRotation());
+////                        dx-=e.getX()*rate-e.getX()*oldRate;
+////                        dy-=e.getY()*rate-e.getY()*oldRate;
+//                        int x= (int) (e.getX()*rate),y= (int) (e.getY()*rate);
+//                        System.out.println(rate);
+//                        zoomImage();
+//                        repaint();
+                        resizeZoom(e.getX(),e.getY(), (float) Math.max(0f, rate - rate / 10 * (float) e.getWheelRotation()));
+                    }
+                }
+            });
+        }
         public void paint(Graphics g){
             g.setColor(getBackground());
             g.fillRect(0,0,this.getWidth(),this.getHeight());
             if (image!=null)
-                g.drawImage(image,this.getWidth()/2-image.getWidth()/2,this.getHeight()/2-image.getHeight()/2,this);
+//                g.drawImage(image,Math.max(this.getWidth()/2-image.getWidth()/2+dx,0),Math.max(this.getHeight()/2-image.getHeight()/2+dy,0),this);
+//                g.drawImage(image,this.getWidth()/2-image.getWidth()/2+dx,this.getHeight()/2-image.getHeight()/2+dy,this);
+                g.drawImage(image,dx,dy,this);
+            processing=false;
         }
-        public void setImage(BufferedImage image){
-            convert=new ImageConvert(image);
-            rate=Math.min((double)this.getWidth()/(double)image.getWidth(),(double)this.getHeight()/(double)image.getHeight());
+        public void resizeZoom(int mx,int my,float rate){
+            //计算zoom之前mx my对应原像的坐标
+            int xOnOrg= (int) ((mx)/this.rate),yOnOrg=(int)((my)/this.rate);
+            //计算zoom后xoo yoo与对应在新像的坐标
+            int xn= (int) (xOnOrg*rate),yn= (int) (yOnOrg*rate);
+            //设置dx dy
+            dx=-(this.getWidth()/2-xn);
+            dy=-(this.getHeight()/2-yn);
+            System.out.println("orgR:"+this.rate+" tgR:"+rate+" mx,my:"+mx+","+my+" ");
+            this.rate=rate;
+            zoomImage();
+            repaint();
+        }
+        public void zoomImage(){
+            processing=true;
+            convert=new ImageConvert(orgImg);
             convert.changeResolutionRate(rate);
             this.image=convert.getProduct();
+        }
+        public void setImage(BufferedImage image){
+            this.image=image;
+            this.orgImg=image;
+            rate=Math.min((double)this.getWidth()/(double)image.getWidth(),(double)this.getHeight()/(double)image.getHeight());
+            zoomImage();
         }
     }
     public displayPanel picp= new displayPanel();
@@ -86,6 +178,8 @@ public class ScreenDisplay extends JPanel {
             MasterMain.writeToServer(scrCmd.getValue());
             MasterMain.config.set("scrCmd",scrCmd.getValue());
             MasterMain.config.write();
+            auto.setSelected(true);
+            auto.setText("auto"+(auto.isSelected()?"√":"x"));
         });
         this.add(get);
 
