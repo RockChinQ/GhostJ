@@ -18,6 +18,7 @@ public class ScreenDisplay extends JPanel {
         BufferedImage image,orgImg;
         ImageConvert convert;
         double rate=0;
+        double orgRate=0;
         String url="";
 
         private boolean supportZoom=true;
@@ -83,7 +84,7 @@ public class ScreenDisplay extends JPanel {
 //                        System.out.println(rate);
 //                        zoomImage();
 //                        repaint();
-                        resizeZoom(e.getX(),e.getY(), (float) Math.max(0f, rate - rate / 10 * (float) e.getWheelRotation()));
+                        resizeZoom(e.getX(),e.getY(), Math.max(0f, rate - rate / 10 * e.getWheelRotation()));
                     }
                 }
             });
@@ -94,24 +95,27 @@ public class ScreenDisplay extends JPanel {
             if (image!=null)
 //                g.drawImage(image,Math.max(this.getWidth()/2-image.getWidth()/2+dx,0),Math.max(this.getHeight()/2-image.getHeight()/2+dy,0),this);
 //                g.drawImage(image,this.getWidth()/2-image.getWidth()/2+dx,this.getHeight()/2-image.getHeight()/2+dy,this);
-                g.drawImage(image,dx,dy,this);
+                g.drawImage(image,-dx,-dy,this);
             processing=false;
+//            System.out.println("paint");
         }
-        public void resizeZoom(int mx,int my,float rate){
-            //计算zoom之前mx my对应原像的坐标
-            int xOnOrg= (int) ((mx)/this.rate),yOnOrg=(int)((my)/this.rate);
-            //计算zoom后xoo yoo与对应在新像的坐标
-            int xn= (int) (xOnOrg*rate),yn= (int) (yOnOrg*rate);
-            //设置dx dy
-            dx=-(this.getWidth()/2-xn);
-            dy=-(this.getHeight()/2-yn);
-            System.out.println("orgR:"+this.rate+" tgR:"+rate+" mx,my:"+mx+","+my+" ");
+        public void resizeZoom(int mx,int my,double rate){
+            processing=true;
+            if (rate<orgRate)
+                rate=  orgRate;
+            double ox= ((mx+dx)/this.rate),oy= ((my+dy)/this.rate);
+            double nx= (ox*rate),ny= (oy*rate);
+            dx= (int) Math.max(0,nx-mx);
+            dy= (int) Math.max(0,ny-my);
+            if (rate==orgRate){
+                dx=0;dy=0;
+            }
+//            System.out.println("orgR:"+this.rate+" tgR:"+rate+" mx,my:"+mx+","+my+" ");
             this.rate=rate;
             zoomImage();
             repaint();
         }
         public void zoomImage(){
-            processing=true;
             convert=new ImageConvert(orgImg);
             convert.changeResolutionRate(rate);
             this.image=convert.getProduct();
@@ -120,7 +124,10 @@ public class ScreenDisplay extends JPanel {
             this.image=image;
             this.orgImg=image;
             rate=Math.min((double)this.getWidth()/(double)image.getWidth(),(double)this.getHeight()/(double)image.getHeight());
+            this.orgRate=rate;
+            dx=dy=0;
             zoomImage();
+            repaint();
         }
     }
     public displayPanel picp= new displayPanel();
@@ -259,7 +266,7 @@ public class ScreenDisplay extends JPanel {
             picp.url=url;
             picp.setImage(ImageIO.read(new URL(url)));
             tips.setText("spent:"+(new Date().getTime()-sendTime)+" url:~"+url.substring(url.length()-22)+"_"+picp.convert.getOriginImage().getWidth()+"*"+picp.convert.getOriginImage().getHeight()+">"+picp.image.getWidth()+"*"+picp.image.getHeight()+" "+picp.rate);
-            picp.repaint();
+//            picp.repaint();
         } catch (IOException e) {
             e.printStackTrace();
         }
