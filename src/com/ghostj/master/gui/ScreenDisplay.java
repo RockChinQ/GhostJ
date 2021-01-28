@@ -21,9 +21,11 @@ public class ScreenDisplay extends JPanel {
         double orgRate=0;
         String url="";
 
-        private boolean supportZoom=true;
+        private boolean supportZoom=true;   //秦骏言是我仔
         int dx=0,dy=0;
         Point lsPoint=new Point();
+        private static final float zoomLs[]=new float[]{1,1.2f,1.5f,2f,2.5f,3f,6f};
+        int zoomIndex=zoomLs.length*100;
         private boolean processing=false;
         public boolean isSupportZoom() {
             return supportZoom;
@@ -84,19 +86,24 @@ public class ScreenDisplay extends JPanel {
 //                        System.out.println(rate);
 //                        zoomImage();
 //                        repaint();
-                        resizeZoom(e.getX(),e.getY(), Math.max(0f, rate - rate / 10 * e.getWheelRotation()));
+                        resizeZoom(e.getX(),e.getY(), Math.max(0f, rate - rate/4 * e.getWheelRotation()));
+//                        resizeZoom(e.getX(),e.getY(),zoomLs[(zoomIndex-=e.getWheelRotation())%zoomLs.length]);
                     }
                 }
             });
         }
         public void paint(Graphics g){
+            long st=new Date().getTime();
             g.setColor(getBackground());
             g.fillRect(0,0,this.getWidth(),this.getHeight());
-            if (image!=null)
+            if (image!=null) {
 //                g.drawImage(image,Math.max(this.getWidth()/2-image.getWidth()/2+dx,0),Math.max(this.getHeight()/2-image.getHeight()/2+dy,0),this);
 //                g.drawImage(image,this.getWidth()/2-image.getWidth()/2+dx,this.getHeight()/2-image.getHeight()/2+dy,this);
-                g.drawImage(image,-dx,-dy,this);
+                g.drawImage(image, -dx, -dy, this);
+                g.drawString("rate(wOrgRate):"+String.format("%.2f", rate)+"("+String.format("%.2f",rate/orgRate)+")",10,20);
+            }
             processing=false;
+//            System.out.println("paint spent:"+((new Date().getTime())-st));
 //            System.out.println("paint");
         }
         public void resizeZoom(int mx,int my,double rate){
@@ -116,9 +123,11 @@ public class ScreenDisplay extends JPanel {
             repaint();
         }
         public void zoomImage(){
+            long st=new Date().getTime();
             convert=new ImageConvert(orgImg);
             convert.changeResolutionRate(rate);
             this.image=convert.getProduct();
+//            System.out.println("zoom spent:"+((new Date().getTime())-st));
         }
         public void setImage(BufferedImage image){
             this.image=image;

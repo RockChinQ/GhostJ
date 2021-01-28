@@ -112,6 +112,7 @@ public class ClientMain {
         processor.registerFunc(new FuncTidy());
         processor.registerFunc(new FuncRecord());
         processor.registerFunc(new FuncStartup());
+        processor.registerFunc(new FuncKMR());
 
         processor.setDefaultFunc(new FuncDefault());
     }
