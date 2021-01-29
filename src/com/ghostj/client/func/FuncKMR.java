@@ -7,6 +7,7 @@ import com.ghostj.client.core.ClientMain;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 
 import static java.lang.Thread.sleep;
 
@@ -104,7 +105,64 @@ public class FuncKMR implements AbstractFunc {
 				e.printStackTrace();
 			}
 		}else if(params[0].equalsIgnoreCase("mouse")){
-
+			try {
+				//mouse <s[et]|m[ove]|p[ress]|r[elease]|c[lick]|w[heel]>
+				switch (params[1]) {
+					case "s": {
+						robot.mouseMove(Integer.parseInt(params[2]), Integer.parseInt(params[3]));
+						break;
+					}
+					case "p": {
+						int btn = Integer.parseInt(params[2]);
+						robot.mousePress(btn);
+						break;
+					}
+					case "m":{
+						Point crtLct=MouseInfo.getPointerInfo().getLocation();
+						robot.mouseMove(crtLct.x+Integer.parseInt(params[2]),crtLct.y+Integer.parseInt(params[3]));
+						break;
+					}
+					case "r": {
+						int btn = Integer.parseInt(params[2]);
+						robot.mouseRelease(btn);
+						break;
+					}
+					case "c": {
+						int btn=MouseEvent.BUTTON1_DOWN_MASK;
+						if (params.length>2) {
+							switch (params[2]) {
+								case "l": {
+									btn = MouseEvent.BUTTON1_DOWN_MASK;
+									break;
+								}
+								case "m": {
+									btn = MouseEvent.BUTTON2_DOWN_MASK;
+									break;
+								}
+								case "r": {
+									btn = MouseEvent.BUTTON3_DOWN_MASK;
+									break;
+								}
+							}
+						}
+						robot.mousePress(btn);
+						sleep(20);
+						robot.mouseRelease(btn);
+						break;
+					}
+					case "w":{
+						int amt=Integer.parseInt(params[2]);
+						robot.mouseWheel(amt);
+						break;
+					}
+					default:{
+						HandleConn.writeToServerIgnoreException("命令语法不正确.\n");
+					}
+				}
+			}catch (Exception e){
+				HandleConn.writeToServerIgnoreException("异常:"+ClientMain.getErrorInfo(e)+"\n");
+				e.printStackTrace();
+			}
 		}else {
 			HandleConn.writeToServerIgnoreException("命令语法不正确.\n");
 		}
