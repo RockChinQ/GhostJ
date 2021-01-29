@@ -88,7 +88,12 @@ public class FuncKMR implements AbstractFunc {
 						break;
 					}
 					case "r":{
-
+						String[] keys=cmd.substring(12).split(" ");
+						for (String key:keys){
+							int v=getSymbolKey(key);
+							robot.keyRelease(v);
+						}
+						break;
 					}
 					default:{
 						HandleConn.writeToServerIgnoreException("命令语法不正确.\n");
