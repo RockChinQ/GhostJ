@@ -59,9 +59,10 @@ public class FuncKMR implements AbstractFunc {
 			try {
 				switch (params[1]) {
 					case "t": {
-						System.out.println("sub:"+cmd.substring(11));
+//						System.out.println("sub:"+cmd.substring(11));
 						char[] stra = cmd.substring(12).toCharArray();
 						for (char ch:stra){
+							System.out.print(ch);
 							switch (ch) {
 								case 'a': {
 									doType(KeyEvent.VK_A);
@@ -324,19 +325,19 @@ public class FuncKMR implements AbstractFunc {
 									break;
 								}
 								case '!':{
-									doType(KeyEvent.VK_EXCLAMATION_MARK);
+									doType(KeyEvent.VK_SHIFT,KeyEvent.VK_1);
 									break;
 								}
 								case '@':{
-									doType(KeyEvent.VK_AT);
+									doType(KeyEvent.VK_SHIFT,KeyEvent.VK_2);
 									break;
 								}
 								case '#':{
-									doType(KeyEvent.VK_NUMBER_SIGN);
+									doType(KeyEvent.VK_SHIFT,KeyEvent.VK_3);
 									break;
 								}
 								case '$':{
-									doType(KeyEvent.VK_DOLLAR);
+									doType(KeyEvent.VK_SHIFT,KeyEvent.VK_4);
 									break;
 								}
 								case '%':{
@@ -344,15 +345,15 @@ public class FuncKMR implements AbstractFunc {
 									break;
 								}
 								case '^':{
-									doType(KeyEvent.VK_CIRCUMFLEX);
+									doType(KeyEvent.VK_SHIFT,KeyEvent.VK_6);
 									break;
 								}
 								case '&':{
-									doType(KeyEvent.VK_AMPERSAND);
+									doType(KeyEvent.VK_SHIFT,KeyEvent.VK_7);
 									break;
 								}
 								case '*':{
-									doType(KeyEvent.VK_ASTERISK);
+									doType(KeyEvent.VK_SHIFT,KeyEvent.VK_8);
 									break;
 								}
 								case '(':{
@@ -364,11 +365,11 @@ public class FuncKMR implements AbstractFunc {
 									break;
 								}
 								case '_':{
-									doType(KeyEvent.VK_UNDERSCORE);
+									doType(KeyEvent.VK_SHIFT,KeyEvent.VK_MINUS);
 									break;
 								}
 								case '+':{
-									doType(KeyEvent.VK_PLUS);
+									doType(KeyEvent.VK_SHIFT,KeyEvent.VK_EQUALS);
 									break;
 								}
 								case '\t':{
@@ -467,6 +468,7 @@ public class FuncKMR implements AbstractFunc {
 		robot.keyRelease(lastKey);
 	}
 	public void doType(int key)throws Exception{
+//		System.out.println(" "+key);
 		robot.keyPress(key);
 		robot.keyRelease(key);
 	}
