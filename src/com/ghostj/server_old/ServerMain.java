@@ -8,6 +8,8 @@ import com.ghostj.util.TimeUtil;
 import com.rft.core.server.BufferedFileReceiver;
 import com.rft.core.server.FileServer;
 import com.rft.core.server.ParallelFileServer;
+import com.rftx.core.RFTXHost;
+import com.rftx.core.RFTXServer;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,6 +43,10 @@ public class ServerMain {
 	static FileManager fileManager=new FileManager();
 
 	static JRERegister jreRegister=new JRERegister();
+
+	//RFTX2
+	static RFTXHost rftxHost=new RFTXHost(config.getStringAnyhow("rftxHostName","GhostJServer"));
+//	static RFTXServer rftxServer;
 
 	static StringBuffer note=new StringBuffer();
 	public static void main(String[] args){
@@ -84,17 +90,26 @@ public class ServerMain {
 		//启动master的检测计时器
 		new Timer().schedule(checkMasterAlive,6000,60*1000);
 		Out.say("ServerMain","master的pw是"+masterPw);
-		//启动文件服务器
+		//启动文件服务器(RFT)
 		fileReceiver=new BufferedFileReceiver();
 		fileReceiver.setRootPath("");
 		fileServer=new ParallelFileServer(1035,fileReceiver);
 		fileServer.setTaskEvent(new FileReceiveEvent());
 		try {
 			fileServer.start();
-			Out.say("ServerMain","文件服务器已启动 port:1035");
+			Out.say("ServerMain","文件服务器(RFT)已启动 port:1035");
 		} catch (Exception e) {
 			e.printStackTrace();
-			Out.say("ServerMain","文件服务器启动失败");
+			Out.say("ServerMain","文件服务器(RFT)启动失败");
+		}
+		//启动RFTX文件服务器
+		try {
+			rftxHost.initServer(config.getIntAnyhow("rftxPort",1036));
+			rftxHost.server.start();
+			Out.say("ServerMain","RFTX文件服务器已启动 port:"+config.getIntAnyhow("rftxPort",1036));
+		}catch (Exception e){
+			e.printStackTrace();
+			Out.say("ServerMain","无法创建RFTX文件服务器.");
 		}
 		//读取jre记录
 		jreRegister.sync();

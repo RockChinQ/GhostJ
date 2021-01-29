@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="fastjson-1.2.53" level="project" />
     <orderEntry type="library" name="RFT" level="project" />
+    <orderEntry type="library" name="libs" level="project" />
   </component>
 </module>
