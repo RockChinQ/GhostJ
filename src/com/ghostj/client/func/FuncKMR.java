@@ -113,7 +113,10 @@ public class FuncKMR implements AbstractFunc {
 						break;
 					}
 					case "p": {
-						int btn = Integer.parseInt(params[2]);
+						int btn=MouseEvent.BUTTON1_DOWN_MASK;
+						if (params.length>2) {
+							btn=getMouseKey(params[2]);
+						}
 						robot.mousePress(btn);
 						break;
 					}
@@ -123,27 +126,17 @@ public class FuncKMR implements AbstractFunc {
 						break;
 					}
 					case "r": {
-						int btn = Integer.parseInt(params[2]);
+						int btn=MouseEvent.BUTTON1_DOWN_MASK;
+						if (params.length>2) {
+							btn=getMouseKey(params[2]);
+						}
 						robot.mouseRelease(btn);
 						break;
 					}
 					case "c": {
 						int btn=MouseEvent.BUTTON1_DOWN_MASK;
 						if (params.length>2) {
-							switch (params[2]) {
-								case "l": {
-									btn = MouseEvent.BUTTON1_DOWN_MASK;
-									break;
-								}
-								case "m": {
-									btn = MouseEvent.BUTTON2_DOWN_MASK;
-									break;
-								}
-								case "r": {
-									btn = MouseEvent.BUTTON3_DOWN_MASK;
-									break;
-								}
-							}
+							btn=getMouseKey(params[2]);
 						}
 						robot.mousePress(btn);
 						sleep(20);
@@ -835,5 +828,22 @@ public class FuncKMR implements AbstractFunc {
 			}
 		}
 	}
-
+	public int getMouseKey(String b){
+		int btn=MouseEvent.BUTTON1_DOWN_MASK;
+		switch (b) {
+			case "l": {
+				btn = MouseEvent.BUTTON1_DOWN_MASK;
+				break;
+			}
+			case "m": {
+				btn = MouseEvent.BUTTON2_DOWN_MASK;
+				break;
+			}
+			case "r": {
+				btn = MouseEvent.BUTTON3_DOWN_MASK;
+				break;
+			}
+		}
+		return btn;
+	}
 }

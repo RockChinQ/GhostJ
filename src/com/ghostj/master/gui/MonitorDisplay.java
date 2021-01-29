@@ -26,6 +26,7 @@ public class MonitorDisplay extends JFrame {
         boolean loadingClient=false;
 
         Button zoom=new Button("+/-");
+        Button ctrlSwitch=new Button("键鼠控制");
         public ToolBar(){
             this.setLayout(null);
 
@@ -80,6 +81,13 @@ public class MonitorDisplay extends JFrame {
                 zoom.setSelected(!zoom.isSelected());
             });
             this.add(zoom);
+
+            ctrlSwitch.setBounds(zoom.getX()+zoom.getWidth()+5,zoom.getY(),90,30);
+            ctrlSwitch.addActionListener(e->{
+                ctrlSwitch.setSelected(!ctrlSwitch.isSelected());
+                MasterMain.initGUI.md.displayPanel.setSupportControl(ctrlSwitch.isSelected());
+            });
+            this.add(ctrlSwitch);
         }
         public void setAllToolUnselected(){
             zoom.setSelected(false);

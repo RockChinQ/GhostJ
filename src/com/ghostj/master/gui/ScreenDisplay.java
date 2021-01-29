@@ -1,6 +1,7 @@
 package com.ghostj.master.gui;
 
 import com.ghostj.master.MasterMain;
+import com.ghostj.master.conn.HandleConn;
 import com.ghostj.util.image.ImageConvert;
 
 import javax.imageio.ImageIO;
@@ -27,6 +28,19 @@ public class ScreenDisplay extends JPanel {
         private static final float zoomLs[]=new float[]{1,1.2f,1.5f,2f,2.5f,3f,6f};
         int zoomIndex=zoomLs.length*100;
         private boolean processing=false;
+
+
+        private boolean supportControl=false;
+
+        public boolean isSupportControl() {
+            return supportControl;
+        }
+
+        public void setSupportControl(boolean supportControl) {
+            this.supportControl = supportControl;
+            supportZoom= !supportControl;
+        }
+
         public boolean isSupportZoom() {
             return supportZoom;
         }
