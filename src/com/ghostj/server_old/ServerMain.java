@@ -71,7 +71,7 @@ public class ServerMain {
 
 		transCmd=new TransCmd();
 		transCmd.start();
-		Out.say("ServerMain","键盘>客户端数据传输接口已启动");
+		Out.say("ServerMain","控制台>客户端数据传输接口已启动");
 
 		//启动检查计时器
 		Timer t=new Timer();
@@ -159,16 +159,7 @@ public class ServerMain {
 		for (HandleMaster master:AcceptMaster.masters) {
 			master.sentMsg(msg.toString());
 		}
-		/*if(acceptMaster.acceptable|| !handleMaster.available){
-			return;
-		}
-		handleMaster.outputStreamWriter.write(msg.toString()+"!");
-		handleMaster.outputStreamWriter.flush();*/
 	}
-	//    public static void deleteConn(HandleConn conn){
-//        socketArrayList.remove(conn);
-//        conn.stop();
-//    }
 	public static void sendMasterList(){
 		StringBuffer msts=new StringBuffer("!msts");
 		for(HandleMaster master0:AcceptMaster.masters){

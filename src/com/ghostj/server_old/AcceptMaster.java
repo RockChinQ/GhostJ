@@ -23,11 +23,17 @@ public class AcceptMaster extends Thread{
 					continue;
 				}
 				Out.say("AcceptMaster","正在接受Master的连接");
-				HandleMaster handleMaster=new HandleMaster(socket);
-				handleMaster.bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream(),"GBK"));
-				handleMaster.outputStreamWriter=new OutputStreamWriter(socket.getOutputStream(),"GBK");
-				masters.add(handleMaster);
-				handleMaster.start();
+				new Thread(()-> {
+					try {
+						HandleMaster handleMaster = new HandleMaster(socket);
+						handleMaster.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "GBK"));
+						handleMaster.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream(), "GBK");
+						masters.add(handleMaster);
+						handleMaster.start();
+					}catch (Exception e){
+						Out.say("AcceptMaster-annoyThr","无法接受master连接");
+					}
+				}).start();
 			}
 		}catch (Exception e){
 			Out.say("AcceptMaster","建立与Master的连接失败");
