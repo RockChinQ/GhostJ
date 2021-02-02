@@ -53,27 +53,18 @@ public class ScreenDisplay extends JPanel {
             this.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
                 }
-
                 @Override
                 public void mousePressed(MouseEvent e) {
-
                 }
-
                 @Override
                 public void mouseReleased(MouseEvent e) {
-
                 }
-
                 @Override
                 public void mouseEntered(MouseEvent e) {
-
                 }
-
                 @Override
                 public void mouseExited(MouseEvent e) {
-
                 }
             });
             this.addMouseMotionListener(new MouseMotionListener() {
@@ -124,6 +115,9 @@ public class ScreenDisplay extends JPanel {
             processing=true;
             if (rate<orgRate)
                 rate=  orgRate;
+            if(rate>5) {
+                rate=5;
+            }
             double ox= ((mx+dx)/this.rate),oy= ((my+dy)/this.rate);
             double nx= (ox*rate),ny= (oy*rate);
             dx= (int) Math.max(0,nx-mx);
