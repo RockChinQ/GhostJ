@@ -22,14 +22,14 @@ public class CheckAliveTimer extends TimerTask {
     @Override
     public void run() {
         try {
-            Out.say("CheckAliveTimer","check alive");
+//            Out.say("CheckAliveTimer","check alive");
             alive=false;
             Thread send=new Thread(()->{
                 HandleConn.writeToServerIgnoreException("!alive!");
             });
             send.start();
             Thread.sleep(5000);
-            Out.say("CheckAliveTimer",alive+"");
+//            Out.say("CheckAliveTimer",alive+"");
             if(!alive){
                 HandleConn.closeSocket();
             }

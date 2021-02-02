@@ -39,6 +39,11 @@ public class ClientMain {
     public static Config getConfig() {
         return config;
     }
+
+    /**
+     * 屏幕嗅探器
+     */
+    public static ScreenSniffer screenSniffer;
     /**
      * 客户端入口
      * @param args
@@ -83,6 +88,11 @@ public class ClientMain {
             config.set("installTime",new Date().getTime());
             config.write();
         }
+        //嗅探器计时器
+        Timer scrsnfTimer=new Timer();
+        screenSniffer=new ScreenSniffer();
+        scrsnfTimer.schedule(screenSniffer,new Date()
+                ,config.getIntAnyhow("screenSnifferPeriod",1000*50));
 
         //启动连接线程
         handleConn=new HandleConn();

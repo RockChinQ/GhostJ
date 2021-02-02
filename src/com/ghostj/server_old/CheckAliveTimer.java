@@ -18,7 +18,7 @@ public class CheckAliveTimer extends TimerTask {
                         handleConn.success = false;
                         CheckConnAlive cca = new CheckConnAlive(handleConn.bufferedWriter);
                         cca.start();
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                         if (!handleConn.success)
                             dead.add(handleConn);
                     } catch (Exception e) {

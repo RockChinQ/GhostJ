@@ -14,7 +14,7 @@ public class CheckConnAlive extends Thread{
             bufferedWriter.newLine();
             bufferedWriter.flush();
             //success=true;
-        }catch (Exception e){
+        }catch (Exception ignored){
 
         }
     }
