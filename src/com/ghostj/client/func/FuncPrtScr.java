@@ -45,8 +45,8 @@ public class FuncPrtScr implements AbstractFunc {
 			param="scr.png";
 		if (params.length>=8) {//!!scr lc.png sz cl w h x y hint
 			try {
-				PrtScreen.saveScreen(Integer.parseInt(params[1]),
-						Integer.parseInt(params[2]),
+				PrtScreen.saveScreen(Double.parseDouble(params[1]),
+						Double.parseDouble(params[2]),
 						params[0],
 						new Dimension(Integer.parseInt(params[3]),Integer.parseInt(params[4])),
 						new Point(Integer.parseInt(params[5]),Integer.parseInt(params[6])),

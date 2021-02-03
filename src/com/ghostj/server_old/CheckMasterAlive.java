@@ -15,7 +15,7 @@ public class CheckMasterAlive extends TimerTask {
 				ArrayList<HandleMaster> masterTokill=new ArrayList<>();
 				for(HandleMaster handleMaster:AcceptMaster.masters){
 					handleMaster.alive=false;
-					new Thread() {{
+					new Thread( ()->{
 						try {
 							handleMaster.outputStreamWriter.write("!alivem!");
 							handleMaster.outputStreamWriter.flush();
@@ -23,7 +23,7 @@ public class CheckMasterAlive extends TimerTask {
 //							kill(handleMaster);
 							masterTokill.add(handleMaster);
 						}
-					}}.start();
+					}).start();
 					Thread.sleep(10000);
 					if (!alive)
 //						kill();
