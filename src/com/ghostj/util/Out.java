@@ -1,8 +1,8 @@
 package com.ghostj.util;
 
-import com.ghostj.server_old.AcceptMaster;
-import com.ghostj.server_old.HandleMaster;
-import com.ghostj.server_old.ServerMain;
+import com.ghostj.server.AcceptMaster;
+import com.ghostj.server.HandleMaster;
+import com.ghostj.server.ServerMain;
 
 import java.io.File;
 import java.util.Date;

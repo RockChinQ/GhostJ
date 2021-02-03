@@ -1,12 +1,9 @@
-package com.ghostj.server.log;
+package com.ghostj.server;
 
 import com.ghostj.util.FileRW;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TagLog {
 	public static class tagOwner{
@@ -39,10 +36,45 @@ public class TagLog {
 	public  void  pack(){
 		this.smallerPack();
 	}
+	/*public void pack(){
+		JSONObject jsonObject=new JSONObject(true);
+		for(String ownerKey:allOwner.keySet()){
+			JSONObject aowner=new JSONObject(true);
+			tagOwner owner=allOwner.get(ownerKey);
+			int index=0;
+			for(tagOwner.tag tag:owner.tags){
+				JSONObject atag=new JSONObject();
+				atag.put("n",tag.name);
+				atag.put("t",tag.time);
+				aowner.put(""+(index),atag.toJSONString());
+				index++;
+			}
+			jsonObject.put(ownerKey,aowner.toJSONString());
+		}
+		FileRW.write("tagLog.json",jsonObject.toString());
+		smallerPack();
+	}*/
 	//加载文件
 	public void load(){
 		smallerLoad();
 	}
+	/*public void load(){
+		allOwner.clear();
+		JSONObject jsonObject=JSONObject.parseObject(com.ghostj.util.FileRW.read("tagLog.json"), Feature.OrderedField);
+		for(String ownerKey:jsonObject.keySet()){
+			JSONObject aowenr=JSONObject.parseObject(jsonObject.getString(ownerKey), Feature.OrderedField);
+//			allOwner.put(ownerKey,new tagOwner());
+			tagOwner tagOwner=new tagOwner();
+			for(String tagKey:aowenr.keySet()){
+				JSONObject atag=JSONObject.parseObject(aowenr.getString(tagKey), Feature.OrderedField);
+				tagOwner.tag tag=new tagOwner.tag();
+				tag.name=atag.getString("n");
+				tag.time=atag.getLongValue("t");
+				tagOwner.tags.add(tag);
+			}
+			allOwner.put(ownerKey,tagOwner);
+		}
+	}*/
 	//ownerName:time tag,time2 tag2;ownerName:time tag;
 	public void smallerPack(){
 		StringBuffer fileStr=new StringBuffer();

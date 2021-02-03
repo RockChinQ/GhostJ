@@ -1,11 +1,8 @@
-package com.ghostj.server_old;
+package com.ghostj.server;
 
 import com.ghostj.util.Out;
 import com.rft.core.server.FileInfo;
 import com.rft.core.server.TaskEvent;
-
-import java.io.File;
-import java.lang.reflect.Field;
 
 public class FileReceiveEvent implements TaskEvent {
     @Override

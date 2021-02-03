@@ -1,4 +1,4 @@
-package com.ghostj.server_old;
+package com.ghostj.server;
 
 import com.ghostj.client.core.ClientMain;
 import com.ghostj.util.Config;
@@ -9,7 +9,6 @@ import com.rft.core.server.BufferedFileReceiver;
 import com.rft.core.server.FileServer;
 import com.rft.core.server.ParallelFileServer;
 import com.rftx.core.RFTXHost;
-import com.rftx.core.RFTXServer;
 
 import java.io.File;
 import java.io.IOException;

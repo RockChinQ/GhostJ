@@ -25,7 +25,7 @@
 
 - `com.ghostj.client` 客户端主程序，被控端
 - `com.ghostj.master` 主控端程序，javaSwing开发的可视化操作桌面程序
-- `com.ghostj.server_old` 服务端程序，处理客户端和主控端的连接、管理文件、转发消息等功能
+- `com.ghostj.server` 服务端程序，处理客户端和主控端的连接、管理文件、转发消息等功能
 - `com.ghostj.util` 通用的类和方法
 
 ### client

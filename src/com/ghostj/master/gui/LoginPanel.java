@@ -2,7 +2,7 @@ package com.ghostj.master.gui;
 
 import com.ghostj.master.MasterMain;
 import com.ghostj.master.conn.CreateConn;
-import com.ghostj.server_old.ServerMain;
+import com.ghostj.server.ServerMain;
 
 import javax.swing.*;
 
