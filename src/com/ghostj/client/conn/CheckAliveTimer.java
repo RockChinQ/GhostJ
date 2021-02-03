@@ -1,7 +1,5 @@
 package com.ghostj.client.conn;
 
-import com.ghostj.client.util.Out;
-
 import java.util.TimerTask;
 
 /**

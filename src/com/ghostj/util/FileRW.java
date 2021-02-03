@@ -38,14 +38,14 @@ public class FileRW {
             bufferedWriter.flush();
             bufferedWriter.close();
         }catch (Exception e){
-            System.out.println("Write file error.");
-            e.printStackTrace();
+//            System.out.println("Write file error.");
+//            e.printStackTrace();
         }finally {
             try{
                 bufferedWriter.close();
             }catch (Exception e){
-                System.out.println("Close writer failed.");
-                e.printStackTrace();
+//                System.out.println("Close writer failed.");
+//                e.printStackTrace();
             }
         }
     }

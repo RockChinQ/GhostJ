@@ -4,6 +4,9 @@ import com.ghostj.util.Out;
 import com.rft.core.server.FileInfo;
 import com.rft.core.server.TaskEvent;
 
+import java.io.File;
+import java.lang.reflect.Field;
+
 public class FileReceiveEvent implements TaskEvent {
     @Override
     public void taskStarted(String token, FileInfo fileInfo) {
@@ -18,8 +21,10 @@ public class FileReceiveEvent implements TaskEvent {
         if (!fileInfo.getName().contains("quiet")) {
             Out.say("FileReceiveEvent", "成功 " + fileInfo.getName() + " pa:" + fileInfo.getSavePath() + " size:" + fileInfo.getSize() + " token:" + token);
         }
+        //删除MASK标志
+        String fileName=fileInfo.getSavePath() + "/" + fileInfo.getName();
         if(fileInfo.getName().endsWith(".png")&&!fileInfo.getName().contains("quiet")) {
-            Out.say("HandleConn", "接收到新图片,url:http://39.100.5.139/ghost/" + ServerMain.fileReceiver.getRootPath() + fileInfo.getSavePath() + "/" + fileInfo.getName());
+            Out.say("HandleConn", "接收到新图片,url:http://39.100.5.139/ghost/" + ServerMain.fileReceiver.getRootPath() + fileName);
             ServerMain.sendToSpecificMaster("!scrd http://39.100.5.139/ghost/" + ServerMain.fileReceiver.getRootPath() + fileInfo.getSavePath() + "/" + fileInfo.getName() + "\n", "screenShot");
         }
         if (!fileInfo.getName().contains("quiet"))
