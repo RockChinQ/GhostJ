@@ -5,9 +5,9 @@ import java.io.*;
 public class FileRW {
     public static String read(String path){
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
             StringBuffer result=new StringBuffer();
-            String line="";
+            String line;
             while ((line=bufferedReader.readLine())!=null){
                 result.append(line);
             }
@@ -18,7 +18,7 @@ public class FileRW {
     }
     public static String readMultiLine(String path){
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
             StringBuffer result=new StringBuffer();
             String line="";
             while ((line=bufferedReader.readLine())!=null){
@@ -42,7 +42,7 @@ public class FileRW {
 //            e.printStackTrace();
         }finally {
             try{
-                bufferedWriter.close();
+                bufferedWriter.close();//
             }catch (Exception e){
 //                System.out.println("Close writer failed.");
 //                e.printStackTrace();
