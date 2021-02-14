@@ -9,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class AcceptConn extends Thread{
     static long rti=0;
@@ -23,6 +24,7 @@ public class AcceptConn extends Thread{
             while (true){
                 Socket socket=serverSocket.accept();//接受连接
                 if(isBanned(String.valueOf(socket.getInetAddress()))){
+                    try{socket.close();}catch (Exception ignored){}
                     continue;
                 }
                 HandleConn handleConn=new HandleConn(socket);
@@ -57,7 +59,7 @@ public class AcceptConn extends Thread{
     }
     public static boolean isBanned(String ip){
         for(String ips:banList){
-            if(ips.equalsIgnoreCase(ip)){
+            if(Pattern.matches(ips,ip)){
                 return true;
             }
         }

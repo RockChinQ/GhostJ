@@ -20,9 +20,10 @@ public class AcceptMaster extends Thread{
 			while (true) {
 				Socket socket=serverSocket.accept();
 				if(AcceptConn.isBanned(String.valueOf(socket.getInetAddress()))){
+					try{socket.close();}catch (Exception ignored){}
 					continue;
 				}
-				Out.say("AcceptMaster","正在接受Master的连接");
+				Out.say("AcceptMaster","正在接受Master的连接("+socket.getInetAddress()+")");
 				new Thread(()-> {
 					try {
 						HandleMaster handleMaster = new HandleMaster(socket);
