@@ -23,9 +23,9 @@ public class AcceptMaster extends Thread{
 					try{socket.close();}catch (Exception ignored){}
 					continue;
 				}
-				Out.say("AcceptMaster","正在接受Master的连接("+socket.getInetAddress()+")");
 				new Thread(()-> {
 					try {
+						Out.say("AcceptMaster","正在接受Master的连接("+socket.getInetAddress()+")");
 						HandleMaster handleMaster = new HandleMaster(socket);
 						handleMaster.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "GBK"));
 						handleMaster.outputStreamWriter = new OutputStreamWriter(socket.getOutputStream(), "GBK");

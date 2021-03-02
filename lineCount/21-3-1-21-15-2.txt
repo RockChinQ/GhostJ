@@ -1,0 +1,116 @@
+C:\Users\10105\IdeaProjects\GhostJ\src
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src. ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\client ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\client\cmd ...
+      File AbstractFunc.java 573
+      File AbstractProcessor.java 3001
+      File Command.java 1360
+      File CommandProcessException.java 503
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\client\conn ...
+      File CheckAliveTimer.java 900
+      File HandleConn.java 3729
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\client\core ...
+      File ClientMain.java 4211
+      File CmdError.java 1110
+      File ProcessCmd.java 3059
+      File Processor.java 1136
+      File ScreenSniffer.java 1821
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\client\func ...
+      File FuncBatch.java 2062
+      File FuncConfig.java 2622
+      File FuncDefault.java 2903
+      File FuncExit.java 1037
+      File FuncGGet.java 2901
+      File FuncHelp.java 2724
+      File FuncKMR.java 16574
+      File FuncName.java 988
+      File FuncProcess.java 5371
+      File FuncPrtScr.java 3069
+      File FuncReconn.java 827
+      File FuncRecord.java 2412
+      File FuncRespAlive.java 794
+      File FuncRFE.java 6319
+      File FuncRFT.java 1382
+      File FuncRFTX.java 611
+      File FuncSendAlive.java 776
+      File FuncStartup.java 1388
+      File FuncTidy.java 1312
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\client\util ...
+      File Config.java 3263
+      File FileRW.java 1933
+      File Out.java 230
+      File PrtScreen.java 2220
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\console ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\console\core ...
+      File ConsoleMain.java 67
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\console\model ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\console\model\routine ...
+      File AbstractRoutine.java 560
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\master ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\master\conn ...
+      File CheckServerAlive.java 822
+      File CreateConn.java 2356
+      File HandleConn.java 5799
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\master\core ...
+      File AddStringToConsole.java 1136
+      File BatProcess.java 2157
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\master\gui ...
+      File BatPanel.java 7673
+      File Button.java 1621
+      File ClientTable.java 2893
+      File FileExplorer.java 8508
+      File InitGUI.java 9402
+      File InputAreaField.java 1394
+      File InputField.java 1328
+      File LoginPanel.java 2156
+      File MasterList.java 1553
+      File MonitorDisplay.java 5791
+      File OnlineTimeChart.java 5580
+      File ScreenDisplay.java 10794
+      File MasterMain.java 2781
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\master\util ...
+      File Config.java 2814
+      File FileRW.java 1333
+      File Out.java 900
+      File TagLog.java 3685
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\server_old ...
+      File AcceptConn.java 2818
+      File AcceptMaster.java 1459
+      File CheckAliveMaster.java 1244
+      File CheckAliveTimer.java 2343
+      File CheckConnAlive.java 473
+      File CheckMasterAlive.java 1523
+      File FileManager.java 1651
+      File FileReceiveEvent.java 1860
+      File HandleConn.java 7752
+      File HandleMaster.java 4882
+      File JRERegister.java 3227
+      File ServerMain.java 7370
+      File TagLog.java 3476
+      File TransCmd.java 30511
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\test ...
+      File RegExpTest.java 205
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\util ...
+      File Config.java 3256
+      File FileRW.java 1814
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\com\ghostj\util\image ...
+      File ImageConvert.java 3505
+      File Out.java 4211
+      File TimeUtil.java 499
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\COUNTLINE ...
+      File Main.java 2303
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\META-INF ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\META-INF\client ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\META-INF\client\META-INF ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\META-INF\master ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\META-INF\master\META-INF ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\META-INF\server ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\META-INF\server\META-INF ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\META-INF\server_new ...
+Counting:C:\Users\10105\IdeaProjects\GhostJ\src.\META-INF\server_new\META-INF ...
+----------Summary 233ms-----------
+Line Count:8075
+Symbol Count:252301
+Average:31 sym/line

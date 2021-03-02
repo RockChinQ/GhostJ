@@ -15,15 +15,7 @@ public class Out {
         System.out.print(msg+"\n");
         history.append(msg+"\n");
         loggedHistory.append(msg+"\n");
-        try {
-            /*if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
-                return;*/
-            for(HandleMaster master: AcceptMaster.masters) {
-                master.sentMsg( msg + "\n");
-            }
-        }catch (Exception e){
-            ;
-        }
+        ServerMain.sendMsgToAllMasterIgnoreException(msg+"\n");
         checkHistory();
         isPromptEnd=false;
     }

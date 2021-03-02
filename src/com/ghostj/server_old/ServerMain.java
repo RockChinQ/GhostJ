@@ -115,7 +115,14 @@ public class ServerMain {
 		jreRegister.sync();
 		Out.putPrompt();
 	}
+	public static void sendMsgToAllMasterIgnoreException(String msg){
 
+		try {
+			for(HandleMaster master: AcceptMaster.masters) {
+				master.sentMsg( msg);
+			}
+		}catch (Exception ignored){}
+	}
 	/**
 	 * 启动服务器上的客户端
 	 */

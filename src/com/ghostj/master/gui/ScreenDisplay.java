@@ -22,10 +22,9 @@ public class ScreenDisplay extends JPanel {
         double orgRate=0;
         String url="";
 
-        private boolean supportZoom=true;   //秦骏言是我仔
-        int dx=0,dy=0;
-        Point lsPoint=new Point();
-        private static final float zoomLs[]=new float[]{1,1.2f,1.5f,2f,2.5f,3f,6f};
+        int dx=0,dy=0,sdx=0,sdy=0;
+        Point lsPoint=new Point(),pressPoint;
+        private static final float[] zoomLs =new float[]{1,1.2f,1.5f,2f,2.5f,3f,6f};
         int zoomIndex=zoomLs.length*100;
         private boolean processing=false;
 
@@ -38,17 +37,10 @@ public class ScreenDisplay extends JPanel {
 
         public void setSupportControl(boolean supportControl) {
             this.supportControl = supportControl;
-            supportZoom= !supportControl;
         }
 
-        public boolean isSupportZoom() {
-            return supportZoom;
-        }
-
-        public void setSupportZoom(boolean supportZoom) {
-            this.supportZoom = supportZoom;
-        }
-
+        public static final int DRAG_ZOOM=0,DRAG_MOVE=1;
+        int dragMode=DRAG_MOVE;
         public displayPanel(){
             this.addMouseListener(new MouseListener() {
                 @Override
@@ -56,6 +48,9 @@ public class ScreenDisplay extends JPanel {
                 }
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    pressPoint=e.getPoint();
+                    sdx=dx;
+                    sdy=dy;
                 }
                 @Override
                 public void mouseReleased(MouseEvent e) {
@@ -70,7 +65,11 @@ public class ScreenDisplay extends JPanel {
             this.addMouseMotionListener(new MouseMotionListener() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
-
+                    if (dragMode==DRAG_MOVE){
+                        dx=sdx-(e.getX()-pressPoint.x);
+                        dy=sdy-(e.getY()-pressPoint.y);
+                        repaint();
+                    }
                 }
 
                 @Override

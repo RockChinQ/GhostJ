@@ -97,7 +97,6 @@ public class ClientMain {
         //启动连接线程
         handleConn=new HandleConn();
         handleConn.start();
-
     }
 
     /**

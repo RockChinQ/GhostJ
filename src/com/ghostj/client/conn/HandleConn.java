@@ -1,5 +1,6 @@
 package com.ghostj.client.conn;
 
+import com.ghostj.client.cmd.CommandProcessException;
 import com.ghostj.client.core.ClientMain;
 import com.ghostj.client.util.FileRW;
 import com.ghostj.client.util.Out;
@@ -42,6 +43,12 @@ public class HandleConn extends Thread{
     @Override
     public void run(){
         String verOfThisClient=FileRW.read("nowVer.txt");
+        //启动startup
+        try {
+            ClientMain.processor.start("!!startup");
+        } catch (CommandProcessException e) {
+            e.printStackTrace();
+        }
         //反复尝试连接
         while (true){
             try {
@@ -66,7 +73,7 @@ public class HandleConn extends Thread{
                 writeToServer("!info "+ ClientMain.name+" c"+ verOfThisClient
                         +" "+ ClientMain.sysStartTime+" "+ ClientMain.installTime+"!");
                 //运行启动任务
-                ClientMain.processor.start("!!startup");
+//                ClientMain.processor.start("!!startup");
                 /**
                  * 轮询信息
                  */

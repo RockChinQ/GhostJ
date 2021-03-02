@@ -31,7 +31,7 @@ public class Main {
 		int elec=dir.listFiles().length;
 		File[] lf=dir.listFiles();
 		for(int i=0;i<elec;i++) {
-			if(lf[i].isFile()) {
+			if(lf[i].isFile()&&lf[i].getName().endsWith(".java")) {
 				String temp=read(lf[i].getAbsolutePath());
 				chars+=temp.length();
 				count+=temp.split("\n").length;
