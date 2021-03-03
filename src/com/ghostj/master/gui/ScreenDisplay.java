@@ -19,6 +19,7 @@ public class ScreenDisplay extends JPanel {
         BufferedImage image,orgImg;
         ImageConvert convert;
         double rate=0;
+        double srate=0;//点击时记录当时的rate
         double orgRate=0;
         String url="";
 
@@ -39,8 +40,8 @@ public class ScreenDisplay extends JPanel {
             this.supportControl = supportControl;
         }
 
-        public static final int DRAG_ZOOM=0,DRAG_MOVE=1;
-        int dragMode=DRAG_MOVE;
+        public static final int DRAG_ZOOM=0,DRAG_MOVE=1,DRAG_MIX=2;
+        int dragMode=DRAG_MIX;
         public displayPanel(){
             this.addMouseListener(new MouseListener() {
                 @Override
@@ -51,9 +52,11 @@ public class ScreenDisplay extends JPanel {
                     pressPoint=e.getPoint();
                     sdx=dx;
                     sdy=dy;
+                    srate=rate;
                 }
                 @Override
                 public void mouseReleased(MouseEvent e) {
+
                 }
                 @Override
                 public void mouseEntered(MouseEvent e) {
@@ -69,6 +72,13 @@ public class ScreenDisplay extends JPanel {
                         dx=sdx-(e.getX()-pressPoint.x);
                         dy=sdy-(e.getY()-pressPoint.y);
                         repaint();
+                    }else if(dragMode==DRAG_ZOOM){
+                        if (!processing){
+                            resizeZoom(pressPoint.x,pressPoint.y,Math.max(0f,srate-srate/0.4*((float)(pressPoint.x-e.getX())/(float)getWidth()) ));
+                            repaint();
+                        }
+                    }else if (dragMode==DRAG_MIX){
+
                     }
                 }
 

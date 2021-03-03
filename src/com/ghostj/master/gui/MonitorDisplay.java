@@ -18,6 +18,7 @@ import java.util.Objects;
  *
  */
 public class MonitorDisplay extends JFrame {
+    ScreenDisplay.displayPanel displayPanel=new ScreenDisplay.displayPanel();
     static class ToolBar extends JPanel{
         Button getNew=new Button("Get!");
         JComboBox<String> clientList=new JComboBox<>();
@@ -25,7 +26,7 @@ public class MonitorDisplay extends JFrame {
         public JLabel tips=new JLabel("无截图");
         boolean loadingClient=false;
 
-        Button zoom=new Button("+/-");
+        Button dragMode=new Button("MIX");
         Button ctrlSwitch=new Button("键鼠控制");
         public ToolBar(){
             this.setLayout(null);
@@ -76,13 +77,29 @@ public class MonitorDisplay extends JFrame {
 
 
             //tools
-            zoom.setBounds(10,clientList.getY()+clientList.getHeight()+5,50,30);
-            zoom.addActionListener(e->{
-                zoom.setSelected(!zoom.isSelected());
+            dragMode.setBounds(10,clientList.getY()+clientList.getHeight()+5,50,30);
+            dragMode.addActionListener(e->{
+                switch (dragMode.getText()){
+                    case "ZOOM":{
+                        dragMode.setText("MOVE");
+                        MasterMain.initGUI.md.displayPanel.dragMode=ScreenDisplay.displayPanel.DRAG_MOVE;
+                        break;
+                    }
+                    case "MOVE":{
+                        dragMode.setText("MIX");
+                        MasterMain.initGUI.md.displayPanel.dragMode=ScreenDisplay.displayPanel.DRAG_MIX;
+                        break;
+                    }
+                    case "MIX":{
+                        dragMode.setText("ZOOM");
+                        MasterMain.initGUI.md.displayPanel.dragMode=ScreenDisplay.displayPanel.DRAG_ZOOM;
+                        break;
+                    }
+                }
             });
-            this.add(zoom);
+            this.add(dragMode);
 
-            ctrlSwitch.setBounds(zoom.getX()+zoom.getWidth()+5,zoom.getY(),90,30);
+            ctrlSwitch.setBounds(dragMode.getX()+dragMode.getWidth()+5,dragMode.getY(),90,30);
             ctrlSwitch.addActionListener(e->{
                 ctrlSwitch.setSelected(!ctrlSwitch.isSelected());
                 MasterMain.initGUI.md.displayPanel.setSupportControl(ctrlSwitch.isSelected());
@@ -90,7 +107,7 @@ public class MonitorDisplay extends JFrame {
             this.add(ctrlSwitch);
         }
         public void setAllToolUnselected(){
-            zoom.setSelected(false);
+            dragMode.setSelected(false);
         }
         //从ClientTable对象拉取客户端列表
         public void updateClientList(){
@@ -109,7 +126,6 @@ public class MonitorDisplay extends JFrame {
     public void updateClient(){
         toolBar.updateClientList();
     }
-    ScreenDisplay.displayPanel displayPanel=new ScreenDisplay.displayPanel();
     //发起截图指令的时间戳
     static long sendTime=0;
     public MonitorDisplay(){

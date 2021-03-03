@@ -1,7 +1,7 @@
 package com.ghostj.master.gui;
 
 import com.ghostj.master.MasterMain;
-import com.ghostj.util.Out;
+import com.ghostj.master.util.Out;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +41,7 @@ public class ClientTable extends JPanel {
 			clientInfo.sysStartTimeStr=new String(da.getDate()+","+da.getHours()+":"+da.getMinutes()+":"+da.getSeconds());
 			this.addActionListener(e->{
 				try{
-					Out.say("ClientTable","focus");
+					Out.say("ClientTable","focus &"+clientInfo.id+"("+clientInfo.name+")");
 					MasterMain.bufferedWriter.write("!focus &"+clientInfo.id);
 					MasterMain.bufferedWriter.newLine();
 					MasterMain.bufferedWriter.flush();
