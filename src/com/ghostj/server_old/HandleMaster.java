@@ -169,6 +169,7 @@ public class HandleMaster extends Thread{
 			outputStreamWriter.flush();
 		}catch (Exception e){
 			e.printStackTrace();
+			CheckMasterAlive.kill(this);
 		}
 	}
 }

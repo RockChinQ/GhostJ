@@ -26,7 +26,7 @@ public class TransCmd extends  Thread{
                 handleCommand(typeCmd);
             } catch (Exception e) {
                 e.printStackTrace();
-                Out.say("TansCmd", "处理指令失败");
+                Out.say("TransCmd", "处理指令失败");
                 ServerMain.cmdProcessFinish();
             }
         }

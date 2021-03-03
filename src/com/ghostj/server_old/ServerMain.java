@@ -109,17 +109,19 @@ public class ServerMain {
 			Out.say("ServerMain","RFTX文件服务器已启动 port:"+config.getIntAnyhow("rftxPort",1036));
 		}catch (Exception e){
 			e.printStackTrace();
-			Out.say("ServerMain","无法创建RFTX文件服务器.");
+			Out.say("ServerMain","无法初始化RFTX文件服务器.");
 		}
 		//读取jre记录
 		jreRegister.sync();
 		Out.putPrompt();
 	}
 	public static void sendMsgToAllMasterIgnoreException(String msg){
-
+		//创建诸个线程向每个master发送数据
 		try {
 			for(HandleMaster master: AcceptMaster.masters) {
-				master.sentMsg( msg);
+				new Thread(()->{
+					master.sentMsg( msg);
+				}).start();
 			}
 		}catch (Exception ignored){}
 	}
