@@ -31,11 +31,6 @@ public class Out {
         isPromptEnd=true;
     }
 
-    /**
-     * �������������Ϣ
-     * �����ᱻ������ʷ��¼
-     * @param msg
-     */
     public static void noRecordSay(String msg){
         try {
            /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
@@ -47,21 +42,21 @@ public class Out {
             ;
         }
     }
-    //�ڴ������
     public static void sayThisLine(char msg){
 
         System.out.print((isPromptEnd?"\n":"")+msg);
         history.append((isPromptEnd?"\n":"")+msg);
         loggedHistory.append((isPromptEnd?"\n":"")+msg);
-        try {
-           /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
-                return;*/
-            for(HandleMaster master: AcceptMaster.masters) {
-                master.sentMsg((isPromptEnd ? "\n" : "") + msg );
-            }
-        }catch (Exception e){
-            ;
-        }
+        ServerMain.sendMsgToAllMasterIgnoreException((isPromptEnd ? "\n" : "") + msg );
+//        try {
+//           /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
+//                return;*/
+//            for(HandleMaster master: AcceptMaster.masters) {
+//                master.sentMsg((isPromptEnd ? "\n" : "") + msg );
+//            }
+//        }catch (Exception e){
+//            ;
+//        }
         checkHistory();
         isPromptEnd=false;
     }
