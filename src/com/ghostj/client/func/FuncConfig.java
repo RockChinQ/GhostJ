@@ -52,8 +52,9 @@ public class FuncConfig implements AbstractFunc {
                     HandleConn.writeToServerIgnoreException("命令语法不正确\n");
                     break;
                 }
-                ClientMain.getConfig().set(params[1],params[2]);
-                HandleConn.writeToServerIgnoreException("设置"+params[1]+"="+params[2]+"\n");
+                //!!cfg set startupRoutine 124
+                ClientMain.getConfig().set(params[1],cmd.substring(11+params[1].length()));
+                HandleConn.writeToServerIgnoreException("设置"+params[1]+"="+cmd.substring(11+params[1].length())+"\n");
                 break;
             }
             case "rm":{
