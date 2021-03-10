@@ -11,6 +11,9 @@ public class Config {
         this.filePath=filePath;
         read();
     }
+    public Object remove(String key){
+        return field.remove(key);
+    }
     public void read(){
         BufferedReader bufferedReader=null;
         try{
