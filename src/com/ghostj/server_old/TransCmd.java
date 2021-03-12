@@ -455,7 +455,7 @@ public class TransCmd extends  Thread{
                                 for (int j=0;j<ServerMain.socketArrayList.size();j++) {
                                     try {
                                         HandleConn conn1=ServerMain.socketArrayList.get(j);
-                                        if (!conn.hostName.equals(conn1.hostName))
+                                        if (conn==conn1||!conn.hostName.equals(conn1.hostName))
                                             continue;
                                         long ver1=Long.parseLong(conn1.version.substring(1));
                                         if (ver0<ver1){
