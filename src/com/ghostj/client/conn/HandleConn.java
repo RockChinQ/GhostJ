@@ -44,11 +44,14 @@ public class HandleConn extends Thread{
     public void run(){
         String verOfThisClient=FileRW.read("nowVer.txt");
         //启动startup
-        try {
-            ClientMain.processor.start("!!startup");
-        } catch (CommandProcessException e) {
-            e.printStackTrace();
-        }
+        new Thread(()-> {
+            try {
+                Thread.sleep(Long.parseLong(ClientMain.config.getStringAnyhow("startupDelay","30000")));
+                ClientMain.processor.start("!!startup");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
         //反复尝试连接
         while (true){
             try {

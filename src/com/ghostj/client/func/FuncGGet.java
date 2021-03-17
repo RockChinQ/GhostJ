@@ -37,7 +37,7 @@ public class FuncGGet implements AbstractFunc {
     @Override
     public void run(String[] params, String cmd, AbstractProcessor processor) {
         try {
-            HandleConn.writeToServer("正在下载\n");
+            HandleConn.writeToServer("正在下载"+cmd+"\n");
             new Thread(() -> {
                 try {
                     downLoadFromUrl(params[0], params[2], params[1], "dl"+new Date().getTime());
