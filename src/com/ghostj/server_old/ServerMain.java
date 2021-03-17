@@ -216,9 +216,7 @@ public class ServerMain {
 			//向所有master发送finish，这个是非常非常非常非常不安全的
 			/*handleMaster.outputStreamWriter.write("!finish!");
 			handleMaster.outputStreamWriter.flush();*/
-			for(HandleMaster master:AcceptMaster.masters){
-				master.sentMsg("!finish!");
-			}
+			sendMsgToAllMasterIgnoreException("!finish!");
 		}catch (Exception e){
 			//e.printStackTrace();
 		}
