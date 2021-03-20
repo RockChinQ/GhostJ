@@ -427,6 +427,8 @@ public class TransCmd extends  Thread{
                     }
                     ArrayList<HandleConn> kill=new ArrayList<>();
                     if(cmd[1].equalsIgnoreCase("-m")){
+
+
                         ArrayList<String> alreadyScanHostNames=new ArrayList<>();
                         Out.say("TransCmd-exit-m","扫描并清除重复的连接:");
                         for(HandleConn conn:ServerMain.socketArrayList){
@@ -439,7 +441,35 @@ public class TransCmd extends  Thread{
                                 Out.say("keep");
                             }
                         }
-                        Out.say("TransCmd-exit-m","扫描完成，清除"+kill.size()+"个重复连接");
+                        Out.say("TransCmd-exit-m","扫描完成，退出"+kill.size()+"个重复连接");
+                    }else if(cmd[1].equalsIgnoreCase("-a")){
+                        kill.addAll(ServerMain.socketArrayList);
+                        Out.say("退出所有客户端");
+                    }else if(cmd[1].equalsIgnoreCase("-lv")){
+                        Out.say("TransCmd-lv","退出低版本客户端");
+                        i:for (int i=0;i<ServerMain.socketArrayList.size();i++){
+                            HandleConn conn=ServerMain.socketArrayList.get(i);
+                            try {
+                                long ver0=Long.parseLong(conn.version.substring(1));
+                                Out.sayThisLine(conn.hostName+":");
+                                for (int j=0;j<ServerMain.socketArrayList.size();j++) {
+                                    try {
+                                        HandleConn conn1=ServerMain.socketArrayList.get(j);
+                                        if (conn==conn1||!conn.hostName.equals(conn1.hostName))
+                                            continue;
+                                        long ver1=Long.parseLong(conn1.version.substring(1));
+                                        if (ver0<ver1){
+                                            kill.add(conn);
+                                            Out.say("kill");
+                                            continue i;
+                                        }
+                                    }catch (Exception ignored){}
+                                }
+                                Out.say("keep");
+                            }catch (Exception ignored){
+                            }
+                        }
+                        Out.say("TransCmd-exit-m","扫描完成，退出"+kill.size()+"个重复连接");
                     }else {
                         for (HandleConn conn : ServerMain.socketArrayList) {
                             if (conn.hostName.equals(cmd[1])) {
