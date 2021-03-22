@@ -124,6 +124,8 @@ public class ClientMain {
         processor.registerFunc(new FuncKMR());
 
         processor.setDefaultFunc(new FuncDefault());
+
+        processor.registerFunc(new FuncRecorder());
     }
 
     /**
