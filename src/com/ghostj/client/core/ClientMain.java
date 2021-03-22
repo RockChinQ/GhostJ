@@ -1,6 +1,5 @@
 package com.ghostj.client.core;
 
-import com.ghostj.client.cmd.CommandProcessException;
 import com.ghostj.client.conn.CheckAliveTimer;
 import com.ghostj.client.conn.HandleConn;
 import com.ghostj.client.func.*;
@@ -122,10 +121,10 @@ public class ClientMain {
         processor.registerFunc(new FuncRecord());
         processor.registerFunc(new FuncStartup());
         processor.registerFunc(new FuncKMR());
+        processor.registerFunc(new FuncAudio());
 
         processor.setDefaultFunc(new FuncDefault());
 
-        processor.registerFunc(new FuncRecorder());
     }
 
     /**

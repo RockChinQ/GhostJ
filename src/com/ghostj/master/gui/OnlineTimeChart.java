@@ -40,18 +40,18 @@ public class OnlineTimeChart extends JPanel {
 				}
 			}
 		});
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				try{
-					MasterMain.bufferedWriter.write("#taglog#");
-					MasterMain.bufferedWriter.newLine();
-					MasterMain.bufferedWriter.flush();
-				}catch (Exception e){
-					//e.printStackTrace();
-				}
-			}
-		},new Date(),20000);
+//		new Timer().schedule(new TimerTask() {
+//			@Override
+//			public void run() {
+//				try{
+//					MasterMain.bufferedWriter.write("#taglog#");
+//					MasterMain.bufferedWriter.newLine();
+//					MasterMain.bufferedWriter.flush();
+//				}catch (Exception e){
+//					//e.printStackTrace();
+//				}
+//			}
+//		},new Date(),20000);
 	}
 	@Override
 	public void paint(Graphics g){
