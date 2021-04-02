@@ -89,7 +89,7 @@ public class FuncAudio implements AbstractFunc {
     }
 
     private AudioFormat getAudioFormat() {
-        float sampleRate = 16000F;
+        float sampleRate = 44100F;
         // 8000,11025,16000,22050,44100 采样率
         int sampleSizeInBits = 8;
         // 8,16 每个样本中的位数
