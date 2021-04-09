@@ -172,7 +172,7 @@ public class TransCmd extends  Thread{
                         return;
                     }
                     ArrayList<String> delete=new ArrayList<>();
-                    for(String owner:ServerMain.tagLog.allOwner.keySet()){
+                    for(String owner:ServerMain.tagLog.getAllOwner().keySet()){
                         if(owner.startsWith(cmd[1])){
                             delete.add(owner);
                         }
@@ -180,7 +180,7 @@ public class TransCmd extends  Thread{
                     if(delete.size()!=0){
                         for(String dk:delete){
                             Out.say("TransCmd-rmtag","清除tagLog:"+dk);
-                            ServerMain.tagLog.allOwner.remove(dk);
+                            ServerMain.tagLog.getAllOwner().remove(dk);
                         }
                         ServerMain.tagLog.pack();
                     }else {
@@ -192,7 +192,7 @@ public class TransCmd extends  Thread{
                 case "!lstag":{
                     Out.say("TransCmd-lstag","列表所有tagLog");
                     int i=0;
-                    for(String owner:ServerMain.tagLog.allOwner.keySet()){
+                    for(String owner:ServerMain.tagLog.getAllOwner().keySet()){
                         Out.say(++i+" "+owner);
                     }
                     Out.say("TransCmd-lstag","列表完成");

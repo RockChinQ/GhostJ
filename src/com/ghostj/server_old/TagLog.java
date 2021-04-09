@@ -23,7 +23,12 @@ public class TagLog {
 			}
 		}
 	}
-	Map<String,tagOwner> allOwner=new LinkedHashMap<>();
+	private Map<String,tagOwner> allOwner=new LinkedHashMap<>();
+
+	public Map<String, tagOwner> getAllOwner() {
+		return allOwner;
+	}
+
 	private void addOwner(String indexName){
 		allOwner.put(indexName,new tagOwner());
 	}
@@ -32,51 +37,8 @@ public class TagLog {
 			addOwner(ownerName);
 		allOwner.get(ownerName).addTag(tag);
 	}
-	//打包进文件
-	public  void  pack(){
-		this.smallerPack();
-	}
-	/*public void pack(){
-		JSONObject jsonObject=new JSONObject(true);
-		for(String ownerKey:allOwner.keySet()){
-			JSONObject aowner=new JSONObject(true);
-			tagOwner owner=allOwner.get(ownerKey);
-			int index=0;
-			for(tagOwner.tag tag:owner.tags){
-				JSONObject atag=new JSONObject();
-				atag.put("n",tag.name);
-				atag.put("t",tag.time);
-				aowner.put(""+(index),atag.toJSONString());
-				index++;
-			}
-			jsonObject.put(ownerKey,aowner.toJSONString());
-		}
-		FileRW.write("tagLog.json",jsonObject.toString());
-		smallerPack();
-	}*/
-	//加载文件
-	public void load(){
-		smallerLoad();
-	}
-	/*public void load(){
-		allOwner.clear();
-		JSONObject jsonObject=JSONObject.parseObject(com.ghostj.util.FileRW.read("tagLog.json"), Feature.OrderedField);
-		for(String ownerKey:jsonObject.keySet()){
-			JSONObject aowenr=JSONObject.parseObject(jsonObject.getString(ownerKey), Feature.OrderedField);
-//			allOwner.put(ownerKey,new tagOwner());
-			tagOwner tagOwner=new tagOwner();
-			for(String tagKey:aowenr.keySet()){
-				JSONObject atag=JSONObject.parseObject(aowenr.getString(tagKey), Feature.OrderedField);
-				tagOwner.tag tag=new tagOwner.tag();
-				tag.name=atag.getString("n");
-				tag.time=atag.getLongValue("t");
-				tagOwner.tags.add(tag);
-			}
-			allOwner.put(ownerKey,tagOwner);
-		}
-	}*/
 	//ownerName:time tag,time2 tag2;ownerName:time tag;
-	public void smallerPack(){
+	public void pack(){
 		StringBuffer fileStr=new StringBuffer();
 		for(String ownerName:allOwner.keySet()){
 			StringBuffer aownerStr=new StringBuffer(ownerName+":");
@@ -92,7 +54,7 @@ public class TagLog {
 		FileRW.write("tagLog.txt",fileStr.toString());
 	}
 	//ownerName:time tag,time2 tag2;ownerName:time tag;
-	public void smallerLoad(){
+	public void load(){
 		allOwner.clear();
 		if(!new File("tagLog.txt").exists()){
 			return;
