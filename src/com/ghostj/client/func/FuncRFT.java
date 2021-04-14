@@ -39,7 +39,12 @@ public class FuncRFT implements AbstractFunc {
 					break;
 				}
 				try {
-					FileSender.sendFileMethod(new File(params[1].replaceAll("\\?"," ").replaceAll("\\*","!")),params[2],new Date().getTime()+"",HandleConn.ip,HandleConn.rft_port);
+					File source=new File(params[1].replaceAll("\\?"," ").replaceAll("\\*","!"));
+					if (source.isFile()){
+						FileSender.sendFileMethod(source,params[2],new Date().getTime()+"",HandleConn.ip,HandleConn.rft_port);
+					}else if (source.isDirectory()){
+						UploadDir(source,params[2]+"/"+source.getName(),HandleConn.ip,HandleConn.rft_port);
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 					HandleConn.writeToServerIgnoreException("上传出错"+ ClientMain.getErrorInfo(e)+"\n");
@@ -52,5 +57,15 @@ public class FuncRFT implements AbstractFunc {
 			}
 		}
 		HandleConn.sendFinishToServer();
+	}
+	private void UploadDir(File dirFile,String remotePath,String ip,int port){
+		File[] files=dirFile.listFiles();
+		for (File file:files){
+			if (file.isFile()){
+				FileSender.sendFile(file,remotePath, file.getName(), ip,port);
+			}else if (file.isDirectory()){
+				UploadDir(file,remotePath+"/"+file.getName(),ip,port);
+			}
+		}
 	}
 }

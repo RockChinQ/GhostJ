@@ -203,7 +203,7 @@ public class FileExplorer extends JPanel {
 		uploadAll.setBounds(0,refresh.getY()+refresh.getHeight()+3,40,25);
 		uploadAll.addActionListener(e -> {
 			for(EntryBtn btn:this.btn){
-				if(btn.isSelect()&&!btn.info.isDir()){
+				if(btn.isSelect()){
 					MasterMain.writeToServer("!!rfe upload "+btn.info.getName().replaceAll(" ","?")+" files/"+dateStr);
 				}
 			}
