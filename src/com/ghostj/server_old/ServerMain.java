@@ -119,9 +119,7 @@ public class ServerMain {
 		//创建诸个线程向每个master发送数据
 		try {
 			for(HandleMaster master: AcceptMaster.masters) {
-				new Thread(()->{
-					master.sentMsg( msg);
-				}).start();
+				master.addMsg( msg);
 			}
 		}catch (Exception ignored){}
 	}
@@ -166,7 +164,7 @@ public class ServerMain {
 		msg.append("!");
 		//发送到每个master
 		for (HandleMaster master:AcceptMaster.masters) {
-			master.sentMsg(msg.toString());
+			master.addMsg(msg.toString());
 		}
 	}
 	public static void sendMasterList(){
@@ -185,7 +183,7 @@ public class ServerMain {
 			//向每一个master发送退出信息
 			for(HandleMaster master:AcceptMaster.masters){
 				try {
-					master.sentMsg("!relogin!");
+					master.addMsg("!relogin!");
 					master.outputStreamWriter.close();
 				}catch (Exception e){
 					e.printStackTrace();
@@ -232,7 +230,7 @@ public class ServerMain {
 		for (HandleMaster master:AcceptMaster.masters){
 			if(master.attributes.contains(attri)){
 				System.out.println(master.socket.getInetAddress());
-				master.sentMsg(msg);
+				master.addMsg(msg);
 			}
 		}
 	}

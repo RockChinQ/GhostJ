@@ -36,7 +36,7 @@ public class Out {
            /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;*/
             for(HandleMaster master: AcceptMaster.masters) {
-                master.sentMsg( msg );
+                master.addMsg( msg );
             }
         }catch (Exception e){
             ;
@@ -48,15 +48,6 @@ public class Out {
         history.append((isPromptEnd?"\n":"")+msg);
         loggedHistory.append((isPromptEnd?"\n":"")+msg);
         ServerMain.sendMsgToAllMasterIgnoreException((isPromptEnd ? "\n" : "") + msg );
-//        try {
-//           /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
-//                return;*/
-//            for(HandleMaster master: AcceptMaster.masters) {
-//                master.sentMsg((isPromptEnd ? "\n" : "") + msg );
-//            }
-//        }catch (Exception e){
-//            ;
-//        }
         checkHistory();
         isPromptEnd=false;
     }
@@ -68,7 +59,7 @@ public class Out {
            /* if(!ServerMain.handleMaster.available || ServerMain.handleMaster.outputStreamWriter == null)
                 return;*/
             for(HandleMaster master: AcceptMaster.masters) {
-                master.sentMsg((isPromptEnd ? "\n" : "") + msg);
+                master.addMsg((isPromptEnd ? "\n" : "") + msg);
             }
         }catch (Exception e){
             ;

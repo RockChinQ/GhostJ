@@ -203,7 +203,7 @@ public class TransCmd extends  Thread{
                     Out.say("TransCmd-lsmst","列出所有在线master的信息");
                     int i=0;
                     for(HandleMaster master:AcceptMaster.masters){
-                        Out.say(i+++"  ip"+master.socket.getInetAddress()+"  t"+ TimeUtil.millsToMMDDHHmmSS(master.connTime));
+                        master.addMsg(i+++"  ip"+master.socket.getInetAddress()+"  t"+ TimeUtil.millsToMMDDHHmmSS(master.connTime));
                     }
                     Out.say("TransCmd-lsmst","列表完成");
                     ServerMain.cmdProcessFinish();

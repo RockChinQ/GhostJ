@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class HandleMaster extends Thread{
 	Socket socket=null;
@@ -18,8 +19,10 @@ public class HandleMaster extends Thread{
 	public long connTime=new Date().getTime();
 	public HandleMaster(Socket socket){
 		this.socket=socket;
+		queueThread.start();
 	}
 
+	QueueThread queueThread=new QueueThread();
 	//标签集
 	ArrayList<String> attributes=new ArrayList<>();
 
@@ -27,14 +30,6 @@ public class HandleMaster extends Thread{
 	@Override
 	public void run() {
 		//新建master连接
-		/*，向其发送最近的一些消息
-		try{
-			outputStreamWriter.write(Out.history.toString());
-			outputStreamWriter.flush();
-		}catch (Exception e){
-			e.printStackTrace();
-		}
-		*/
 		ServerMain.sendMasterList();
 		try{
 			readMsg:while (true){
@@ -76,8 +71,7 @@ public class HandleMaster extends Thread{
 								ServerMain.tagLog.addTag(".Master","alive");
 								Out.say("NOTE",ServerMain.note.toString());
 							}else {
-								outputStreamWriter.write("!passErr!");
-								outputStreamWriter.flush();
+								addMsg("!passErr!");
 								CheckMasterAlive.kill(this);
 								Out.say("HandleMaster","密码错误");
 								this.stop();
@@ -94,8 +88,7 @@ public class HandleMaster extends Thread{
 						case "#alivems#":{
 							try{
 								//Out.say("HandleMaster","检测连接");
-								outputStreamWriter.write("!alivems!");
-								outputStreamWriter.flush();
+								addMsg("!alivems!");
 								if(available)
 									ServerMain.tagLog.addTag(".Master","alive");
 							}catch (Exception e){
@@ -120,8 +113,7 @@ public class HandleMaster extends Thread{
 								ServerMain.logAliveDevice();
 								String  write="!taglog " + FileRW.read("tagLog.txt") + "!";
 //								System.out.println(write);
-								outputStreamWriter.write(write);
-								outputStreamWriter.flush();
+								addMsg(write);
 							}catch (Exception e){
 								Out.say("HandleMaster","发送tagLog到master失败");
 								e.printStackTrace();
@@ -135,8 +127,7 @@ public class HandleMaster extends Thread{
 							}
 							msts.append("!");
 							try{
-								outputStreamWriter.write(msts.toString());
-								outputStreamWriter.flush();
+								addMsg(msts.toString());
 							}catch (Exception e){
 								e.printStackTrace();
 							}
@@ -163,13 +154,38 @@ public class HandleMaster extends Thread{
 			e.printStackTrace();
 		}
 	}
-	public void sentMsg(String msg){
+	private final ArrayList<String> msgQueue=new ArrayList<>();
+	public class QueueThread extends Thread{
+		@Override
+		public void run(){
+			while(true){
+				synchronized (msgQueue) {
+					if (msgQueue.size() > 0) {
+						sent(msgQueue.remove(0));
+					}else {
+						try {
+							msgQueue.wait();
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+	}
+	private void sent(String msg){
 		try{
 			outputStreamWriter.write(msg);
 			outputStreamWriter.flush();
 		}catch (Exception e){
 			e.printStackTrace();
 			CheckMasterAlive.kill(this);
+		}
+	}
+	public void addMsg(String msg){
+		synchronized (msgQueue){
+			msgQueue.add(msg);
+			msgQueue.notify();
 		}
 	}
 }

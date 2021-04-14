@@ -17,8 +17,7 @@ public class CheckMasterAlive extends TimerTask {
 					handleMaster.alive=false;
 					new Thread( ()->{
 						try {
-							handleMaster.outputStreamWriter.write("!alivem!");
-							handleMaster.outputStreamWriter.flush();
+							handleMaster.addMsg("!alivem!");
 						} catch (Exception e) {
 //							kill(handleMaster);
 							masterTokill.add(handleMaster);
@@ -41,11 +40,11 @@ public class CheckMasterAlive extends TimerTask {
 	public static void kill(HandleMaster master){
 		try{
 			try{
-				master.outputStreamWriter.write("!relogin!");
-				master.outputStreamWriter.flush();
+				master.addMsg("!relogin!");
 			}catch (Exception e){
 
 			}
+			master.queueThread.stop();
 			AcceptMaster.masters.remove(master);
 			ServerMain.sendMasterList();
 			master.outputStreamWriter.close();
