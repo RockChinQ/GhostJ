@@ -50,8 +50,8 @@ public class InitGUI {
 
 	public InitGUI(){
 		long s=new Date().getTime();
-		mainwd.setSize(920,920);
-		mainwd.setLocation(200,100);
+		mainwd.setSize(920,1020);
+		mainwd.setLocation(100,100);
 		mainwd.setLayout(null);
 		mainwd.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainwd.setBackground(new Color(80,80,80));
@@ -66,8 +66,8 @@ public class InitGUI {
 		//批处理指令列表
 		batPanel=new BatPanel();
 		batPanel.setBackground(bgp.getBackground());
-		batPanel.setBounds(10,clientTable.getY(),200,600);
-		batPanel.setSize(170,600);
+		batPanel.setBounds(10,clientTable.getY(),200,700);
+		batPanel.setSize(170,700);
 		bgp.add(batPanel);
 
 		masterList.setBounds(batPanel.getX(),batPanel.getY()+batPanel.getHeight(),batPanel.getWidth(),265);
@@ -108,7 +108,7 @@ public class InitGUI {
 			clientTable.updateCom();
 		});
 
-		onlineTimeChart.setBounds(clientTable.getX()+clientTable.getWidth()+10,45,650,205);
+		onlineTimeChart.setBounds(clientTable.getX()+clientTable.getWidth()+10,45,750,275);
 		onlineTimeChart.setBackground(Color.darkGray);
 		onlineTimeChart.setZoom(1000);
 		onlineTimeChart.setPreferredSize(onlineTimeChart.getSize());
@@ -152,7 +152,7 @@ public class InitGUI {
 			onlineTimeChart.repaint();
 		});
 		//控制台
-		console.setBounds(onlineTimeScroll.getX(),onlineTimeScroll.getY()+onlineTimeScroll.getHeight()+10,650
+		console.setBounds(onlineTimeScroll.getX(),onlineTimeScroll.getY()+onlineTimeScroll.getHeight()+10,750
 				,bgp.getHeight()-onlineTimeScroll.getHeight()-onlineTimeScroll.getY()-115);
 		console.setBackground(Color.darkGray);
 		console.setForeground(new Color(255, 255, 255, 255));
@@ -230,7 +230,7 @@ public class InitGUI {
 		typeMode.setVisible(true);
 		bgp.add(typeMode);
 
-		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeScroll.getY(),480,400);
+		fe.setBounds(console.getX()+console.getWidth()+10,onlineTimeScroll.getY(),480,450);
 		fe.setBackground(Color.darkGray);
 		bgp.add(fe);
 

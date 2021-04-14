@@ -227,8 +227,8 @@ public class FileExplorer extends JPanel {
 
 		entryPanel.setLayout(null);
 		entryPanel.setLocation(0,diskPanel.getY()+diskPanel.getHeight()+5);
-		entryPanel.setSize(450,300);
-		entryPanel.setPreferredSize(new Dimension(450,500));
+		entryPanel.setSize(450,350);
+		entryPanel.setPreferredSize(new Dimension(450,550));
 		entryPanel.setBackground(Color.darkGray);
 		scrollPane.setBounds(entryPanel.getX(),entryPanel.getY(),entryPanel.getWidth(),entryPanel.getHeight());
 		scrollPane.validate();

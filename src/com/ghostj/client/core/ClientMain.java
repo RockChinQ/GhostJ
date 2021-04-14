@@ -122,6 +122,7 @@ public class ClientMain {
         processor.registerFunc(new FuncStartup());
         processor.registerFunc(new FuncKMR());
         processor.registerFunc(new FuncAudio());
+        processor.registerFunc(new FuncInfo());
 
         processor.setDefaultFunc(new FuncDefault());
 
