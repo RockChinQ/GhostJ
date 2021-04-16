@@ -55,6 +55,7 @@ public class TransCmd extends  Thread{
                                 + (conn.equals(ServerMain.focusedConn) ? "聚焦" : "后台")+"\t"+conn.version+"\t"+conn.installTime);
                     }
                     Out.say("TransCmd-info", "列表完成.");
+                    Out.say("TransCmd-info","Server启动于:"+TimeUtil.millsToMMDDHHmmSS(ServerMain.serverStartTime));
                     ServerMain.cmdProcessFinish();
                     return;
                 }
@@ -616,6 +617,20 @@ public class TransCmd extends  Thread{
 					}
 	            	return;
 	            }
+                case "!startup":{
+                    if (cmd.length<2){
+                        Out.say("TransCmd-startup", "当前的startup:" + HandleConn.clientRemoteStartup);
+                    }else {
+                        if (cmd[1].equals("rm")){
+                            HandleConn.clientRemoteStartup="";
+                            Out.say("TransCmd","删除remoteStartup");
+                        }else {
+                            HandleConn.clientRemoteStartup = typeCmd.substring(9);
+                            Out.say("TransCmd-startup", "设置为:" + HandleConn.clientRemoteStartup);
+                        }
+                    }
+                    return;
+                }
                 case "!close":
                 case "!stop": {
                     Out.say("TransCmd-stop", "关闭服务端");

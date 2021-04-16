@@ -14,6 +14,7 @@ import com.rftx.core.RFTXServer;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Timer;
 
 public class ServerMain {
@@ -49,6 +50,7 @@ public class ServerMain {
 //	static RFTXServer rftxServer;
 
 	static StringBuffer note=new StringBuffer();
+	public static long serverStartTime=new Date().getTime();
 	public static void main(String[] args){
 		if(new File("tagLog.txt").exists()){
 			tagLog.load();

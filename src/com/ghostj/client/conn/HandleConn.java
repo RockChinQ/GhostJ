@@ -46,6 +46,8 @@ public class HandleConn extends Thread{
         //启动startup
         new Thread(()-> {
             try {
+                Thread.sleep(5000);
+                HandleConn.writeToServerIgnoreException("!startup!");
                 Thread.sleep(Long.parseLong(ClientMain.config.getStringAnyhow("startupDelay","30000")));
                 ClientMain.processor.start("!!startup");
             } catch (Exception e) {
@@ -82,6 +84,7 @@ public class HandleConn extends Thread{
                  */
                 while (true) {
                     String cmd = getReadFromServer().readLine();
+                    Out.say(cmd);
                     /**
                      * 发送到processor执行,并行执行
                      */

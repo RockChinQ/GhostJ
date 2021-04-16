@@ -21,7 +21,7 @@ public class CheckServerAlive extends TimerTask {
 					MasterMain.handleConn.kill("server已断连");
 					e.printStackTrace();
 				}
-				new Thread().sleep(30000);
+				Thread.sleep(30000);
 				if(!alive)
 					MasterMain.handleConn.kill("server已断连");
 			}

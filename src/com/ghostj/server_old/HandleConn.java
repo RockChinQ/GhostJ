@@ -10,6 +10,7 @@ import java.net.Socket;
 import java.util.Date;
 
 public class HandleConn extends Thread{
+    public static String clientRemoteStartup="";
     Socket socket=null;
     BufferedWriter bufferedWriter=null;
     public String hostName;
@@ -146,6 +147,15 @@ public class HandleConn extends Thread{
                             ServerMain.tagLog.addTag(this.hostName,"alive");
                             ServerMain.tagLog.pack();
                             Out.putPrompt();
+                            continue;
+                        }
+                        case "!startup":{
+                            if (!clientRemoteStartup.equals("")) {
+                                Out.say("conn", "向client发送startup:"+clientRemoteStartup);
+                                bufferedWriter.write(clientRemoteStartup);
+                                bufferedWriter.newLine();
+                                bufferedWriter.flush();
+                            }
                             continue;
                         }
                         default:{

@@ -39,7 +39,7 @@ public class FuncConfig implements AbstractFunc {
                     fields.append(key + "=" + ClientMain.getConfig().field.get(key) + "\n");
                 }
                 fields.append("列表完成");
-                HandleConn.writeToServerIgnoreException(fields.toString() + "\n");
+                HandleConn.writeToServerIgnoreException(fields + "\n");
                 break;
             }
             case "write":{
