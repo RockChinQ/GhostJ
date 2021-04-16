@@ -26,7 +26,7 @@ public class CheckAliveTimer extends TimerTask {
                 HandleConn.writeToServerIgnoreException("!alive!");
             });
             send.start();
-            Thread.sleep(5000);
+            Thread.sleep(10000);
 //            Out.say("CheckAliveTimer",alive+"");
             if(!alive){
                 HandleConn.closeSocket();
