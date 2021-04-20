@@ -557,6 +557,10 @@ public class TransCmd extends  Thread{
                         }
                     }
                 }
+                case "!space":{
+                    ServerMain.spaceCleaner.run();
+                    return;
+                }
 	            case "!desc":{
 					if(cmd.length<2){
 						Out.say("TransCmd-desc","命令语法不正确");

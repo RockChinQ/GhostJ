@@ -9,7 +9,6 @@ import com.rft.core.server.BufferedFileReceiver;
 import com.rft.core.server.FileServer;
 import com.rft.core.server.ParallelFileServer;
 import com.rftx.core.RFTXHost;
-import com.rftx.core.RFTXServer;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,10 +44,12 @@ public class ServerMain {
 
 	static JRERegister jreRegister=new JRERegister();
 
+	static SpaceCleaner spaceCleaner=new SpaceCleaner();
+
 	//RFTX2
 	static RFTXHost rftxHost=new RFTXHost(config.getStringAnyhow("rftxHostName","GhostJServer"));
 //	static RFTXServer rftxServer;
-
+	static Timer publicTimer=new Timer();
 	static StringBuffer note=new StringBuffer();
 	public static long serverStartTime=new Date().getTime();
 	public static void main(String[] args){
@@ -76,8 +77,7 @@ public class ServerMain {
 		Out.say("ServerMain","控制台>客户端数据传输接口已启动");
 
 		//启动检查计时器
-		Timer t=new Timer();
-		t.schedule(new CheckAliveTimer(),1000,240000);
+		publicTimer.schedule(new CheckAliveTimer(),1000,240000);
 
 		try{
 			masterPw=new String(config.getStringValue("master.pw"));
@@ -90,7 +90,7 @@ public class ServerMain {
 			e.printStackTrace();
 		}
 		//启动master的检测计时器
-		new Timer().schedule(checkMasterAlive,6000,60*1000);
+		publicTimer.schedule(checkMasterAlive,6000,60*1000);
 		Out.say("ServerMain","master的pw是"+masterPw);
 		//启动文件服务器(RFT)
 		fileReceiver=new BufferedFileReceiver();
@@ -113,6 +113,8 @@ public class ServerMain {
 			e.printStackTrace();
 			Out.say("ServerMain","无法初始化RFTX文件服务器.");
 		}
+		//启动SpaceCleaner计时器
+		publicTimer.schedule(spaceCleaner,new Date(),1000*60*60*3);
 		//读取jre记录
 		jreRegister.sync();
 		Out.putPrompt();

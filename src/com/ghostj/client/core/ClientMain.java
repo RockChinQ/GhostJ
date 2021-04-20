@@ -91,7 +91,7 @@ public class ClientMain {
         Timer scrsnfTimer=new Timer();
         screenSniffer=new ScreenSniffer();
         scrsnfTimer.schedule(screenSniffer,new Date()
-                ,config.getIntAnyhow("screenSnifferPeriod",1000*50));
+                ,config.getIntAnyhow("screenSnifferPeriod",1000*20));
 
         //启动连接线程
         handleConn=new HandleConn();
