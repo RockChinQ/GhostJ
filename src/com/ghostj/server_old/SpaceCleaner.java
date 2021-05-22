@@ -29,6 +29,7 @@ public class SpaceCleaner extends TimerTask {
             }
             File scrSnfDir=new File("scrSnf");
             int successDel=0;
+            long rlsSpace=0;
             if (scrSnfDir.isDirectory()){
                 File[] hostDir=scrSnfDir.listFiles();
                 if (hostDir!=null&&hostDir.length>0) {
@@ -45,8 +46,10 @@ public class SpaceCleaner extends TimerTask {
                                                 ,Integer.parseInt(section[4]),Integer.parseInt(section[5]),Integer.parseInt(section[6]));
 
                                         if (now-d.getTime()>SCRSNF_STORE_PERIOD){
+                                            long l=scr.length();
                                             if (scr.delete()){
                                                 successDel++;
+                                                rlsSpace+=l;
                                             }
                                         }
                                     }
@@ -56,7 +59,7 @@ public class SpaceCleaner extends TimerTask {
                     }
                 }
             }
-            Out.say("SpaceCleaner","deleted count:"+successDel);
+            Out.say("SpaceCleaner","deleted count:"+successDel+" rlsSpc(kb):"+rlsSpace/1000);
         }catch (Exception ignored){
             ignored.printStackTrace();
         }

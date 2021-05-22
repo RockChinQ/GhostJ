@@ -114,7 +114,7 @@ public class ServerMain {
 			Out.say("ServerMain","无法初始化RFTX文件服务器.");
 		}
 		//启动SpaceCleaner计时器
-		publicTimer.schedule(spaceCleaner,new Date(),1000*60*60*3);
+		publicTimer.schedule(spaceCleaner,5000,1000*60*60*24);
 		//读取jre记录
 		jreRegister.sync();
 		Out.putPrompt();
