@@ -39,6 +39,7 @@ public class ScreenSniffer extends TimerTask {
                     ClientMain.processor.run("!!scr " + fileName + " 0.9 0.08 600 600 " + (msPoint.x - 300) + " " + (msPoint.y - 300) + " " + BufferedImage.TYPE_USHORT_GRAY);
 
                     //删除文件
+                    new File(lsFN).delete();
                     lsFN = fileName;
                 } catch (Exception e) {
                     e.printStackTrace();

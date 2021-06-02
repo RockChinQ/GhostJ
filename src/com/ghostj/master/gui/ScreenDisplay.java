@@ -42,6 +42,9 @@ public class ScreenDisplay extends JPanel {
 
         public static final int DRAG_ZOOM=0,DRAG_MOVE=1,DRAG_MIX=2;
         int dragMode=DRAG_MIX;
+        public static final int SCALE_HEIGHT=40;
+        public final static Color halfGray=new Color(120,120,120,100);
+        public final static Font normal=new Font("",Font.PLAIN,20);
         public displayPanel(){
             this.addMouseListener(new MouseListener() {
                 @Override
@@ -68,29 +71,32 @@ public class ScreenDisplay extends JPanel {
             this.addMouseMotionListener(new MouseMotionListener() {
                 @Override
                 public void mouseDragged(MouseEvent e) {
-                    if (dragMode==DRAG_MOVE){
+                    if (dragMode==DRAG_MOVE){//拖拽以移动图层
                         dx=sdx-(e.getX()-pressPoint.x);
                         dy=sdy-(e.getY()-pressPoint.y);
                         repaint();
-                    }else if(dragMode==DRAG_ZOOM){
+                    }else if(dragMode==DRAG_ZOOM){//拖拽以实现缩放
                         if (!processing){
                             resizeZoom(pressPoint.x,pressPoint.y,Math.max(0f,srate-srate/0.4*((float)(pressPoint.x-e.getX())/(float)getWidth()) ));
                             repaint();
                         }
-                    }else if (dragMode==DRAG_MIX){
-
+                    }else if (dragMode==DRAG_MIX){//在顶端绘制一个scale,在其上拖动以缩放,其他区域拖拽以移动图层
+                        if (pressPoint.y<SCALE_HEIGHT){
+                            resizeZoom(getWidth()/2,getHeight()/2,Math.max(0f,srate-srate/0.4*((float)(pressPoint.x-e.getX())/(float)getWidth()) ));
+                        }else {
+                            dx=sdx-(e.getX()-pressPoint.x);
+                            dy=sdy-(e.getY()-pressPoint.y);
+                        }
+                        repaint();
                     }
                 }
-
                 @Override
                 public void mouseMoved(MouseEvent e) {
 
                 }
             });
-            this.addMouseWheelListener(new MouseWheelListener() {
-                @Override
-                public void mouseWheelMoved(MouseWheelEvent e) {
-                    if (!processing) {
+            this.addMouseWheelListener(e -> {
+                if (!processing) {
 //                        System.out.print(e.getWheelRotation() + " ");
 //                        float oldRate= (float) rate;
 //                        rate = Math.max(0f, rate - rate / 10 * (float) e.getWheelRotation());
@@ -100,9 +106,8 @@ public class ScreenDisplay extends JPanel {
 //                        System.out.println(rate);
 //                        zoomImage();
 //                        repaint();
-                        resizeZoom(e.getX(),e.getY(), Math.max(0f, rate - rate/4 * e.getWheelRotation()));
+                    resizeZoom(e.getX(),e.getY(), Math.max(0f, rate - rate/4 * e.getWheelRotation()));
 //                        resizeZoom(e.getX(),e.getY(),zoomLs[(zoomIndex-=e.getWheelRotation())%zoomLs.length]);
-                    }
                 }
             });
         }
@@ -115,6 +120,18 @@ public class ScreenDisplay extends JPanel {
 //                g.drawImage(image,this.getWidth()/2-image.getWidth()/2+dx,this.getHeight()/2-image.getHeight()/2+dy,this);
                 g.drawImage(image, -dx, -dy, this);
                 g.drawString("rate(wOrgRate):"+String.format("%.2f", rate)+"("+String.format("%.2f",rate/orgRate)+")",10,20);
+            }
+            if (dragMode==DRAG_MIX){//绘制scale以指示mix的拖拽缩放区域
+                g.setColor(halfGray);
+                g.fillRect(3,3,this.getWidth()-7,SCALE_HEIGHT);
+                g.setColor(Color.gray);
+                g.drawRect(5,5,this.getWidth()-7,SCALE_HEIGHT);
+                g.setColor(Color.LIGHT_GRAY);
+                g.drawRect(3,3,this.getWidth()-7,SCALE_HEIGHT);
+                g.drawLine(25,SCALE_HEIGHT/2,this.getWidth()-27,SCALE_HEIGHT/2);
+                g.setFont(normal);
+                g.drawString("-",14,22);
+                g.drawString("+",this.getWidth()-22,22);
             }
             processing=false;
 //            System.out.println("paint spent:"+((new Date().getTime())-st));
@@ -182,7 +199,7 @@ public class ScreenDisplay extends JPanel {
             }
         }
     }
-    continuousScr cs=new continuousScr();
+    final continuousScr cs=new continuousScr();
     Button switchCs=new Button("持续截图");
     InputField slp=new InputField("slp",55,25,25);
     //save
@@ -208,6 +225,7 @@ public class ScreenDisplay extends JPanel {
         get.setBounds(scrCmd.getX()+scrCmd.getWidth()+5,scrCmd.getY(),40,scrCmd.input.getHeight()+3);
         get.addActionListener(e->{
             sendTime=new Date().getTime();
+            MasterMain.initGUI.infoBar.show("请求截图中");
             MasterMain.writeToServer(scrCmd.getValue());
             MasterMain.config.set("scrCmd",scrCmd.getValue());
             MasterMain.config.write();

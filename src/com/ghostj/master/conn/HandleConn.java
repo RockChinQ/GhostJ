@@ -20,8 +20,6 @@ public class HandleConn extends Thread{
 		try {
 			while ((c=MasterMain.inputStreamReader.read())!=-1) {
 				try{
-					;
-
 					if((char)c=='!'){
 						StringBuffer cmds=new StringBuffer("!");
 						while(true){
@@ -153,14 +151,14 @@ public class HandleConn extends Thread{
 				}catch (Exception e){
 					Out.say("HandleConn","接受数据出错，连接正在重置");
 					e.printStackTrace();
-					kill("连接已断开");
-					MasterMain.initGUI.bgp.setVisible(false);
 				}
 			}
 			kill("server被关闭");
 		}catch (Exception e){
 			Out.say("HandleConn","处理连接数据时出错 非致命错误");
 			e.printStackTrace();
+			kill("连接已断开");
+			MasterMain.initGUI.bgp.setVisible(false);
 		}
 	}
 	public void kill(String msg){
