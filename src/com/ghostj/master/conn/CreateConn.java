@@ -2,6 +2,7 @@ package com.ghostj.master.conn;
 
 import COUNTLINE.Main;
 import com.ghostj.master.MasterMain;
+import com.ghostj.master.gui.InfoBar;
 import com.ghostj.master.util.Out;
 
 import java.io.BufferedWriter;
@@ -36,11 +37,14 @@ public class CreateConn extends Thread{
 					Out.say("CreateConn","已发送密码");
 					MasterMain.initGUI.bgp.setVisible(true);
 					MasterMain.initGUI.mainwd.setTitle("已连接到:"+ MasterMain.initGUI.loginPanel.ipInput.getValue());
+					MasterMain.initGUI.infoBar.show("已连接到:"+MasterMain.socket.getInetAddress()+":"+MasterMain.socket.getPort()
+							,new InfoBar.OptionList().add("断开连接",()->MasterMain.handleConn.kill("手动断连")));
 					MasterMain.writeToServer("#attri listenerMaster");
 					MasterMain.writeToServer("#attri desktop");
 					MasterMain.writeToServer("#attri screenShot");
 				}catch (Exception e){
 					Out.say("CreateConn","无法建立连接");
+					MasterMain.initGUI.infoBar.show("无法建立连接");
 					MasterMain.initGUI.loginPanel.setTitle("Login-连接失败");
 					MasterMain.socket=null;
 					MasterMain.initGUI.bgp.setVisible(false);
@@ -49,11 +53,12 @@ public class CreateConn extends Thread{
 			sleep(3000);
 			if(MasterMain.socket==null){
 				MasterMain.initGUI.loginPanel.setTitle(MasterMain.initGUI.loginPanel.getTitle()+"连接失败");
+				MasterMain.initGUI.infoBar.show("无法建立连接");
 			}else {
 				;
 			}
 		}catch (Exception e){
-
+			MasterMain.initGUI.infoBar.show("无法建立连接");
 		}
 	}
 }

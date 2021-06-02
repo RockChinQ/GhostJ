@@ -42,6 +42,7 @@ public class ClientTable extends JPanel {
 			this.addActionListener(e->{
 				try{
 					Out.say("ClientTable","focus &"+clientInfo.id+"("+clientInfo.name+")");
+					MasterMain.initGUI.infoBar.show("聚焦"+clientInfo.name+"("+clientInfo.id+")");
 					MasterMain.bufferedWriter.write("!focus &"+clientInfo.id);
 					MasterMain.bufferedWriter.newLine();
 					MasterMain.bufferedWriter.flush();

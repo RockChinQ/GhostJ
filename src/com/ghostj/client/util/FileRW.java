@@ -5,7 +5,7 @@ import java.io.*;
 public class FileRW {
     public static String read(String path){
         try {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(new File(path))));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(path)));
             StringBuffer result=new StringBuffer();
             String line="";
             while ((line=bufferedReader.readLine())!=null){

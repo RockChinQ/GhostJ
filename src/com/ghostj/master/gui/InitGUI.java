@@ -48,6 +48,8 @@ public class InitGUI {
 
 	public MonitorDisplay md=new MonitorDisplay();
 
+	public InfoBar infoBar;
+
 	public InitGUI(){
 		long s=new Date().getTime();
 		mainwd.setSize(920,1020);
@@ -237,7 +239,14 @@ public class InitGUI {
 		//截图展示
 		sd.setLocation(fe.getX(),fe.getY()+fe.getHeight()+15);
 		sd.setBackground(fe.getBackground());
+		sd.picp.dragMode=ScreenDisplay.displayPanel.DRAG_MOVE;
 		bgp.add(sd);
+
+		infoBar=new InfoBar(sd.getWidth(),typeMode.getHeight());
+		infoBar.setLocation(sd.getX(),typeMode.getY());
+		infoBar.setBackground(sd.getBackground());
+		infoBar.setTextForeground(Color.LIGHT_GRAY);
+		bgp.add(infoBar);
 
 
 		bgp.setVisible(false);

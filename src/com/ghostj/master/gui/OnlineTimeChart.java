@@ -35,6 +35,7 @@ public class OnlineTimeChart extends JPanel {
 					MasterMain.bufferedWriter.write("#taglog#");
 					MasterMain.bufferedWriter.newLine();
 					MasterMain.bufferedWriter.flush();
+					MasterMain.initGUI.infoBar.show("正在下载TagLog");
 				}catch (Exception er){
 					er.printStackTrace();
 				}

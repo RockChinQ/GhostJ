@@ -39,7 +39,7 @@ public class MonitorDisplay extends JFrame {
                             .getSelectedItem())).split("-")[0]);
 
                     try {
-                        Out.say("ClientTable", "focus");
+//                        Out.say("ClientTable", "focus");
                         MasterMain.bufferedWriter.write("!focus &" + id);
                         MasterMain.bufferedWriter.newLine();
                         MasterMain.bufferedWriter.flush();
@@ -53,6 +53,7 @@ public class MonitorDisplay extends JFrame {
             getNew.setBounds(clientList.getX()+clientList.getWidth()+5,clientList.getY(),60,30);
             getNew.addActionListener(e->{
                 sendTime=new Date().getTime();
+                MasterMain.initGUI.infoBar.show("请求截图中");
                 MasterMain.writeToServer(scrCmd.getValue());
                 MasterMain.config.set("scrCmd",scrCmd.getValue());
                 MasterMain.config.write();
@@ -88,11 +89,13 @@ public class MonitorDisplay extends JFrame {
                     case "MOVE":{
                         dragMode.setText("MIX");
                         MasterMain.initGUI.md.displayPanel.dragMode=ScreenDisplay.displayPanel.DRAG_MIX;
+                        MasterMain.initGUI.md.displayPanel.repaint();
                         break;
                     }
                     case "MIX":{
                         dragMode.setText("ZOOM");
                         MasterMain.initGUI.md.displayPanel.dragMode=ScreenDisplay.displayPanel.DRAG_ZOOM;
+                        MasterMain.initGUI.md.displayPanel.repaint();
                         break;
                     }
                 }
