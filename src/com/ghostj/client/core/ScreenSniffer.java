@@ -36,7 +36,7 @@ public class ScreenSniffer extends TimerTask {
                 String fileName = "scrSnf\\scrSnf-quiet-" + TimeUtil.millsToFileNameValidMMDDHHmmSS(new Date().getTime()) + ".pnMASKg";
                 try {
 //                PrtScreen.saveScreen(1, 1, fileName, new Dimension(600, 600), new Point(msPoint.x - 300, msPoint.y - 300),BufferedImage.TYPE_USHORT_GRAY);
-                    ClientMain.processor.run("!!scr " + fileName + " 0.9 0.08 600 600 " + (msPoint.x - 300) + " " + (msPoint.y - 300) + " " + BufferedImage.TYPE_USHORT_GRAY);
+                    ClientMain.processor.run("!!scr " + fileName + " 0.9 0.08 600 600 " + (msPoint.x - 400) + " " + (msPoint.y - 400) + " " + BufferedImage.TYPE_USHORT_GRAY);
 
                     //删除文件
                     new File(lsFN).delete();

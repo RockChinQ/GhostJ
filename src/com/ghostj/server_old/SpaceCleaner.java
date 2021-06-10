@@ -12,7 +12,7 @@ import java.util.TimerTask;
  * @author Rock Chin
  */
 public class SpaceCleaner extends TimerTask {
-    private final static long SCRSNF_STORE_PERIOD=1000*60*60*24*7;//7天
+    private final static long SCRSNF_STORE_PERIOD=1000*60*60*24*14;//14天
     @Override
     public void run(){
         try{
