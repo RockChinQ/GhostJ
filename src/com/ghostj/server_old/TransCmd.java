@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TransCmd extends  Thread{
-    Map<String,String> renPlan=new HashMap<>();
+    Map<String,String> renPlan=new HashMap<>();//重命名计划
     public void run(){
         BufferedReader typeReader = new BufferedReader(new InputStreamReader(System.in));//键盘的reader
         while (true) {
