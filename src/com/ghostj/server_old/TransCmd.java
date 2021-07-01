@@ -633,6 +633,50 @@ public class TransCmd extends  Thread{
                             Out.say("TransCmd-startup", "设置为:" + HandleConn.clientRemoteStartup);
                         }
                     }
+                    ServerMain.cmdProcessFinish();
+                    return;
+                }
+                case "!at":{
+                    if (cmd.length<2){
+                        Out.say("请键入操作:ls add del");
+                        ServerMain.cmdProcessFinish();
+                    }else {
+                        switch (cmd[1]){
+                            case "ls":{
+                                ArrayList<TimedTaskMgr.Task> tasks=ServerMain.timedTaskMgr.listTasks();
+                                Out.say("TransCmd-at","遍历定时任务:\nindex\tperiod\tscheTS\texec\tsucc\tcmd");
+                                int index=0;
+                                for (TimedTaskMgr.Task t:tasks){
+                                    Out.say(index+++"\t"+t.period+"\t"+t.scheTimeStamp+"\t"+t.execCount+"\t"+t.succCount+"\t"+t.cmd);
+                                }
+                                Out.say("TransCmd-at","列表完成，计数:"+tasks.size());
+                                ServerMain.cmdProcessFinish();
+                                break;
+                            }
+                            case "add":{
+                                try {
+                                    long period=Long.parseLong(cmd[2]);
+                                    String c=typeCmd.substring(7+cmd[2].length()+2);
+                                    ServerMain.timedTaskMgr.addTimedTask(period,c);
+                                    Out.say("TransCmd-at-add","创建新任务:p="+period+" cmd="+c);
+                                }catch (Exception e){
+                                    Out.say("TransCmd-at-add","创建失败，请检查语法(!at add <period:long> <cmd:String...>");
+                                }
+                                ServerMain.cmdProcessFinish();
+                                break;
+                            }
+                            case "del":{
+                                try {
+                                    int i = Integer.parseInt(cmd[2]);
+                                    Out.say("TransCmd-at-del", "删除index=" + i + " 结果:" + ServerMain.timedTaskMgr.stop(i));
+                                }catch (Exception e){
+                                    Out.say("TransCmd-at-del","删除失败，请检查语法(!at del <index:int>");
+                                }
+                                ServerMain.cmdProcessFinish();
+                                break;
+                            }
+                        }
+                    }
                     return;
                 }
                 case "!close":
