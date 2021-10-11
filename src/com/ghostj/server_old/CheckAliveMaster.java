@@ -27,7 +27,7 @@ public class CheckAliveMaster extends Thread{
 					Out.sayThisLine("Failed\n");
 					dead.add(handleConn);
 				}else{
-					Out.sayThisLine("Succeeded "+(handleConn.reveiveAliveMsgTime-stTime)+"ms\n");
+					Out.sayThisLine("Succeeded "+(handleConn.receiveAliveMsgTime -stTime)+"ms\n");
 				}
 			} catch (Exception e) {
 				Out.sayThisLine("Failed\n");

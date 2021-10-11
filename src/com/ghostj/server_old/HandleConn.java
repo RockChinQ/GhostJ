@@ -25,7 +25,7 @@ public class HandleConn extends Thread{
 
     String version=null;
     boolean success=false;
-    long reveiveAliveMsgTime=0;
+    long receiveAliveMsgTime =0;
     public HandleConn(Socket socket){
         try {
             this.socket = socket;
@@ -73,7 +73,7 @@ public class HandleConn extends Thread{
                         }
                         case "!alives":{
                             success=true;
-                            reveiveAliveMsgTime=new Date().getTime();
+                            receiveAliveMsgTime =new Date().getTime();
                             continue;
                         }
                         case "!name":{//此开关已过时，新版本的client使用info指令传输属性信息

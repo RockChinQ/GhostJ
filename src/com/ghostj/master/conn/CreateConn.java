@@ -16,6 +16,7 @@ public class CreateConn extends Thread{
 		try{
 			MasterMain.config.set("ip",MasterMain.initGUI.loginPanel.ipInput.getValue());
 			MasterMain.config.set("port",MasterMain.initGUI.loginPanel.portInput.getValue());
+			MasterMain.config.set("name",MasterMain.initGUI.loginPanel.nameInput.getValue());
 			MasterMain.config.set("pw",MasterMain.initGUI.loginPanel.pwInput.getValue());
 			MasterMain.config.write();
 			MasterMain.initGUI.loginPanel.setTitle("Login-尝试连接");
@@ -31,7 +32,7 @@ public class CreateConn extends Thread{
 					MasterMain.handleConn=new HandleConn();
 					MasterMain.handleConn.start();
 					//发送密码
-					MasterMain.bufferedWriter.write("#pw "+MasterMain.initGUI.loginPanel.pwInput.getValue());
+					MasterMain.bufferedWriter.write("#login "+MasterMain.initGUI.loginPanel.nameInput.getValue()+" "+MasterMain.initGUI.loginPanel.pwInput.getValue());
 					MasterMain.bufferedWriter.newLine();
 					MasterMain.bufferedWriter.flush();
 					Out.say("CreateConn","已发送密码");
