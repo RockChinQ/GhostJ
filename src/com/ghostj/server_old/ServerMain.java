@@ -46,6 +46,8 @@ public class ServerMain {
 
 	static SpaceCleaner spaceCleaner=new SpaceCleaner();
 
+	static TimedTaskMgr timedTaskMgr=new TimedTaskMgr();
+
 	//RFTX2
 	static RFTXHost rftxHost=new RFTXHost(config.getStringAnyhow("rftxHostName","GhostJServer"));
 //	static RFTXServer rftxServer;

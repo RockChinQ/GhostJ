@@ -159,7 +159,8 @@ public class HandleConn extends Thread{
                             continue;
                         }
                         default:{
-                            Out.sayThisLine(cmds.toString());
+                            if(this.equals(ServerMain.focusedConn))
+                                Out.sayThisLine(cmds.toString());
                             continue;
                         }
                     }
