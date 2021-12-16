@@ -84,6 +84,8 @@ Server级别的由单个半角惊叹号(!)开始,Client级别的由两个半角�
 
 ### Server级别
 
+以下指令均运行于Server,实现代码详见server包的TransCmd类
+
 #### !help
 
 - 输出指令列表
@@ -193,3 +195,91 @@ Server级别的由单个半角惊叹号(!)开始,Client级别的由两个半角�
 #### !stop
 
 关闭服务端
+
+### Client级别
+
+以下指令均运行于Client,其实现代码详见client包中的func包
+
+#### !!audio [Length]
+
+- 录音并上传到Server
+- `Length`为录音时长毫秒,未指定时设置为5000
+
+#### !!bat \<reset|add|view|run> [params]
+
+- Client提供一个储存指令的缓存
+- `!!batch reset`清除缓存
+- `!!batch add <Content>`在缓存中追加一行内容<Content>
+- `!!batch view`输出缓存中所有指令
+- `!!batch run`逐行运行缓存中的指令
+
+#### !!cfg \<ls|write|set|rm> \<params>
+
+- 管理客户端的配置文件,操作不当可能导致断连
+- `!!cfg ls`列出客户端所有配置字段
+- `!!cfg write`将运行时修改的配置字段写入配置文件
+- `!!cfg set <Field> <Value>`设置运行时中的配置字段`Field`为`Value`
+- `!!cfg rm <Field>`删除字段
+- set和rm之后需要执行write才能写入文件,否则重启客户端之后将丢失修改结果
+
+#### !!exit \<ClientName>
+
+- 退出客户端
+- `ClientName`必须为客户端完整名称
+
+#### !!gget \<URL> \<SavePath> \<SaveName>
+
+- http下载器
+- 将`url`的文件下载到目录`SavePath`,重命名为`SaveName`
+
+#### !!help
+
+- 输出客户端指令帮助
+
+#### !!info
+
+- 运行时信息
+
+#### !!kmr \<mouse|key> \<params>
+
+- 控制鼠标和模拟键盘输入
+
+#### !!proc \<focus|ls|bg|new|disc> \<params>
+
+- 管理客户端上启动的子进程
+- `!!proc ls`列出所有子进程
+- `!!proc new [Name] [Command]`新建名为`Name`的子进程并执行命令`Command`并聚焦到此子进程,若未设置命令则执行`cmd`
+- `!!proc bg [Name] [Command]`新建子进程并执行命令,但不聚焦到此子进程
+- `!!proc focus <ProcessName>`聚焦到名称以`ProcessName`开头的子进程,之后Client收到的来自Server的内容都将发送到Process中
+- `!!proc disc <ProcessName>`断连名称以`ProcessName`开头的子进程,此操作并不会停止目标子进程,且Client之后将无法操作此子进程
+
+#### !!scr \<params>
+
+- 屏幕截图并发送到Server
+- `!!scr <FileName>`全屏截图并储存到文件
+- `!!scr <FileName> <ResolutionCompressRate>`全屏截图并进行分辨率压缩(范围0.0-+∞)然后储存到文件
+- `!!scr <FileName> <ResolutionCompressRate> <ColorCompressRate>`全屏截图并进行分辨率压缩(范围0.0-+∞),进行颜色压缩(范围0.0-1.0),然后储存到文件
+- `!!scr <FileName> <ResolutionCompressRate> <ColorCompresseRate> <Width> <Height> <XOnScreen> <YOnScreen> <ColorFormat>`  
+      从屏幕坐标(x,y)为(`XOnScreen`,`YOnScreen`)的像素开始向右下角截图宽为`Width`长为`Height`的截图,并对图像的分辨率进行比率为`ResolutionCompressRate`(范围0.0-+∞)的压缩,  
+      对图像色彩进行比率为`ColorCompressRate`(范围0.0-1.0)的压缩,使用编码为`ColorFormat`的颜色格式编码到文件`FileName`
+- 每次截图之后都会自动上传到Server,除非命令第四个参数为`nosend`
+
+#### !!rfe \<dir|cd|upload|download|dsk|del> \<params>
+
+- 为GhostJ设计的文件浏览指令,详见client包中func包中的FuncRFE.java
+
+#### !!rft upload \<FileOnClientHost> \<TargetPathOnServerHost>
+
+- 使用文件传输库传输文件
+- 将客户端本地的`FileOnClientHost`文件上传到Server主机上相对于Server上RFT根目录的路径`TargetPathOnServerHost`
+- 设置Server上RFT的根目录参见!rft指令
+
+#### !!reconn
+
+- 使该客户端断连并尝试重新连接Server
+
+#### !!startup [set|rm]
+
+- 管理Client的启动任务,客户端将在每次启动时自动运行此任务
+- `!!startup set <Content>`设置启动任务为`Content`
+- `!!startup rm`删除启动任务
