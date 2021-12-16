@@ -113,7 +113,7 @@ public class HandleConn extends Thread{
 								String ctn[]=cmds.substring(7,cmds.length()-1).split("\\|");
 								MasterMain.initGUI.fe.crtPath=(ctn.length-1)+":"+ctn[0];
 								MasterMain.initGUI.fe.flLs.clear();
-								System.out.println(cmds);
+								System.out.println("#"+cmds+"#");
 								if(ctn.length>1){
 									for(int i=1;i<ctn.length;i++){
 										String spt[]=ctn[i].split(":");
@@ -134,6 +134,7 @@ public class HandleConn extends Thread{
 								continue;
 							}
 							case "!dsk":{
+								System.out.println("#"+cmds+"#");
 								if(cmd.length>1){
 									MasterMain.initGUI.fe.disks=cmd[1].toCharArray();
 								}
@@ -146,8 +147,7 @@ public class HandleConn extends Thread{
 							}
 						}
 					}
-					if (!((char)c=='!'))
-						Out.sayThisLine((char)c);
+					Out.sayThisLine((char)c);
 				}catch (Exception e){
 					Out.say("HandleConn","接受数据出错，连接正在重置");
 					e.printStackTrace();

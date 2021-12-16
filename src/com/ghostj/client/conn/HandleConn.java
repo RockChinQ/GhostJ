@@ -8,6 +8,7 @@ import com.ghostj.client.util.Out;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 /**
@@ -70,7 +71,7 @@ public class HandleConn extends Thread{
                 /**
                  * 为io对象赋值
                  */
-                outToServer=new OutputStreamWriter(socket.getOutputStream(),"GBK");
+                outToServer=new OutputStreamWriter(socket.getOutputStream(),StandardCharsets.UTF_8);
                 readFromServer=new BufferedReader(new InputStreamReader(socket.getInputStream(),"GBK"));
                 //连接正常
                 Out.say("HandleConn","已连接");
@@ -104,23 +105,89 @@ public class HandleConn extends Thread{
         }
     }
 
+
+
+    public static String getEncoding(String str) {
+        String encode = "GB2312";
+        try {
+            if (str.equals(new String(str.getBytes(encode), encode))) { //判断是不是GB2312
+                String s = encode;
+                return s; //是的话，返回“GB2312“，以下代码同理
+            }
+        } catch (Exception exception) {
+        }
+        encode = "ISO-8859-1";
+        try {
+            if (str.equals(new String(str.getBytes(encode), encode))) { //判断是不是ISO-8859-1
+                String s1 = encode;
+                return s1;
+            }
+        } catch (Exception exception1) {
+        }
+        encode = "UTF-8";
+        try {
+            if (str.equals(new String(str.getBytes(encode), encode))) { //判断是不是UTF-8
+                String s2 = encode;
+                return s2;
+            }
+        } catch (Exception exception2) {
+        }
+        encode = "GBK";
+        try {
+            if (str.equals(new String(str.getBytes(encode), encode))) { //判断是不是GBK
+                String s3 = encode;
+                return s3;
+            }
+        } catch (Exception exception3) {
+        }
+        return "";
+    }
+
+
     /**
      * 向服务端发送消息
      * @param msg
      */
     public static void writeToServer(String msg)throws Exception{
-
-        getOutToServer().write(msg);
+        System.out.println("Encoding:"+getEncoding(msg)+":"+msg);
+        System.out.println("->ConvertUTF8:"+new String(getUTF8BytesFromGBKString(msg), StandardCharsets.UTF_8)
+                +" encoding:"+getEncoding(new String(getUTF8BytesFromGBKString(msg), StandardCharsets.UTF_8)));
+        getOutToServer().write(new String(getUTF8BytesFromGBKString(msg),StandardCharsets.UTF_8));
         getOutToServer().flush();
     }
+
+
+
+
+    public static byte[] getUTF8BytesFromGBKString(String gbkStr) {
+        int n = gbkStr.length();
+        byte[] utfBytes = new byte[3 * n];
+        int k = 0;
+        for (int i = 0; i < n; i++) {
+            int m = gbkStr.charAt(i);
+            if (m < 128) {
+                utfBytes[k++] = (byte) m;
+                continue;
+            }
+            utfBytes[k++] = (byte) (0xe0 | (m >> 12));
+            utfBytes[k++] = (byte) (0x80 | ((m >> 6) & 0x3f));
+            utfBytes[k++] = (byte) (0x80 | (m & 0x3f));
+        }
+        if (k < utfBytes.length) {
+            byte[] tmp = new byte[k];
+            System.arraycopy(utfBytes, 0, tmp, 0, k);
+            return tmp;
+        }
+        return utfBytes;
+    }
+
     /**
      * 向服务端发送消息
      * @param msg
      */
     public static void writeToServerIgnoreException(String msg){
         try {
-            getOutToServer().write(msg);
-            getOutToServer().flush();
+            writeToServer(msg);
         }catch (Exception e){}
     }
     /**
