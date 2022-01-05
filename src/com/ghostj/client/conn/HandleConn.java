@@ -149,10 +149,11 @@ public class HandleConn extends Thread{
      * @param msg
      */
     public static void writeToServer(String msg)throws Exception{
-        System.out.println("Encoding:"+getEncoding(msg)+":"+msg);
-        System.out.println("->ConvertUTF8:"+new String(getUTF8BytesFromGBKString(msg), StandardCharsets.UTF_8)
-                +" encoding:"+getEncoding(new String(getUTF8BytesFromGBKString(msg), StandardCharsets.UTF_8)));
-        getOutToServer().write(new String(getUTF8BytesFromGBKString(msg),StandardCharsets.UTF_8));
+//        System.out.println("Encoding:"+getEncoding(msg)+":"+msg);
+//        System.out.println("->ConvertUTF8:"+new String(getUTF8BytesFromGBKString(msg), StandardCharsets.UTF_8)
+//                +" encoding:"+getEncoding(new String(getUTF8BytesFromGBKString(msg), StandardCharsets.UTF_8)));
+//        getOutToServer().write(new String(getUTF8BytesFromGBKString(msg),StandardCharsets.UTF_8));
+        getOutToServer().write(msg);
         getOutToServer().flush();
     }
 
