@@ -607,15 +607,23 @@ public class TransCmd extends  Thread{
 								ServerMain.cmdProcessFinish();
 								return;
 							}
+							// Collect keys to remove first to avoid concurrent modification
+							java.util.List<String> keysToRemove = new java.util.ArrayList<>();
 							for(String key:AcceptConn.description.keySet()){
 								if(key.startsWith(cmd[2])){
-									AcceptConn.description.remove(key);
-									AcceptConn.saveDescription();
-									Out.say("TransCmd-desc-rm","删除描述"+key);
-									return;
+									keysToRemove.add(key);
 								}
 							}
-							Out.say("TransCmd-desc-rm","没有符合条件的描述键");
+							if(keysToRemove.size() > 0){
+								// Remove all matching keys
+								for(String key : keysToRemove){
+									AcceptConn.description.remove(key);
+									Out.say("TransCmd-desc-rm","删除描述"+key);
+								}
+								AcceptConn.saveDescription();
+							}else{
+								Out.say("TransCmd-desc-rm","没有符合条件的描述键");
+							}
 							return;
 						}
 					}
