@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "libs/RFT.jar",
+        "libs/RFTX2.jar",
+        "libs/fastjson-1.2.53.jar"
+    ]
+}
